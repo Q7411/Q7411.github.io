@@ -6,6 +6,10 @@
   --vp-c-brand-3: #856a0c;
   --vp-c-brand-soft: rgba(197, 160, 23, 0.16);
 
+  /* 赛博朋克极客青色 (Cyber Cyan) 辅色 */
+  --vp-c-cyan-1: #00e5ff;
+  --vp-c-cyan-soft: rgba(0, 229, 255, 0.16);
+
   /* 恢复浅色模式默认背景，去除之前强制的深色 */
   --vp-c-bg: #ffffff;
   --vp-c-bg-alt: #f6f6f7;
@@ -27,9 +31,12 @@ html {
   --vp-c-brand-3: #f5d061;
   --vp-c-brand-soft: rgba(212, 175, 55, 0.16);
 
+  --vp-c-cyan-1: #00f0ff;
+  --vp-c-cyan-soft: rgba(0, 240, 255, 0.16);
+
   /* 主色 深色渐变背景 */
-  --vp-c-bg: #0A0A0B;
-  --vp-c-bg-alt: #121214;
+  --vp-c-bg: #050505;
+  --vp-c-bg-alt: #0a0a0c;
 }
 
 /* 隐藏 VitePress 默认的内容容器，使得自定义布局可以占满全屏 */
@@ -118,9 +125,11 @@ html {
 }
 
 .VPHero .tagline {
+  font-family: var(--vp-font-family-mono) !important; /* 切换为等宽字体增加极客感 */
   font-size: clamp(1.1rem, 2vw, 1.5rem) !important;
   margin-top: 1rem !important;
   opacity: 0.8;
+  color: var(--vp-c-cyan-1) !important;
 }
 
 .dark .VPHero .name {

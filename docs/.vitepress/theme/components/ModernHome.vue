@@ -10,6 +10,7 @@ const videoRef = ref(null)
 const contentRef = ref(null)
 const featuresRef = ref(null)
 const skillsRef = ref(null)
+const statsRef = ref(null)
 const postsRef = ref(null)
 const ctaRef = ref(null)
 let ctx
@@ -101,6 +102,23 @@ onMounted(() => {
       }
     )
 
+    // 数据统计动画
+    gsap.fromTo('.stat-item',
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: statsRef.value,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    )
+
     // CTA 区域入场动画
     gsap.fromTo('.cta-content',
       { opacity: 0, y: 40 },
@@ -166,10 +184,14 @@ const recentPosts = [
 
 <template>
   <div class="modern-home">
+    <!-- Cyber Background Elements -->
+    <div class="cyber-grid"></div>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
     <!-- Hero Section -->
     <section ref="heroRef" class="hero-section">
       <div class="video-container">
-        <!-- 占位 4K 视频，这里用一个公开免费的超高清短视频演示 -->
         <video 
           ref="videoRef"
           class="hero-video gpu-accel" 
@@ -179,22 +201,34 @@ const recentPosts = [
           playsinline
           poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
         >
-          <!-- WebM 格式优先 -->
           <source src="https://cdn.pixabay.com/video/2023/10/22/186115-877114413_large.mp4" type="video/mp4" />
         </video>
         <div class="video-overlay"></div>
       </div>
 
+      <!-- HUD Elements -->
+      <div class="hud-top-left">SYS.INIT // {{ new Date().getFullYear() }}.CTF.REV</div>
+      <div class="hud-bottom-right">STATUS: <span class="status-online">ONLINE</span> <span class="blink">_</span></div>
+
       <div ref="contentRef" class="hero-content">
+        <div class="terminal-badge">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span class="terminal-text">root@q7411:~# ./start_journey.sh</span>
+        </div>
         <h1 class="hero-title gpu-accel">
-          <span class="gradient-text">极简主义</span><br/>
-          探索未来视界
+          <span class="gradient-text">极简未来视界</span><br/>
+          <span class="cyber-text" data-text="BINARY EXPLORATION">BINARY EXPLORATION</span>
         </h1>
         <p class="hero-subtitle gpu-accel">
           结合深色渐变、玻璃拟态与 3D 视差滚动，为您呈现 4K 级 120Hz 丝滑体验。
         </p>
         <div class="hero-actions gpu-accel">
-          <a href="/posts/first-post" class="btn btn-primary">开始探索</a>
+          <a href="/posts/first-post" class="btn btn-primary cyber-btn">
+            <span class="btn-content">开始探索</span>
+            <span class="btn-glitch"></span>
+          </a>
           <a href="/about" class="btn btn-secondary">关于我们</a>
         </div>
       </div>
@@ -226,6 +260,28 @@ const recentPosts = [
         >
           {{ skill }}
         </span>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section ref="statsRef" class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-item gpu-accel">
+          <div class="stat-number">0xff</div>
+          <div class="stat-label">BINARIES PWNED</div>
+        </div>
+        <div class="stat-item gpu-accel">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">LINES OF CODE</div>
+        </div>
+        <div class="stat-item gpu-accel">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">SYSTEM UPTIME</div>
+        </div>
+        <div class="stat-item gpu-accel">
+          <div class="stat-number">0.05</div>
+          <div class="stat-label">CLS SCORE</div>
+        </div>
       </div>
     </section>
 
@@ -278,6 +334,109 @@ const recentPosts = [
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+/* Cyber Background Elements */
+.cyber-grid {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  z-index: 0;
+  pointer-events: none;
+  animation: floatOrb 12s infinite alternate ease-in-out;
+}
+.orb-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: var(--vp-c-brand-1); }
+.orb-2 { bottom: 20%; right: -10%; width: 50vw; height: 50vw; background: var(--vp-c-cyan-1); animation-delay: -6s; }
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 80px) scale(1.1); }
+}
+
+/* HUD Elements */
+.hud-top-left {
+  position: absolute;
+  top: 100px;
+  left: 40px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  color: var(--vp-c-brand-1);
+  letter-spacing: 0.2em;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.hud-top-left::before {
+  content: '';
+  display: inline-block;
+  width: 12px; height: 12px;
+  background: var(--vp-c-brand-1);
+  margin-right: 12px;
+  animation: pulse 2s infinite;
+}
+
+.hud-bottom-right {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+  z-index: 10;
+}
+
+.status-online {
+  color: var(--vp-c-cyan-1);
+  text-shadow: 0 0 10px var(--vp-c-cyan-soft);
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* Terminal Badge */
+.terminal-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-dot {
+  width: 10px; height: 10px; border-radius: 50%; margin-right: 8px;
+}
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27c93f; margin-right: 16px; }
+
+.terminal-text {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9rem;
+  color: #a9b1d6;
 }
 
 .video-container {
@@ -336,6 +495,16 @@ const recentPosts = [
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+}
+
+.cyber-text {
+  font-family: var(--vp-font-family-mono);
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: var(--vp-c-cyan-1);
+  text-shadow: 0 0 20px var(--vp-c-cyan-soft);
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.1em;
 }
 
 .hero-subtitle {
@@ -412,7 +581,30 @@ const recentPosts = [
   background: rgba(18, 18, 20, 0.6) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2) !important;
+  position: relative;
 }
+
+/* Tech Corners for Feature Cards */
+.feature-card::before, .feature-card::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  transition: all 0.3s ease;
+  opacity: 0.3;
+}
+.feature-card::before {
+  top: 10px; left: 10px;
+  border-top: 2px solid var(--vp-c-cyan-1);
+  border-left: 2px solid var(--vp-c-cyan-1);
+}
+.feature-card::after {
+  bottom: 10px; right: 10px;
+  border-bottom: 2px solid var(--vp-c-cyan-1);
+  border-right: 2px solid var(--vp-c-cyan-1);
+}
+
+.feature-card:hover::before { top: 5px; left: 5px; opacity: 1; }
+.feature-card:hover::after { bottom: 5px; right: 5px; opacity: 1; }
 
 .feature-card:hover {
   transform: translateY(-10px) scale(1.02) !important;
@@ -490,6 +682,44 @@ const recentPosts = [
   box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
 }
 
+/* Stats Section */
+.stats-section {
+  padding: 40px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 150px;
+}
+
+.stat-number {
+  font-family: var(--vp-font-family-mono);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 8px;
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--vp-font-family-mono);
+}
+
 /* Recent Posts Section */
 .posts-section {
   padding: 80px 24px;
@@ -511,12 +741,28 @@ const recentPosts = [
   transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   background: rgba(18, 18, 20, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 0%;
+  background: var(--vp-c-cyan-1);
+  transition: height 0.4s ease;
+}
+
+.post-card:hover::before {
+  height: 100%;
+  box-shadow: 0 0 20px var(--vp-c-cyan-1);
 }
 
 .post-card:hover {
   transform: translateY(-8px) !important;
-  border-color: rgba(212, 175, 55, 0.3) !important;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(0, 229, 255, 0.3) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 229, 255, 0.1) inset !important;
 }
 
 .post-meta {
