@@ -1,6 +1,34 @@
 import { defineConfig } from 'vitepress'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  vite: {
+    plugins: [
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+        manifest: {
+          name: "Q7411's Blog",
+          short_name: 'Q7411',
+          description: 'CTF 与逆向工程学习记录',
+          theme_color: '#0A0A0B',
+          background_color: '#0A0A0B',
+          icons: [
+            {
+              src: '/pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png'
+            },
+            {
+              src: '/pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png'
+            }
+          ]
+        }
+      })
+    ]
+  },
   base: '/',
   title: "Q7411's Blog",
   description: "CTF 与逆向工程学习记录",

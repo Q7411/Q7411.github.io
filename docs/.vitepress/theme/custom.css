@@ -1,41 +1,66 @@
-/* 现代化博客与极客风格主题配色 */
+/* 极简高级视觉体验 */
 :root {
-  /* 基础主色调: 清新科技蓝到明青色 */
-  --vp-c-brand-1: #0ea5e9;
-  --vp-c-brand-2: #0284c7;
-  --vp-c-brand-3: #0369a1;
-  --vp-c-brand-soft: rgba(14, 165, 233, 0.16);
+  /* 钛金点缀 */
+  --vp-c-brand-1: #D4AF37;
+  --vp-c-brand-2: #c5a017;
+  --vp-c-brand-3: #f5d061;
+  --vp-c-brand-soft: rgba(212, 175, 55, 0.16);
 
-  /* 字体设置 */
-  --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --vp-font-family-mono: 'Fira Code', 'JetBrains Mono', Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-
-  /* 首页大字（名字）渐变色 */
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #38bdf8 30%, #3b82f6);
-
-  /* 首页背景光晕效果 */
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, #38bdf8 50%, #3b82f6 50%);
-  --vp-home-hero-image-filter: blur(75px);
+  /* 主色 深色渐变背景 */
+  --vp-c-bg: #0A0A0B;
+  --vp-c-bg-alt: #121214;
+  
+  /* 字体设置：Inter + 思源黑体 */
+  --vp-font-family-base: 'Inter', 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --vp-font-family-mono: 'Fira Code', 'JetBrains Mono', Consolas, Monaco, monospace;
 }
 
 html {
-  /* 平滑滚动 */
   scroll-behavior: smooth;
+  background-color: var(--vp-c-bg);
 }
 
-/* 深色模式特定颜色 */
 .dark {
-  --vp-c-brand-1: #38bdf8;
-  --vp-c-brand-2: #0ea5e9;
-  --vp-c-brand-3: #0284c7;
-  --vp-c-brand-soft: rgba(56, 189, 248, 0.16);
-  
-  --vp-c-bg: #0f1115;       /* 更柔和的深色背景 */
-  --vp-c-bg-alt: #16181d;   /* 模块背景 */
-  
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #00ffcc 30%, #38bdf8);
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, #00ffcc 50%, #38bdf8 50%);
+  --vp-c-brand-1: #D4AF37;
+  --vp-c-brand-2: #e5c35b;
+  --vp-c-brand-3: #f5d061;
+  --vp-c-brand-soft: rgba(212, 175, 55, 0.16);
+  --vp-c-bg: #0A0A0B;
+  --vp-c-bg-alt: #121214;
+}
+
+/* 隐藏 VitePress 默认的内容容器，使得自定义布局可以占满全屏 */
+.VPContent.is-home {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+/* 高性能渲染 */
+.gpu-accel {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Glassmorphism 基础 */
+.glass-card {
+  background: rgba(18, 18, 20, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 导航栏透明与毛玻璃效果 */
+.VPNav {
+  background: transparent !important;
+}
+
+.VPNavBar {
+  background-color: rgba(10, 10, 11, 0.7) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 /* ===== 粒子背景容器样式 ===== */
@@ -52,6 +77,12 @@ html {
 
 .dark #particles-bg {
   opacity: 0.6;
+}
+
+/* 在自定义首页隐藏粒子背景 */
+.VPContent.is-home ~ #particles-bg,
+.modern-home ~ #particles-bg {
+  display: none !important;
 }
 
 /* ===== 深度美化：首页大标题发光与排版 ===== */

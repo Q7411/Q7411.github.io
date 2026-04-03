@@ -1,15 +1,15 @@
 <template>
-  <div id="particles-bg">
+  <div id="particles-bg" v-show="frontmatter.layout !== 'custom'">
     <canvas ref="canvas"></canvas>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useData } from 'vitepress'
 
 const canvas = ref(null)
-const { isDark } = useData()
+const { isDark, frontmatter } = useData()
 let ctx = null
 let particles = []
 let animationFrameId = null
