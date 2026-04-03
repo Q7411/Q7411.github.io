@@ -1,59 +1,288 @@
-/* 针对 CTF-Reverse 的赛博朋克 / 黑客极客风格主题配色 */
+/* 现代化博客与极客风格主题配色 */
 :root {
-  /* 青蓝色到明蓝色的主色调 */
-  --vp-c-brand-1: #00ffcc;
-  --vp-c-brand-2: #00ccff;
-  --vp-c-brand-3: #0099ff;
-  
-  /* 首页大字（名字）变为透明，利用背景作为渐变色 */
+  /* 基础主色调: 清新科技蓝到明青色 */
+  --vp-c-brand-1: #0ea5e9;
+  --vp-c-brand-2: #0284c7;
+  --vp-c-brand-3: #0369a1;
+  --vp-c-brand-soft: rgba(14, 165, 233, 0.16);
+
+  /* 字体设置 */
+  --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --vp-font-family-mono: 'Fira Code', 'JetBrains Mono', Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+
+  /* 首页大字（名字）渐变色 */
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #00ffcc 30%, #0099ff);
-  
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #38bdf8 30%, #3b82f6);
+
   /* 首页背景光晕效果 */
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, #00ffcc 50%, #0099ff 50%);
-  --vp-home-hero-image-filter: blur(70px);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #38bdf8 50%, #3b82f6 50%);
+  --vp-home-hero-image-filter: blur(75px);
 }
 
-/* 给暗黑模式下的主背景加深一点点，更适合黑客风格 */
+/* 深色模式特定颜色 */
 .dark {
-  --vp-c-bg: #09090b;       /* 极深的黑色背景 */
-  --vp-c-bg-alt: #111114;   /* 模块的深灰色背景 */
+  --vp-c-brand-1: #38bdf8;
+  --vp-c-brand-2: #0ea5e9;
+  --vp-c-brand-3: #0284c7;
+  --vp-c-brand-soft: rgba(56, 189, 248, 0.16);
+  
+  --vp-c-bg: #0f1115;       /* 更柔和的深色背景 */
+  --vp-c-bg-alt: #16181d;   /* 模块背景 */
+  
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #00ffcc 30%, #38bdf8);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #00ffcc 50%, #38bdf8 50%);
 }
 
-/* ===== 深度美化：首页大标题霓虹发光 ===== */
+/* ===== 深度美化：首页大标题发光 ===== */
 .dark .VPHero .name {
-  text-shadow: 0 0 25px rgba(0, 255, 204, 0.4);
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
 }
 
 /* ===== 深度美化：特性卡片 毛玻璃 + 悬浮发光效果 ===== */
+.VPFeature {
+  background: var(--vp-c-bg-alt) !important;
+  border: 1px solid var(--vp-c-divider);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.VPFeature:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 12px 30px -10px var(--vp-c-brand-soft);
+  transform: translateY(-6px);
+}
+
+/* 暗色模式下卡片更强的发光效果 */
 .dark .VPFeature {
-  background: rgba(20, 20, 25, 0.6) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 255, 204, 0.1);
-  transition: all 0.3s ease;
-  border-radius: 12px;
+  background: rgba(22, 24, 29, 0.6) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dark .VPFeature:hover {
-  border-color: rgba(0, 255, 204, 0.5);
-  box-shadow: 0 10px 30px -10px rgba(0, 255, 204, 0.3);
-  transform: translateY(-5px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 15px 35px -10px rgba(56, 189, 248, 0.2);
 }
 
 /* ===== 深度美化：代码块背景与边框 ===== */
+div[class*="language-"] {
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  transition: box-shadow 0.3s ease;
+}
+
+div[class*="language-"]:hover {
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.15);
+}
+
 .dark div[class*="language-"] {
-  background-color: #0d0d12 !important;
-  border: 1px solid rgba(0, 204, 255, 0.15);
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+  background-color: #0b0d10 !important;
+  border: 1px solid rgba(56, 189, 248, 0.1);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.dark div[class*="language-"]:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 8px 24px -8px rgba(56, 189, 248, 0.15);
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vp-c-divider);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vp-c-brand-1);
 }
 
 /* ===== 深度美化：按钮动效 ===== */
 .VPButton.brand {
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px 0 var(--vp-c-brand-soft);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 20px;
 }
+
 .VPButton.brand:hover {
-  box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
-  transform: scale(1.05);
+  box-shadow: 0 6px 20px var(--vp-c-brand-soft);
+  transform: translateY(-2px);
 }
+
+/* ===== 深度美化：文章排版优化 ===== */
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.vp-doc h2 {
+  border-bottom: 2px solid var(--vp-c-divider);
+  padding-bottom: 0.5rem;
+  margin-top: 3rem;
+}
+
+.vp-doc a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.vp-doc a:hover {
+  border-bottom-color: var(--vp-c-brand-1);
+}
+
+.vp-doc p, .vp-doc li {
+  line-height: 1.75;
+  color: var(--vp-c-text-1);
+}
+
+/* 引用块美化 */
+.vp-doc blockquote {
+  border-left-color: var(--vp-c-brand-1);
+  background: var(--vp-c-bg-soft);
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+  color: var(--vp-c-text-2);
+}
+
+/* 图片阴影和圆角 */
+.vp-doc img {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vp-doc img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.dark .vp-doc img {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 侧边栏和导航栏毛玻璃 */
+.VPNavBar, .VPSidebar {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dark .VPNavBar, .dark .VPSidebar {
+  background-color: rgba(15, 17, 21, 0.8) !important;
+}
+
+/* 页面过渡动画 */
+.VPContent {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 性能与动画升级：非图标类流畅动画 (附带移动端性能降级) ===== */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  /* 1. 视差滚动优化 - 配合 JS 使用，开启 GPU 加速避免重排 */
+  .VPHero .image-bg {
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+
+  /* 2. 卡片悬停放大与阴影扩散 (控制在300ms内，使用平滑贝塞尔曲线) */
+  .VPFeature {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease !important;
+    will-change: transform, box-shadow;
+  }
+  
+  .VPFeature:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 20px 40px -10px var(--vp-c-brand-soft) !important;
+  }
+  
+  .dark .VPFeature:hover {
+    box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.3) !important;
+  }
+
+  /* 3. 首页文字逐字淡入动画类 */
+  .char-fade-in {
+    opacity: 0;
+    display: inline-block;
+    animation: charFadeIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    will-change: opacity, transform;
+  }
+  
+  @keyframes charFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 4. 导航菜单下拉式展开过渡 (贝塞尔曲线提升流畅度) */
+  /* VitePress 导航下拉菜单组件类名为 .VPFlyout 和 .VPMenu */
+  .VPFlyout:hover .menu,
+  .VPMenu {
+    transform-origin: top center;
+    animation: menuSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+  }
+  
+  @keyframes menuSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px) scaleY(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+}
+
+/* 5. 移动端及偏好减少动画设备的性能降级：强制静态显示 */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .VPFeature {
+    transition: none !important;
+  }
+  
+  .VPFeature:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .char-fade-in {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .VPFlyout:hover .menu,
+  .VPMenu {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
