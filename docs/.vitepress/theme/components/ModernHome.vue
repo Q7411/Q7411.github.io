@@ -9,6 +9,9 @@ const heroRef = ref(null)
 const videoRef = ref(null)
 const contentRef = ref(null)
 const featuresRef = ref(null)
+const skillsRef = ref(null)
+const postsRef = ref(null)
+const ctaRef = ref(null)
 let ctx
 
 onMounted(() => {
@@ -62,6 +65,57 @@ onMounted(() => {
         }
       }
     )
+
+    // 技能标签入场动画
+    gsap.fromTo('.skill-tag',
+      { opacity: 0, scale: 0.8, y: 20 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.05,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: skillsRef.value,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    )
+
+    // 最新文章卡片入场动画
+    gsap.fromTo('.post-card',
+      { opacity: 0, x: -50 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: postsRef.value,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    )
+
+    // CTA 区域入场动画
+    gsap.fromTo('.cta-content',
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: ctaRef.value,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    )
   })
 })
 
@@ -84,6 +138,28 @@ const features = [
     title: 'Performance',
     desc: 'Lighthouse 95+ 评分，CLS <0.05，FID <50ms，性能优化无处不在。',
     icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`
+  }
+]
+
+const skills = [
+  '逆向工程 (Reverse)', '二进制安全 (Pwn)', 'Web 安全渗透', '密码学 (Crypto)',
+  '汇编语言 (Assembly)', 'Python', 'C / C++', 'Vue 3 & Vite', 'GSAP 动效', 'UI/UX 设计'
+]
+
+const recentPosts = [
+  {
+    title: 'BASE64 加密原理与逆向',
+    excerpt: '计算机以 8 位（bit）为一个字节，而 Base64 以 6 位为一个单元，探索其变表、魔改运算及爆破细节...',
+    date: '2024-04-02',
+    link: '/CTF-Reverse/BASE64',
+    category: 'CTF-Reverse'
+  },
+  {
+    title: '我的第一篇博客文章',
+    excerpt: '记录技术成长，分享开发经验与安全研究的心得体会...',
+    date: '2024-04-01',
+    link: '/posts/first-post',
+    category: '随笔'
   }
 ]
 </script>
@@ -136,6 +212,50 @@ const features = [
           <h3 class="feature-title">{{ feat.title }}</h3>
           <p class="feature-desc">{{ feat.desc }}</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section ref="skillsRef" class="skills-section">
+      <h2 class="section-title">Core Skills</h2>
+      <div class="skills-container">
+        <span 
+          v-for="(skill, index) in skills" 
+          :key="index"
+          class="skill-tag gpu-accel"
+        >
+          {{ skill }}
+        </span>
+      </div>
+    </section>
+
+    <!-- Recent Posts Section -->
+    <section ref="postsRef" class="posts-section">
+      <h2 class="section-title">Recent Discoveries</h2>
+      <div class="posts-grid">
+        <a 
+          v-for="(post, index) in recentPosts" 
+          :key="index" 
+          :href="post.link" 
+          class="post-card glass-card gpu-accel"
+        >
+          <div class="post-meta">
+            <span class="post-category">{{ post.category }}</span>
+            <span class="post-date">{{ post.date }}</span>
+          </div>
+          <h3 class="post-title">{{ post.title }}</h3>
+          <p class="post-excerpt">{{ post.excerpt }}</p>
+          <div class="post-read-more">阅读全文 ➔</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section ref="ctaRef" class="cta-section">
+      <div class="cta-content glass-card gpu-accel">
+        <h2 class="cta-title">准备好探索二进制的奥秘了吗？</h2>
+        <p class="cta-desc">跟随我一起深入 CTF 与逆向工程的世界，掌握底层安全技术。</p>
+        <a href="/CTF-Reverse/BASE64" class="btn btn-primary cta-btn">开启极客之旅</a>
       </div>
     </section>
   </div>
@@ -322,6 +442,162 @@ const features = [
   font-size: 1.05rem;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.6);
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 60px;
+  color: #fff;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 50%, rgba(255,255,255,0.4));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Skills Section */
+.skills-section {
+  padding: 80px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.skill-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.skill-tag:hover {
+  background: var(--vp-c-brand-1);
+  color: #0A0A0B;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Recent Posts Section */
+.posts-section {
+  padding: 80px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+}
+
+.post-card {
+  display: block;
+  text-decoration: none;
+  padding: 40px 32px;
+  border-radius: 20px;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  background: rgba(18, 18, 20, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.post-card:hover {
+  transform: translateY(-8px) !important;
+  border-color: rgba(212, 175, 55, 0.3) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.post-category {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+.post-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.post-card:hover .post-title {
+  color: var(--vp-c-brand-1);
+}
+
+.post-excerpt {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.post-read-more {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 100px 24px 160px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cta-content {
+  text-align: center;
+  padding: 80px 40px;
+  border-radius: 32px;
+  background: linear-gradient(145deg, rgba(20, 20, 22, 0.8), rgba(10, 10, 11, 0.9)) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 80px rgba(212, 175, 55, 0.1) inset !important;
+}
+
+.cta-title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.cta-desc {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-btn {
+  font-size: 1.2rem;
+  padding: 18px 48px;
 }
 
 /* Responsive */
