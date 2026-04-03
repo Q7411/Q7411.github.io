@@ -265,6 +265,33 @@ div[class*="language-"]:hover {
 }
 
 /* 5. 移动端及偏好减少动画设备的性能降级：强制静态显示 */
+@media (max-width: 767px) {
+  /* 优化移动端的文字和排版间距 */
+  .vp-doc h1 {
+    font-size: 1.75rem;
+    margin-top: 1.5rem;
+  }
+  
+  .vp-doc h2 {
+    font-size: 1.4rem;
+    margin-top: 2rem;
+  }
+  
+  .vp-doc p, .vp-doc li {
+    font-size: 0.95rem;
+  }
+  
+  /* 调整卡片和图片的内边距及阴影 */
+  .VPFeature {
+    padding: 1.5rem !important;
+  }
+  
+  .vp-doc img {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
   .VPFeature {
     transition: none !important;
