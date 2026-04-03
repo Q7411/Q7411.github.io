@@ -2,22 +2,22 @@
 layout: home
 
 hero:
-  name: "我的博客"
-  text: "记录生活与技术的点点滴滴"
-  tagline: "极简、快速的静态博客系统"
+  name: "Q7411's Space"
+  text: "探索二进制的奥秘"
+  tagline: "专注于 CTF 逆向工程、安全研究与技术分享"
   actions:
     - theme: brand
-      text: 阅读文章
+      text: 开始阅读 🚀
       link: /posts/first-post
     - theme: alt
-      text: 了解更多
+      text: 关于我 🙋‍♂️
       link: /about
 
 features:
-  - title: 极速访问
-    details: 基于 VitePress 和 Vue 3，提供极致的页面加载速度和流畅的阅读体验。
-  - title: Markdown 写作
-    details: 支持全功能的 Markdown 语法，并且可以内嵌 Vue 组件，让内容创作更自由。
-  - title: 自动部署
-    details: 通过 GitHub Actions 实现每次推送代码后自动部署到 GitHub Pages。
+  - title: ⚡️ 极速体验
+    details: 基于 VitePress 构建，页面秒级加载，提供极致的阅读体验。
+  - title: 🛡️ 安全技术
+    details: 记录 CTF 比赛经验、逆向工程 (Reverse) 技巧与二进制分析。
+  - title: 🔍 全文搜索
+    details: 内置本地全文搜索功能，快速定位你想查阅的技术知识点。
 ---

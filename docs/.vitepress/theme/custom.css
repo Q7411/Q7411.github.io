@@ -1,0 +1,20 @@
+/* 针对 CTF-Reverse 的赛博朋克 / 黑客极客风格主题配色 */
+:root {
+  /* 青蓝色到明蓝色的主色调 */
+  --vp-c-brand-1: #00ffcc;
+  --vp-c-brand-2: #00ccff;
+  --vp-c-brand-3: #0099ff;
+  
+  /* 首页大字（名字）变为透明，利用背景作为渐变色 */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #00ffcc 30%, #0099ff);
+  
+  /* 首页背景光晕效果 */
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #00ffcc 50%, #0099ff 50%);
+  --vp-home-hero-image-filter: blur(55px);
+}
+
+/* 给暗黑模式下的主背景加深一点点，更适合黑客风格 */
+.dark {
+  --vp-c-bg: #161618;
+}
