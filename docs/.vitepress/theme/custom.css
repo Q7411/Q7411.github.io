@@ -35,6 +35,10 @@ html {
   max-width: 100% !important;
 }
 
+.VPHome {
+  margin-bottom: 0 !important;
+}
+
 /* 高性能渲染 */
 .gpu-accel {
   will-change: transform, opacity;
