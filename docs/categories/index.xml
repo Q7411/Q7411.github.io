@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>分类 on Q7411 CTF blog</title>
+    <link>https://q7411.github.io/categories/</link>
+    <description>Recent content in 分类 on Q7411 CTF blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 11 Jun 2026 20:19:28 +0800</lastBuildDate>
+    <atom:link href="https://q7411.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>攻防世界WP/简单</title>
+      <link>https://q7411.github.io/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/</link>
+      <pubDate>Thu, 11 Jun 2026 20:19:28 +0800</pubDate>
+      <guid>https://q7411.github.io/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
