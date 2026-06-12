@@ -1,1 +1,4 @@
 User-agent: *
+Allow: /
+
+Sitemap: https://q7411.github.io/sitemap.xml
