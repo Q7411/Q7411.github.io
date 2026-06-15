@@ -68,13 +68,13 @@
   --code-text: #0f172a;
   --code-border: #e2e8f0;
   --code-comment: #64748b;
-  --code-keyword: #cf222e;
-  --code-string: #0a7a37;
-  --code-function: #8250df;
-  --code-number: #0550ae;
-  --code-operator: #57606a;
-  --code-type: #d97706;
-  --code-variable: #0550ae;
+  --code-keyword: #d97706;
+  --code-string: #059669;
+  --code-function: #2563eb;
+  --code-number: #2563eb;
+  --code-operator: var(--code-text);
+  --code-type: var(--code-text);
+  --code-variable: var(--code-text);
 }
 
 [data-theme="dark"] {
@@ -106,13 +106,13 @@
   --code-text: #f1f5f9;
   --code-border: #334155;
   --code-comment: #64748b;
-  --code-keyword: #ff7b72;
-  --code-string: #a5d6ff;
-  --code-function: #d2a8ff;
-  --code-number: #79c0ff;
-  --code-operator: #94a3b8;
-  --code-type: #ffa657;
-  --code-variable: #79c0ff;
+  --code-keyword: #f59e0b;
+  --code-string: #6ee7b7;
+  --code-function: #60a5fa;
+  --code-number: #60a5fa;
+  --code-operator: var(--code-text);
+  --code-type: var(--code-text);
+  --code-variable: var(--code-text);
 }
 
 /* Floating Action Buttons */
@@ -1929,6 +1929,7 @@ a:hover {
 }
 .post-content pre code .token.selector,
 .post-content pre code .token.attr-name,
+.post-content pre code .token.attr-value,
 .post-content pre code .token.string,
 .post-content pre code .token.char,
 .post-content pre code .token.inserted {
@@ -1941,23 +1942,22 @@ a:hover {
   color: var(--code-string);
 }
 .post-content pre code .token.atrule,
-.post-content pre code .token.attr-value,
 .post-content pre code .token.keyword {
   color: var(--code-keyword);
-  font-weight: bold;
+  font-weight: 500;
 }
 .post-content pre code .token.type,
 .post-content pre code .token.typedef,
 .post-content pre code .token.data-type,
 .post-content pre code .token.calling-convention {
   color: var(--code-type);
-  font-weight: 600;
+  font-weight: 500;
 }
 .post-content pre code .token.function,
 .post-content pre code .token.builtin,
 .post-content pre code .token.class-name {
   color: var(--code-function);
-  font-weight: bold;
+  font-weight: 500;
 }
 .post-content pre code .token.regex,
 .post-content pre code .token.important,
@@ -1976,6 +1976,23 @@ a:hover {
 .post-content pre code .token.semantic-token.type,
 .post-content pre code .token.semantic-token.calling-convention {
   color: var(--code-type);
+}
+
+.post-content pre code .token.semantic-token.asm-keyword {
+  color: var(--code-keyword);
+  font-weight: 500;
+}
+
+.post-content pre code .token.semantic-token.asm-number {
+  color: var(--code-number);
+}
+
+.post-content pre code .token.semantic-token.asm-string {
+  color: var(--code-string);
+}
+
+.post-content pre code .token.semantic-token.asm-comment {
+  color: var(--code-comment);
 }
 
 .post-content pre code .c,
@@ -1999,13 +2016,13 @@ a:hover {
 
 .post-content pre code .kt {
   color: var(--code-type);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .post-content pre code .nf,
 .post-content pre code .fm {
   color: var(--code-function);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .post-content pre code .n,
@@ -4006,8 +4023,7 @@ details[open] summary {
 }
 
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.keyword,
-.post-layout.three-column:not(.page-layout) .post-content pre code .token.atrule,
-.post-layout.three-column:not(.page-layout) .post-content pre code .token.attr-value {
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.atrule {
   color: var(--code-keyword);
   font-weight: 500;
 }
@@ -4017,10 +4033,11 @@ details[open] summary {
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.data-type,
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.calling-convention {
   color: var(--code-type);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.string,
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.attr-value,
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.char,
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.inserted {
   color: var(--code-string);
