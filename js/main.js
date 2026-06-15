@@ -602,9 +602,43 @@ function looksLikeIdaPseudocode(text) {
   return score >= 3;
 }
 
+function looksLikeAssembly(text) {
+  const source = text || '';
+  if (!source.trim()) return false;
+
+  const lines = source.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  if (!lines.length) return false;
+
+  const mnemonicPattern = /\b(?:aaa|aad|aam|aas|adc|add|align|and|call|cbw|cdq|clc|cld|cli|cmc|cmp|cmps?|cmpsb|cmpsd|cmpsw|cwd|daa|das|db|dd|dec|div|dq|dt|dw|endp|enter|equ|hlt|idiv|imul|in|inc|int|into|iret|ja|jae|jb|jbe|jc|jcxz|je|jecxz|jg|jge|jl|jle|jmp|jna|jnae|jnb|jnbe|jnc|jne|jng|jnge|jnl|jnle|jno|jnp|jns|jnz|jo|jp|jpe|jpo|js|jz|lahf|lea|leave|lods?|lodsb|lodsd|lodsw|loop|loope|loopne|loopnz|loopz|mov|movs?|movsb|movsd|movsw|movsx|movzx|mul|neg|nop|not|or|out|pop|popa|popad|popf|popfd|proc|push|pusha|pushad|pushf|pushfd|rcl|rcr|resb|resd|resq|resw|ret|retn|retf|rol|ror|sahf|sal|sar|sbb|scas?|scasb|scasd|scasw|section|segment|set[a-z]+|shl|shld|shr|shrd|stos?|stosb|stosd|stosw|sub|test|times|xadd|xchg|xlat|xor)\b/i;
+  const asmLinePattern = /^\s*(?:[.$A-Za-z_][\w.$]*:)?(?:[0-9A-Fa-f]{6,16}\s+)?[A-Za-z][A-Za-z0-9.]*\b/;
+  const addressLinePattern = /^\s*(?:[.$A-Za-z_][\w.$]*:)?[0-9A-Fa-f]{6,16}\s+/;
+  const hasAddressLine = lines.some(line => addressLinePattern.test(line));
+
+  if (!hasAddressLine && /[{};]/.test(source) && /\b(?:return|sizeof|printf|scanf|for|while|if|else)\b/.test(source)) {
+    return false;
+  }
+
+  const asmLines = lines.filter(line => mnemonicPattern.test(line) && asmLinePattern.test(line)).length;
+  if (asmLines === 0) return false;
+
+  let score = asmLines;
+  if (hasAddressLine) score += 2;
+  if (/\b(?:e?[abcd]x|e?[sd]i|e?[sb]p|r(?:[0-9]+|[abcd]x|[sd]i|[sb]p)|[abcd][lh])\b/i.test(source)) score += 1;
+  if (/\b(?:byte|word|dword|qword|xmmword|ymmword)\s+ptr\b/i.test(source)) score += 1;
+  if (/\[[^\]\n]+\]/.test(source)) score += 1;
+  if (/^\s*(?:def|from|import|class)\s+/m.test(source) && !addressLinePattern.test(source)) score -= 2;
+
+  return score >= 3;
+}
+
 function normalizeCodeLanguage(code, language) {
   const text = code.textContent || '';
   const normalizedLanguage = language === 'py' ? 'python' : language;
+
+  if (looksLikeAssembly(text)) {
+    setCodeLanguage(code, 'nasm');
+    return 'nasm';
+  }
 
   if (looksLikeIdaPseudocode(text)) {
     setCodeLanguage(code, 'c');
@@ -618,6 +652,10 @@ function normalizeCodeLanguage(code, language) {
   return normalizedLanguage;
 }
 
+function isAssemblyLanguage(language) {
+  return ['asm', 'assembly', 'nasm', 'x86asm', 'x86-asm'].includes(language);
+}
+
 function initSemanticCodeHighlight() {
   const codeBlocks = document.querySelectorAll('.post-content pre code, .page-content pre code');
   codeBlocks.forEach(code => {
@@ -625,11 +663,72 @@ function initSemanticCodeHighlight() {
     if (code.classList.contains('language-mermaid')) return;
 
     const language = getCodeLanguage(code);
+    if (isAssemblyLanguage(language)) {
+      highlightAssemblyCode(code);
+      code.dataset.semanticHighlight = 'done';
+      return;
+    }
+
     if (!['c', 'cpp', 'c++', 'python', 'py', 'javascript', 'js', 'typescript', 'ts'].includes(language)) return;
 
     highlightCodeIdentifiers(code, language);
     code.dataset.semanticHighlight = 'done';
   });
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+
+function highlightAssemblyCode(code) {
+  const source = code.textContent || '';
+  if (!source.trim()) return;
+
+  const opcodePattern = /\b(?:aaa|aad|aam|aas|adc|add|align|and|call|cbw|cdq|clc|cld|cli|cmc|cmp|cmps?|cmpsb|cmpsd|cmpsw|cwd|daa|das|db|dd|dec|div|dq|dt|dw|endp|enter|equ|hlt|idiv|imul|in|inc|int|into|iret|ja|jae|jb|jbe|jc|jcxz|je|jecxz|jg|jge|jl|jle|jmp|jna|jnae|jnb|jnbe|jnc|jne|jng|jnge|jnl|jnle|jno|jnp|jns|jnz|jo|jp|jpe|jpo|js|jz|lahf|lea|leave|lods?|lodsb|lodsd|lodsw|loop|loope|loopne|loopnz|loopz|mov|movs?|movsb|movsd|movsw|movsx|movzx|mul|neg|nop|not|or|out|pop|popa|popad|popf|popfd|proc|push|pusha|pushad|pushf|pushfd|rcl|rcr|resb|resd|resq|resw|ret|retn|retf|rol|ror|sahf|sal|sar|sbb|scas?|scasb|scasd|scasw|section|segment|set[a-z]+|shl|shld|shr|shrd|stos?|stosb|stosd|stosw|sub|test|times|xadd|xchg|xlat|xor)\b/gi;
+  const numberPattern = /\b(?:0x[0-9A-Fa-f]+|[0-9A-Fa-f]{4,16}h|[0-9A-Fa-f]{6,16}|[0-9]+)\b/g;
+  const stringPattern = /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g;
+  const tokenPattern = new RegExp(`${stringPattern.source}|${numberPattern.source}|${opcodePattern.source}`, 'gi');
+
+  code.innerHTML = source.split(/(\r?\n)/).map(part => {
+    if (/^\r?\n$/.test(part)) return part;
+
+    const commentStart = part.indexOf(';');
+    const codePart = commentStart >= 0 ? part.slice(0, commentStart) : part;
+    const commentPart = commentStart >= 0 ? part.slice(commentStart) : '';
+
+    let cursor = 0;
+    let html = '';
+    codePart.replace(tokenPattern, (...args) => {
+      const match = args[0];
+      const offset = args[args.length - 2];
+      html += escapeHtml(codePart.slice(cursor, offset));
+
+      let tokenClass = '';
+      if (/^["']/.test(match)) {
+        tokenClass = 'asm-string';
+      } else if (/^(?:0x[0-9A-Fa-f]+|[0-9A-Fa-f]{4,16}h|[0-9A-Fa-f]{6,16}|[0-9]+)$/i.test(match)) {
+        tokenClass = 'asm-number';
+      } else {
+        tokenClass = 'asm-keyword';
+      }
+
+      html += `<span class="token semantic-token ${tokenClass}">${escapeHtml(match)}</span>`;
+      cursor = offset + match.length;
+      return match;
+    });
+
+    html += escapeHtml(codePart.slice(cursor));
+    if (commentPart) {
+      html += `<span class="token semantic-token asm-comment">${escapeHtml(commentPart)}</span>`;
+    }
+    return html;
+  }).join('');
 }
 
 function highlightCodeIdentifiers(code, language) {
