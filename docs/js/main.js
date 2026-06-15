@@ -440,20 +440,56 @@ function loadGiscus() {
   
   if (commentsContainer && giscusContainer) {
     giscusContainer.innerHTML = ''; // clear previous
-    const script = document.createElement('script');
-    script.src = "https://giscus.app/client.js";
+    giscusContainer.classList.remove('is-loaded', 'is-error');
+
+    const status = document.createElement('p');
+    status.className = 'giscus-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = commentsContainer.dataset.mapping === 'pathname'
+      ? '留言板加载中...'
+      : '评论区加载中...';
+    giscusContainer.appendChild(status);
+
+    const showGiscusError = message => {
+      giscusContainer.classList.add('is-error');
+      status.className = 'giscus-status is-error';
+      status.textContent = message;
+    };
     
     const gConfig = (window.SiteConfig && window.SiteConfig.giscus) ? window.SiteConfig.giscus : null;
     if (!gConfig || !gConfig.repo || !gConfig.repoId || !gConfig.category || !gConfig.categoryId) {
+      showGiscusError('评论配置缺失，请检查站点配置。');
       return;
     }
     if (gConfig.enabled === false) {
-      const notice = document.createElement('p');
-      notice.className = 'giscus-local-notice';
-      notice.textContent = '本地预览不加载评论，发布后自动启用。';
-      giscusContainer.appendChild(notice);
+      status.className = 'giscus-status giscus-local-notice';
+      status.textContent = '本地预览不加载评论，发布后自动启用。';
       return;
     }
+
+    const observer = new MutationObserver(() => {
+      if (!giscusContainer.querySelector('iframe.giscus-frame')) return;
+      window.clearTimeout(timeout);
+      giscusContainer.classList.add('is-loaded');
+      status.remove();
+      observer.disconnect();
+    });
+    observer.observe(giscusContainer, { childList: true, subtree: true });
+
+    const timeout = window.setTimeout(() => {
+      if (giscusContainer.querySelector('iframe.giscus-frame')) return;
+      observer.disconnect();
+      showGiscusError('评论区加载较慢，请刷新页面或稍后再试。');
+    }, 12000);
+
+    const script = document.createElement('script');
+    script.src = "https://giscus.app/client.js";
+    script.onerror = () => {
+      window.clearTimeout(timeout);
+      observer.disconnect();
+      showGiscusError('评论区加载失败，请检查网络后刷新页面。');
+    };
 
     script.setAttribute("data-repo", gConfig.repo);
     script.setAttribute("data-repo-id", gConfig.repoId); 
