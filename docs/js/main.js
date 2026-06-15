@@ -141,6 +141,7 @@ function initPage() {
   if (window.Prism) {
     Prism.highlightAll();
   }
+  initSemanticCodeHighlight();
 
   // Load Giscus Comments
   loadGiscus();
@@ -566,6 +567,195 @@ function shouldWrapCodeText(text, language = '') {
   return codeSignals <= Math.max(1, Math.floor(lines.length / 2));
 }
 
+function getCodeLanguage(code) {
+  const className = code.className || '';
+  const languageMatch = className.match(/language-([\w-]+)/);
+  return languageMatch ? languageMatch[1].toLowerCase() : '';
+}
+
+function setCodeLanguage(code, language) {
+  if (!code || !language) return;
+
+  Array.from(code.classList).forEach(className => {
+    if (className.startsWith('language-')) {
+      code.classList.remove(className);
+    }
+  });
+
+  code.classList.add(`language-${language}`);
+  code.dataset.lang = language;
+  code.setAttribute('data-lang', language);
+}
+
+function looksLikeIdaPseudocode(text) {
+  const source = text || '';
+  if (!source.trim()) return false;
+
+  let score = 0;
+  if (/\b__(?:int\d+|fastcall|cdecl|stdcall|thiscall|usercall)\b|\b_(?:BYTE|WORD|DWORD|QWORD|BOOL)\b|BYREF/.test(source)) score += 2;
+  if (/\bsub_[0-9A-Fa-f]+|qmemcpy|__isoc99_scanf|std::|::/.test(source)) score += 1;
+  if (/\b(?:int|void|char|bool|BOOL|size_t|unsigned|signed|const|struct)\b[^{;\n]*\([^)]*\)\s*\{/.test(source)) score += 2;
+  if (/[{};]/.test(source) && /\b(?:if|for|while|return|else|switch)\b/.test(source)) score += 1;
+  if (/\*+\s*\(?\s*(?:_BYTE|_DWORD|_QWORD|char|int|void)|\[[re]?[bs]p[+-]/i.test(source)) score += 1;
+  if (/^\s*(?:def|from|import|class)\s+/m.test(source) && !/[{};]/.test(source)) score -= 2;
+
+  return score >= 3;
+}
+
+function normalizeCodeLanguage(code, language) {
+  const text = code.textContent || '';
+  const normalizedLanguage = language === 'py' ? 'python' : language;
+
+  if (looksLikeIdaPseudocode(text)) {
+    setCodeLanguage(code, 'c');
+    return 'c';
+  }
+
+  if (normalizedLanguage && normalizedLanguage !== language) {
+    setCodeLanguage(code, normalizedLanguage);
+  }
+
+  return normalizedLanguage;
+}
+
+function initSemanticCodeHighlight() {
+  const codeBlocks = document.querySelectorAll('.post-content pre code, .page-content pre code');
+  codeBlocks.forEach(code => {
+    if (code.dataset.semanticHighlight === 'done') return;
+    if (code.classList.contains('language-mermaid')) return;
+
+    const language = getCodeLanguage(code);
+    if (!['c', 'cpp', 'c++', 'python', 'py', 'javascript', 'js', 'typescript', 'ts'].includes(language)) return;
+
+    highlightCodeIdentifiers(code, language);
+    code.dataset.semanticHighlight = 'done';
+  });
+}
+
+function highlightCodeIdentifiers(code, language) {
+  const reservedWords = new Set([
+    'if', 'else', 'for', 'while', 'do', 'switch', 'case', 'default', 'break', 'continue', 'return',
+    'goto', 'sizeof', 'typedef', 'struct', 'union', 'enum', 'class', 'public', 'private', 'protected',
+    'new', 'delete', 'try', 'catch', 'throw', 'this', 'true', 'false', 'null', 'NULL', 'nullptr',
+    'def', 'import', 'from', 'as', 'with', 'pass', 'yield', 'lambda', 'global', 'nonlocal', 'and',
+    'or', 'not', 'in', 'is', 'None', 'True', 'False', 'const', 'let', 'var', 'function'
+  ]);
+  const typeWords = new Set([
+    'void', 'char', 'short', 'int', 'long', 'float', 'double', 'signed', 'unsigned', 'bool', 'BOOL',
+    'BYTE', 'WORD', 'DWORD', 'QWORD', '_BYTE', '_WORD', '_DWORD', '_QWORD', '__int8', '__int16',
+    '__int32', '__int64', 'size_t', 'ssize_t', 'uint8_t', 'uint16_t', 'uint32_t', 'uint64_t',
+    'int8_t', 'int16_t', 'int32_t', 'int64_t', 'wchar_t', 'FILE', 'HWND', 'HANDLE', 'LPVOID'
+  ]);
+  const callingConventions = new Set([
+    '__fastcall', '__cdecl', '__stdcall', '__thiscall', '__usercall', '__noreturn', '__spoils'
+  ]);
+  const functionPrefixes = /^(?:sub|loc|off|byte|word|dword|qword|unk|j|j_|main|check|judge|encrypt|decrypt|calc|printf|puts|strlen|scanf|sprintf|qmemcpy|memcpy|strcmp|strncmp|malloc|free|print|range|len|bytes|enumerate)$/i;
+  const identifierPattern = /\b[A-Za-z_][A-Za-z0-9_]*\b/g;
+  const cLike = ['c', 'cpp', 'c++'].includes(language);
+
+  code.querySelectorAll('.token.keyword, .token.builtin, .token.constant').forEach(token => {
+    const value = token.textContent.trim();
+    if (typeWords.has(value)) {
+      token.classList.add('type');
+    }
+    if (callingConventions.has(value)) {
+      token.classList.add('calling-convention');
+    }
+  });
+
+  const walker = document.createTreeWalker(
+    code,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        if (!node.nodeValue || !identifierPattern.test(node.nodeValue)) {
+          identifierPattern.lastIndex = 0;
+          return NodeFilter.FILTER_REJECT;
+        }
+        identifierPattern.lastIndex = 0;
+
+        let parent = node.parentElement;
+        while (parent && parent !== code) {
+          if (parent.classList.contains('semantic-token')) return NodeFilter.FILTER_REJECT;
+          if (parent.classList.contains('token')) {
+            const ignoredToken = ['comment', 'string', 'char', 'number', 'function', 'keyword', 'builtin', 'class-name', 'operator', 'punctuation'];
+            if (ignoredToken.some(token => parent.classList.contains(token))) {
+              return NodeFilter.FILTER_REJECT;
+            }
+          }
+          if (/(^|\s)(c|c1|cm|cp|cpf|s|s1|s2|sa|sb|sc|sd|se|sh|si|sx|mi|mf|mh|mo)(\s|$)/.test(parent.className || '')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          parent = parent.parentElement;
+        }
+
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    }
+  );
+
+  const textNodes = [];
+  while (walker.nextNode()) {
+    textNodes.push(walker.currentNode);
+  }
+
+  textNodes.forEach(node => {
+    const text = node.nodeValue;
+    const fragment = document.createDocumentFragment();
+    let cursor = 0;
+    text.replace(identifierPattern, (word, offset) => {
+      if (offset > cursor) {
+        fragment.appendChild(document.createTextNode(text.slice(cursor, offset)));
+      }
+
+      const tokenClass = getSemanticTokenClass(word, text.slice(offset + word.length), {
+        cLike,
+        reservedWords,
+        typeWords,
+        callingConventions,
+        functionPrefixes
+      });
+
+      if (tokenClass) {
+        const span = document.createElement('span');
+        span.className = `token semantic-token ${tokenClass}`;
+        span.textContent = word;
+        fragment.appendChild(span);
+      } else {
+        fragment.appendChild(document.createTextNode(word));
+      }
+
+      cursor = offset + word.length;
+      return word;
+    });
+
+    if (cursor < text.length) {
+      fragment.appendChild(document.createTextNode(text.slice(cursor)));
+    }
+
+    node.parentNode.replaceChild(fragment, node);
+  });
+}
+
+function getSemanticTokenClass(word, followingText, context) {
+  const { cLike, reservedWords, typeWords, callingConventions, functionPrefixes } = context;
+
+  if (callingConventions.has(word)) return 'calling-convention';
+  if (typeWords.has(word)) return 'type';
+  if (reservedWords.has(word)) return 'keyword';
+  if (/^\s*\(/.test(followingText) && !['if', 'for', 'while', 'switch', 'return', 'sizeof'].includes(word)) {
+    return 'function';
+  }
+  if (cLike && functionPrefixes.test(word) && /^\s*(?:\(|;|,|\[|$)/.test(followingText)) {
+    return 'function';
+  }
+  if (/^(?:v\d+|a\d+|i|j|k|argc|argv|envp|result|flag|target|buffer|Buffer|Str|Src|Size|Block|this|ptr|count|key)$/i.test(word)) {
+    return 'variable';
+  }
+
+  return '';
+}
+
 async function copyTextToClipboard(text) {
   if (navigator.clipboard && window.isSecureContext) {
     try {
@@ -732,7 +922,8 @@ function initRichMarkdownBlocks() {
     if (!code) return;
     const className = code.className || '';
     const languageMatch = className.match(/language-([\w-]+)/);
-    const language = languageMatch ? languageMatch[1].toLowerCase() : '';
+    let language = languageMatch ? languageMatch[1].toLowerCase() : '';
+    language = normalizeCodeLanguage(code, language);
 
     const isTerminalBlock = code.classList.contains('language-terminal')
       || code.classList.contains('language-console')
