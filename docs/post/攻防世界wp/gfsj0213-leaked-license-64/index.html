@@ -16,7 +16,7 @@ IDA打开发现只有一个导出函数就是 verify 其他也没有名字一眼
 bool __cdecl verify( void *a1, int a2, int a3, int a4, int a5, unsigned int a6, void *a7, int a8, int a9, int a10, int a11, unsigned int a12) { int v12; // eax bool v13; // zf int v14; // eax char *v15; // ecx int v16; // eax char *v17; // ecx int v18; // ecx bool v19; // bl char *v20; // ecx int v21; // eax int v22; // eax void *v23; // eax void *v25; // [esp-30h] [ebp-1F0h] int v26; // [esp-2Ch] [ebp-1ECh] int v27; // [esp-28h] [ebp-1E8h] int v28; // [esp-24h] [ebp-1E4h] void *v29; // [esp-18h] [ebp-1D8h] void *v30; // [esp-18h] [ebp-1D8h] int v31; // [esp-14h] [ebp-1D4h] int v32; // [esp-14h] [ebp-1D4h] int v33; // [esp-10h] [ebp-1D0h] int v34; // [esp-10h] [ebp-1D0h] int v35; // [esp-Ch] [ebp-1CCh] int v36; // [esp-Ch] [ebp-1CCh] int v37; // [esp-Ch] [ebp-1CCh] int v38; // [esp-8h] [ebp-1C8h] int v39; // [esp-8h] [ebp-1C8h] int v40; // [esp-4h] [ebp-1C4h] int v41; // [esp-4h] [ebp-1C4h] int v42; // [esp-4h] [ebp-1C4h] _DWORD v44[4]; // [esp&#43;8h] [ebp-1B8h] BYREF _BYTE v45[96]; // [esp&#43;18h] [ebp-1A8h] BYREF void **v46; // [esp&#43;78h] [ebp-148h] BYREF _DWORD v47[19]; // [esp&#43;128h] [ebp-98h] BYREF void *v48[5]; // [esp&#43;174h] [ebp-4Ch] BYREF unsigned int v49; // [esp&#43;188h] [ebp-38h] void *Block[5]; // [esp&#43;18Ch] [ebp-34h] BYREF unsigned int v51; // [esp&#43;1A0h] [ebp-20h] void *v52; // [esp&#43;1A4h] [ebp-1Ch] unsigned int v53; // [esp&#43;1B8h] [ebp-8h] v12 = sub_10008DC0(); sub_10009020(v12); sub_10003930(v40); v13 = sub_10004FB0(v35, v38, v41) == 0; v14 = *(_DWORD *)(v44[0] &#43; 4); if ( v13 ) { v15 = (char *)v44 &#43; v14; v16 = *(_DWORD *)((char *)&amp;v44[3] &#43; v14) | 2; if ( !*((_DWORD *)v15 &#43; 14) ) v16 = *((_DWORD *)v15 &#43; 3) | 6; } else { v17 = (char *)v44 &#43; v14; v16 = 0; if ( !*((_DWORD *)v17 &#43; 14) ) v16 = 4; } sub_10001B00(v16, 0); v18 = v44[0]; if ( (*((_BYTE *)&amp;v44[3] &#43; *(_DWORD *)(v44[0] &#43; 4)) &amp; 6) != 0 ) { v19 = 0; } else { sub_10003130(v39, v42); sub_10002EB0(v45); sub_10003260(v48); sub_10002390(v48); if ( !sub_10005070(v45) ) { v20 = (char *)v44 &#43; *(_DWORD *)(v44[0] &#43; 4); v21 = *((_DWORD *)v20 &#43; 3) | 2; if ( !*((_DWORD *)v20 &#43; 14) ) v21 = *((_DWORD *)v20 &#43; 3) | 6; sub_10001B00(v21, 0); } LOBYTE(v29) = 0; sub_10004970((int)v48, 0, 0xFFFFFFFF); v22 = sub_1000A7E0(v29, v31, v33, v36, 0, 15); v23 = (void *)sub_10001DA0(Block, v22); sub_100027A0(&amp;dword_100325B0, v23); if ( v51 &gt;= 0x10 ) j__free(Block[0]); v51 = 15; Block[4] = nullptr; LOBYTE(Block[0]) = 0; if ( v53 &gt;= 0x10 ) j__free(v52); LOBYTE(v30) = 0; sub_10004970((int)&amp;a7, 0, 0xFFFFFFFF); LOBYTE(v25) = 0; sub_10004970((int)&amp;a1, 0, 0xFFFFFFFF); v19 = (unsigned __int8)sub_10002000(v25, v26, v27, v28, 0, 15, v30, v32, v34, v37, 0, 15) != 0; if ( v49 &gt;= 0x10 ) j__free(v48[0]); v49 = 15; v48[4] = nullptr; LOBYTE(v48[0]) = 0; sub_100031E0(v47); v47[0] = &amp;std::ios_base::`vftable&#39;; std::ios_base::_Ios_base_dtor((struct std::ios_base *)v47); v18 = v44[0]; } *(_DWORD *)((char *)v44 &#43; *(_DWORD *)(v18 &#43; 4)) = &amp;std::ifstream::`vftable&#39;; *(_DWORD *)((char *)&amp;v44[-1] &#43; *(_DWORD *)(v44[0] &#43; 4)) = *(_DWORD *)(v44[0] &#43; 4) - 112; sub_10003AE0(v45); *(_DWORD *)((char *)v44 &#43; *(_DWORD *)(v44[0] &#43; 4)) = &amp;std::istream::`vftable&#39;; *(_DWORD *)((char *)&amp;v44[-1] &#43; *(_DWORD *)(v44[0] &#43; 4)) = *(_DWORD *)(v44[0] &#43; 4) - 24; v46 = &amp;std::ios_base::`vftable&#39;; std::ios_base::_Ios_base_dtor((struct std::ios_base *)&amp;v46); if ( a6 &gt;= 0x10 ) j__free(a1); a6 = 15; a5 = 0; LOBYTE(a1) = 0; if ( a12 &gt;= 0x10 ) j__free(a7); return v19; } open函数 也就是打开许可证的函数
 ">
   <title>GFSJ0213-【leaked-license-64】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0213-leaked-license-64/">
+  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0213-leaked-license-64/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -28,15 +28,15 @@ bool __cdecl verify( void *a1, int a2, int a3, int a4, int a5, unsigned int a6, 
 题目简介
 I have borrowed this software license(Leaked_License) and library from Big Brother of a friend of a friend! It would be …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0213-leaked-license-64/">
-  <meta property="og:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0213-leaked-license-64/">
+  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0213-【leaked-license-64】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 猜 ID 应该是比赛的时候有提示ID吧 其他还好
 题目简介
 I have borrowed this software license(Leaked_License) and library from Big Brother of a friend of a friend! It would be …">
-  <meta name="twitter:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@ I have borrowed this software license(Leaked_License) and library from Big Broth
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.github.io\/"
+        "item": "https:\/\/q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.github.io\/post/"
+        "item": "https:\/\/q7411.xyz\/post/"
       }
       
       
@@ -74,7 +74,7 @@ I have borrowed this software license(Leaked_License) and library from Big Broth
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0213-【leaked-license-64】",
-        "item": "https:\/\/q7411.github.io\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0213-leaked-license-64\/"
+        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0213-leaked-license-64\/"
       }
       
     ]

@@ -13,7 +13,7 @@
 using System; using System.Diagnostics; using System.IO; using System.Net.Sockets; using System.Text; namespace Rev_100 { // Token: 0x02000002 RID: 2 internal class Program { // Token: 0x06000001 RID: 1 RVA: 0x00002050 File Offset: 0x00000250 private static void Main(string[] args) { string text = &#34;127.0.0.1&#34;; int num = 31337; TcpClient tcpClient = new TcpClient(); try { Console.WriteLine(&#34;Connecting...&#34;); tcpClient.Connect(text, num); } catch (Exception) { Console.WriteLine(&#34;Cannot connect!\nFail!&#34;); return; } Socket client = tcpClient.Client; string text2 = &#34;Super Secret Key&#34;; string text3 = Program.read(); client.Send(Encoding.ASCII.GetBytes(&#34;CTF{&#34;)); foreach (char c in text2) { client.Send(Encoding.ASCII.GetBytes(Program.search(c, text3))); } client.Send(Encoding.ASCII.GetBytes(&#34;}&#34;)); client.Close(); tcpClient.Close(); Console.WriteLine(&#34;Success!&#34;); } // Token: 0x06000002 RID: 2 RVA: 0x0000213C File Offset: 0x0000033C private static string read() { string fileName = Process.GetCurrentProcess().MainModule.FileName; string[] array = fileName.Split(new char[] { &#39;\\&#39; }); string text = array[array.Length - 1]; string text2 = &#34;&#34;; using (StreamReader streamReader = new StreamReader(text)) { text2 = streamReader.ReadToEnd(); } return text2; } // Token: 0x06000003 RID: 3 RVA: 0x000021B0 File Offset: 0x000003B0 private static string search(char x, string text) { int length = text.Length; for (int i = 0; i &lt; length; i&#43;&#43;) { if (x == text[i]) { int num = i * 1337 % 256; return Convert.ToString(num, 16).PadLeft(2, &#39;0&#39;); } } return &#34;??&#34;; } } } 发现是一个tcp客户端连接 端口是 31337 我们有三个方法解出flag
 ">
   <title>GFSJ0385-【APK-逆向2】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0385-apk-%E9%80%86%E5%90%912/">
+  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0385-apk-%E9%80%86%E5%90%912/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ using System; using System.Diagnostics; using System.IO; using System.Net.Socket
 查壳发现是C# 看题目名我直接用jadx打开了 发现啥都没有 哈哈哈 dnspy打开
 using System; using System.Diagnostics; using System.IO; using System.Net.Sockets; using …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0385-apk-%E9%80%86%E5%90%912/">
-  <meta property="og:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0385-apk-%E9%80%86%E5%90%912/">
+  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0385-【APK-逆向2】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 模拟执行 or 逆
 查壳发现是C# 看题目名我直接用jadx打开了 发现啥都没有 哈哈哈 dnspy打开
 using System; using System.Diagnostics; using System.IO; using System.Net.Sockets; using …">
-  <meta name="twitter:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ using System; using System.Diagnostics; using System.IO; using System.Net.Socket
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.github.io\/"
+        "item": "https:\/\/q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.github.io\/post/"
+        "item": "https:\/\/q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ using System; using System.Diagnostics; using System.IO; using System.Net.Socket
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0385-【APK-逆向2】",
-        "item": "https:\/\/q7411.github.io\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0385-apk-%E9%80%86%E5%90%912\/"
+        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0385-apk-%E9%80%86%E5%90%912\/"
       }
       
     ]

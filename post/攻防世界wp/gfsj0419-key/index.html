@@ -13,7 +13,7 @@ main函数
 void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void **v3; // ebx void **v4; // eax int v5; // ecx int *v6; // eax int *v7; // esi int v8; // ecx void **v9; // eax int v10; // eax int *v11; // ecx int *v12; // eax int *v13; // eax int *v14; // eax int *v15; // eax int *v16; // eax int *v17; // eax int *v18; // eax const char *v19; // edx int *v20; // eax int v21; // [esp-Ch] [ebp-144h] int v22; // [esp-8h] [ebp-140h] int v23; // [esp-4h] [ebp-13Ch] int v24[46]; // [esp&#43;14h] [ebp-124h] BYREF void *v25[5]; // [esp&#43;CCh] [ebp-6Ch] BYREF int v26; // [esp&#43;E0h] [ebp-58h] void *v27; // [esp&#43;E4h] [ebp-54h] BYREF int v28; // [esp&#43;F4h] [ebp-44h] unsigned int v29; // [esp&#43;F8h] [ebp-40h] void *Block[6]; // [esp&#43;FCh] [ebp-3Ch] BYREF char v31[20]; // [esp&#43;114h] [ebp-24h] BYREF int v32; // [esp&#43;134h] [ebp-4h] v29 = 15; v28 = 0; LOBYTE(v27) = 0; v32 = 1; v26 = 15; v25[4] = nullptr; LOBYTE(v25[0]) = 0; v0 = 0; strcpy((char *)Block, &#34;themidathemidathemida&#34;); strcpy(v31, &#34;&gt;----&#43;&#43;&#43;&#43;....&lt;&lt;&lt;&lt;.&#34;); do { sub_4021E0(v25, 1u, (*((_BYTE *)Block &#43; v0) ^ v31[v0]) &#43; 22); &#43;&#43;v0; } while ( v0 &lt; 18 ); v1 = 0; Block[5] = (void *)15; Block[4] = nullptr; LOBYTE(Block[0]) = 0; LOBYTE(v32) = 2; v2 = v26; v3 = (void **)v25[0]; do { v4 = v25; if ( v2 &gt;= 0x10 ) v4 = v3; sub_4021E0(Block, 1u, *((_BYTE *)v4 &#43; v1&#43;&#43;) &#43; 9); } while ( v1 &lt; 18 ); memset(v24, 0, sizeof(v24)); sub_401620(v24, v5, v21, v22, v23); LOBYTE(v32) = 3; if ( (*((_BYTE *)&amp;v24[3] &#43; *(_DWORD *)(v24[0] &#43; 4)) &amp; 6) != 0 ) { v6 = sub_402A00(std::cerr, &#34;?W?h?a?t h?a?p?p?e?n?&#34;); std::ostream::operator&lt;&lt;(v6); exit(-1); } sub_402E90(v24, &amp;v27); v7 = &amp;v24[4]; if ( v24[23] ) { if ( !(unsigned __int8)sub_4022F0() ) v7 = nullptr; if ( fclose((FILE *)v24[23]) ) v7 = nullptr; } else { v7 = nullptr; } LOBYTE(v24[22]) = 0; BYTE1(v24[19]) = 0; std::streambuf::_Init(&amp;v24[4]); v24[20] = dword_408590; v24[23] = 0; v24[21] = dword_408594; v24[18] = 0; if ( !v7 ) std::ios::setstate((char *)v24 &#43; *(_DWORD *)(v24[0] &#43; 4), 2, 0); v9 = Block; if ( Block[5] &gt;= (void *)0x10 ) v9 = (void **)Block[0]; v10 = sub_4020C0(v8, v28, v9, Block[4]); v11 = (int *)std::cout; if ( v10 ) { v19 = &#34;=W=r=o=n=g=K=e=y=&#34;; } else { v12 = sub_402A00(std::cout, &#34;|------------------------------|&#34;); std::ostream::operator&lt;&lt;(v12); v13 = sub_402A00(std::cout, &#34;|==============================|&#34;); std::ostream::operator&lt;&lt;(v13); v14 = sub_402A00(std::cout, &#34;|==============================|&#34;); std::ostream::operator&lt;&lt;(v14); v15 = sub_402A00(std::cout, &#34;|==============================|&#34;); std::ostream::operator&lt;&lt;(v15); v16 = sub_402A00(std::cout, &#34;\\ /\\ /\\ /\\ /\\==============|&#34;); std::ostream::operator&lt;&lt;(v16); v17 = sub_402A00(std::cout, &#34; \\/ \\/ \\/ \\/ \\=============|&#34;); std::ostream::operator&lt;&lt;(v17); v18 = sub_402A00(std::cout, &#34; |-------------|&#34;); std::ostream::operator&lt;&lt;(v18); std::ostream::operator&lt;&lt;(std::cout); v11 = (int *)std::cout; v19 = &#34;Congrats You got it!&#34;; } v20 = sub_402A00(v11, v19); std::ostream::operator&lt;&lt;(v20); sub_401570(); std::ios::~ios&lt;char,std::char_traits&lt;char&gt;&gt;(&amp;v24[28]); if ( Block[5] &gt;= (void *)0x10 ) sub_402630((_DWORD *)Block[0], (unsigned int)Block[5] &#43; 1); if ( v2 &gt;= 0x10 ) sub_402630(v3, v2 &#43; 1); if ( v29 &gt;= 0x10 ) sub_402630(v27, v29 &#43; 1); } 关键点
 ">
   <title>GFSJ0419-【key】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0419-key/">
+  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0419-key/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void *
 main函数
 void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void **v3; // ebx void **v4; // eax int v5; // ecx int *v6; // …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0419-key/">
-  <meta property="og:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0419-key/">
+  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0419-【key】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" xor
 main函数
 void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void **v3; // ebx void **v4; // eax int v5; // ecx int *v6; // …">
-  <meta name="twitter:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void *
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.github.io\/"
+        "item": "https:\/\/q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.github.io\/post/"
+        "item": "https:\/\/q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void *
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0419-【key】",
-        "item": "https:\/\/q7411.github.io\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0419-key\/"
+        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0419-key\/"
       }
       
     ]

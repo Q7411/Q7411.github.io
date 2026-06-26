@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://q7411.github.io/sitemap.xml
+Sitemap: https://q7411.xyz/sitemap.xml

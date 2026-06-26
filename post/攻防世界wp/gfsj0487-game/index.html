@@ -13,7 +13,7 @@ main函数
 int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; // [esp&#43;0h] [ebp-FCh] char v5; // [esp&#43;0h] [ebp-FCh] char v6; // [esp&#43;0h] [ebp-FCh] char v7; // [esp&#43;0h] [ebp-FCh] char v8; // [esp&#43;0h] [ebp-FCh] char v9; // [esp&#43;0h] [ebp-FCh] char v10; // [esp&#43;0h] [ebp-FCh] char v11; // [esp&#43;0h] [ebp-FCh] char v12; // [esp&#43;0h] [ebp-FCh] char v13; // [esp&#43;0h] [ebp-FCh] char v14; // [esp&#43;0h] [ebp-FCh] char v15; // [esp&#43;0h] [ebp-FCh] char v16; // [esp&#43;0h] [ebp-FCh] char v17; // [esp&#43;0h] [ebp-FCh] char v18; // [esp&#43;0h] [ebp-FCh] char v19; // [esp&#43;0h] [ebp-FCh] char v20; // [esp&#43;0h] [ebp-FCh] char v21; // [esp&#43;0h] [ebp-FCh] char v22; // [esp&#43;0h] [ebp-FCh] char v23; // [esp&#43;0h] [ebp-FCh] int i; // [esp&#43;DCh] [ebp-20h] unsigned int v25; // [esp&#43;F4h] [ebp-8h] BYREF sub_45A7BE((int)&amp;unk_50B110, v4); sub_45A7BE((int)&amp;unk_50B158, v5); sub_45A7BE((int)&amp;unk_50B1A0, v6); sub_45A7BE((int)&amp;unk_50B1E8, v7); sub_45A7BE((int)&amp;unk_50B230, v8); sub_45A7BE((int)&amp;unk_50B278, v9); sub_45A7BE((int)&amp;unk_50B2C0, v10); sub_45A7BE((int)&amp;unk_50B308, v11); sub_45A7BE((int)&amp;unk_50AFD0, v12); sub_45A7BE((int)&#34;| by 0x61 |\n&#34;, v13); sub_45A7BE((int)&#34;| |\n&#34;, v14); sub_45A7BE((int)&#34;|------------------------------------------------------|\n&#34;, v15); sub_45A7BE( (int)&#34;Play a game\n&#34; &#34;The n is the serial number of the lamp,and m is the state of the lamp\n&#34; &#34;If m of the Nth lamp is 1,it&#39;s on ,if not it&#39;s off\n&#34; &#34;At first all the lights were closed\n&#34;, v16); sub_45A7BE((int)&#34;Now you can input n to change its state\n&#34;, v17); sub_45A7BE( (int)&#34;But you should pay attention to one thing,if you change the state of the Nth lamp,the state of (N-1)th and (N&#43;1&#34; &#34;)th will be changed too\n&#34;, v18); sub_45A7BE((int)&#34;When all lamps are on,flag will appear\n&#34;, v19); sub_45A7BE((int)&#34;Now,input n \n&#34;, v20); while ( 1 ) { do { while ( 1 ) { sub_45A7BE((int)&#34;input n,n(1-8)\n&#34;, v21); sub_459418(); sub_45A7BE((int)&#34;n=&#34;, v22); sub_4596D4(&#34;%d&#34;, &amp;v25); sub_45A7BE((int)&#34;\n&#34;, v23); if ( v25 &lt;= 8 ) break; sub_45A7BE((int)&#34;sorry,n error,try again\n&#34;, v21); } if ( v25 ) { sub_4576D6(v25 - 1); } else { for ( i = 0; i &lt; 8; &#43;&#43;i ) { if ( (unsigned int)i &gt;= 9 ) j____report_rangecheckfailure(); byte_532E28[i] = 0; } } j__system(&#34;CLS&#34;); sub_458054(); } while ( byte_532E28[0] != 1 || byte_532E29 != 1 || unk_532E2A != 1 || unk_532E2B != 1 || unk_532E2C != 1 || unk_532E2D != 1 || unk_532E2E != 1 || unk_532E2F != 1 ); sub_457AB4(); } } 能看出来啥都没有 只有游戏框架 我们搜索字符串来定位 flag
 ">
   <title>GFSJ0487-【game】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/">
+  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; //
 main函数
 int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; // [esp&#43;0h] [ebp-FCh] char v5; // [esp&#43;0h] [ebp-FCh] char …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.github.io/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/">
-  <meta property="og:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/">
+  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0487-【game】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 签到 xor
 main函数
 int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; // [esp&#43;0h] [ebp-FCh] char v5; // [esp&#43;0h] [ebp-FCh] char …">
-  <meta name="twitter:image" content="https://q7411.github.io/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; //
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.github.io\/"
+        "item": "https:\/\/q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.github.io\/post/"
+        "item": "https:\/\/q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; //
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0487-【game】",
-        "item": "https:\/\/q7411.github.io\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0487-game\/"
+        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0487-game\/"
       }
       
     ]
