@@ -623,6 +623,16 @@ function setCodeLanguage(code, language) {
   code.setAttribute('data-lang', language);
 }
 
+function markIdaPseudocode(code) {
+  if (!code) return;
+
+  code.classList.add('ida-pseudocode');
+  const pre = code.closest('pre');
+  if (pre) {
+    pre.classList.add('ida-pseudocode-block');
+  }
+}
+
 function looksLikeIdaPseudocode(text) {
   const source = text || '';
   if (!source.trim()) return false;
@@ -678,6 +688,7 @@ function normalizeCodeLanguage(code, language) {
 
   if (looksLikeIdaPseudocode(text)) {
     setCodeLanguage(code, 'c');
+    markIdaPseudocode(code);
     return 'c';
   }
 
@@ -690,6 +701,14 @@ function normalizeCodeLanguage(code, language) {
 
 function isAssemblyLanguage(language) {
   return ['asm', 'assembly', 'nasm', 'x86asm', 'x86-asm'].includes(language);
+}
+
+function isIdaGeneratedFunctionName(value) {
+  return /^sub_[0-9A-Fa-f]+$/i.test((value || '').trim());
+}
+
+function isIdaGlobalName(value) {
+  return /^(?:(?:byte|word|dword|qword|xmmword|ymmword|oword|stru|asc|off|unk|loc)_[0-9A-Fa-f]+|a[A-Z0-9_][A-Za-z0-9_]*_[0-9A-Fa-f]+)$/i.test((value || '').trim());
 }
 
 function initSemanticCodeHighlight() {
@@ -768,6 +787,7 @@ function highlightAssemblyCode(code) {
 }
 
 function highlightCodeIdentifiers(code, language) {
+  const idaLike = code.classList.contains('ida-pseudocode');
   const reservedWords = new Set([
     'if', 'else', 'for', 'while', 'do', 'switch', 'case', 'default', 'break', 'continue', 'return',
     'goto', 'sizeof', 'typedef', 'struct', 'union', 'enum', 'class', 'public', 'private', 'protected',
@@ -779,7 +799,10 @@ function highlightCodeIdentifiers(code, language) {
     'void', 'char', 'short', 'int', 'long', 'float', 'double', 'signed', 'unsigned', 'bool', 'BOOL',
     'BYTE', 'WORD', 'DWORD', 'QWORD', '_BYTE', '_WORD', '_DWORD', '_QWORD', '__int8', '__int16',
     '__int32', '__int64', 'size_t', 'ssize_t', 'uint8_t', 'uint16_t', 'uint32_t', 'uint64_t',
-    'int8_t', 'int16_t', 'int32_t', 'int64_t', 'wchar_t', 'FILE', 'HWND', 'HANDLE', 'LPVOID'
+    'int8_t', 'int16_t', 'int32_t', 'int64_t', 'wchar_t', 'FILE', 'HWND', 'HANDLE', 'LPVOID',
+    'CHAR', 'WCHAR', 'LPSTR', 'LPCSTR', 'LPWSTR', 'LPCWSTR', 'LRESULT', 'WPARAM', 'LPARAM',
+    '_BOOL1', '_BOOL2', '_BOOL4', '_BOOL8', '_OWORD', '_LONGLONG', '__m128', '__m128i',
+    '__m256', '__m256i', 'CPPEH_RECORD'
   ]);
   const callingConventions = new Set([
     '__fastcall', '__cdecl', '__stdcall', '__thiscall', '__usercall', '__noreturn', '__spoils'
@@ -797,6 +820,17 @@ function highlightCodeIdentifiers(code, language) {
       token.classList.add('calling-convention');
     }
   });
+
+  if (idaLike) {
+    code.querySelectorAll('.token.function, .token.builtin, .token.constant, .token.variable, .token.symbol').forEach(token => {
+      if (isIdaGeneratedFunctionName(token.textContent)) {
+        token.classList.add('ida-sub-function');
+      }
+      if (isIdaGlobalName(token.textContent)) {
+        token.classList.add('ida-global');
+      }
+    });
+  }
 
   const walker = document.createTreeWalker(
     code,
@@ -848,7 +882,8 @@ function highlightCodeIdentifiers(code, language) {
         reservedWords,
         typeWords,
         callingConventions,
-        functionPrefixes
+        functionPrefixes,
+        idaLike
       });
 
       if (tokenClass) {
@@ -873,18 +908,21 @@ function highlightCodeIdentifiers(code, language) {
 }
 
 function getSemanticTokenClass(word, followingText, context) {
-  const { cLike, reservedWords, typeWords, callingConventions, functionPrefixes } = context;
+  const { cLike, reservedWords, typeWords, callingConventions, functionPrefixes, idaLike } = context;
 
   if (callingConventions.has(word)) return 'calling-convention';
   if (typeWords.has(word)) return 'type';
   if (reservedWords.has(word)) return 'keyword';
+  if (idaLike && isIdaGlobalName(word)) {
+    return 'ida-global';
+  }
   if (/^\s*\(/.test(followingText) && !['if', 'for', 'while', 'switch', 'return', 'sizeof'].includes(word)) {
     return 'function';
   }
   if (cLike && functionPrefixes.test(word) && /^\s*(?:\(|;|,|\[|$)/.test(followingText)) {
     return 'function';
   }
-  if (/^(?:v\d+|a\d+|i|j|k|argc|argv|envp|result|flag|target|buffer|Buffer|Str|Src|Size|Block|this|ptr|count|key)$/i.test(word)) {
+  if (/^(?:v\d+|a\d+|i|j|k|argc|argv|envp|result|flag|target|buffer|Buffer|Str|Src|Size|Block|this|ptr|count|key|ms_exc|flOldProtect)$/i.test(word)) {
     return 'variable';
   }
 

@@ -75,6 +75,18 @@
   --code-operator: var(--code-text);
   --code-type: var(--code-text);
   --code-variable: var(--code-text);
+  --ida-bg: #fbfbfb;
+  --ida-text: #000000;
+  --ida-border: #d7dbe3;
+  --ida-keyword: #0000b8;
+  --ida-type: #0000b8;
+  --ida-variable: #6b6bff;
+  --ida-function: #ff00aa;
+  --ida-global: #003cff;
+  --ida-number: #003cff;
+  --ida-string: #008000;
+  --ida-comment: #6b6bff;
+  --ida-callconv: #666666;
 }
 
 [data-theme="dark"] {
@@ -113,6 +125,18 @@
   --code-operator: var(--code-text);
   --code-type: var(--code-text);
   --code-variable: var(--code-text);
+  --ida-bg: #111827;
+  --ida-text: #e5e7eb;
+  --ida-border: #374151;
+  --ida-keyword: #8ab4ff;
+  --ida-type: #8ab4ff;
+  --ida-variable: #b6a8ff;
+  --ida-function: #ff7ad9;
+  --ida-global: #7aa2ff;
+  --ida-number: #7aa2ff;
+  --ida-string: #7ddf9a;
+  --ida-comment: #9aa6ff;
+  --ida-callconv: #9ca3af;
 }
 
 /* Floating Action Buttons */
@@ -4460,4 +4484,91 @@ body.medium-zoom--opened {
 
 .medium-zoom-image--opened {
   touch-action: none;
+}
+
+/* IDA-like pseudocode coloring */
+.post-content pre:has(> code.ida-pseudocode),
+.page-content pre:has(> code.ida-pseudocode),
+.code-block-wrapper:has(code.ida-pseudocode) pre,
+.post-layout.three-column:not(.page-layout) .post-content pre:has(> code.ida-pseudocode),
+.post-layout.three-column:not(.page-layout) .code-block-wrapper:has(code.ida-pseudocode) pre {
+  background: var(--ida-bg) !important;
+  color: var(--ida-text) !important;
+  border: 1px solid var(--ida-border) !important;
+  box-shadow: none !important;
+}
+
+.post-content pre code.ida-pseudocode,
+.page-content pre code.ida-pseudocode,
+.post-layout.three-column:not(.page-layout) .post-content pre code.ida-pseudocode {
+  color: var(--ida-text) !important;
+  font-family: Consolas, "Courier New", var(--font-mono);
+  font-weight: 400;
+}
+
+.post-content pre code.ida-pseudocode .token.comment,
+.post-content pre code.ida-pseudocode .token.prolog,
+.post-content pre code.ida-pseudocode .token.doctype,
+.post-content pre code.ida-pseudocode .token.cdata,
+.post-content pre code.ida-pseudocode .token.semantic-token.asm-comment,
+.page-content pre code.ida-pseudocode .token.comment {
+  color: var(--ida-comment) !important;
+  font-style: normal !important;
+}
+
+.post-content pre code.ida-pseudocode .token.keyword,
+.post-content pre code.ida-pseudocode .token.atrule,
+.post-content pre code.ida-pseudocode .token.semantic-token.keyword {
+  color: var(--ida-keyword) !important;
+  font-weight: 500;
+}
+
+.post-content pre code.ida-pseudocode .token.type,
+.post-content pre code.ida-pseudocode .token.typedef,
+.post-content pre code.ida-pseudocode .token.data-type,
+.post-content pre code.ida-pseudocode .token.semantic-token.type {
+  color: var(--ida-type) !important;
+  font-weight: 500;
+}
+
+.post-content pre code.ida-pseudocode .token.calling-convention,
+.post-content pre code.ida-pseudocode .token.semantic-token.calling-convention {
+  color: var(--ida-callconv) !important;
+  font-weight: 400;
+}
+
+.post-content pre code.ida-pseudocode .token.function,
+.post-content pre code.ida-pseudocode .token.builtin,
+.post-content pre code.ida-pseudocode .token.class-name,
+.post-content pre code.ida-pseudocode .token.semantic-token.function {
+  color: var(--ida-function) !important;
+  font-weight: 500;
+}
+
+.post-content pre code.ida-pseudocode .token.ida-sub-function,
+.post-content pre code.ida-pseudocode .token.ida-global,
+.post-content pre code.ida-pseudocode .token.semantic-token.ida-global {
+  color: var(--ida-global) !important;
+}
+
+.post-content pre code.ida-pseudocode .token.string,
+.post-content pre code.ida-pseudocode .token.char,
+.post-content pre code.ida-pseudocode .token.attr-value {
+  color: var(--ida-string) !important;
+}
+
+.post-content pre code.ida-pseudocode .token.number,
+.post-content pre code.ida-pseudocode .token.boolean,
+.post-content pre code.ida-pseudocode .token.constant,
+.post-content pre code.ida-pseudocode .token.symbol {
+  color: var(--ida-number) !important;
+}
+
+.post-content pre code.ida-pseudocode .token.semantic-token.variable {
+  color: var(--ida-variable) !important;
+}
+
+.post-content pre code.ida-pseudocode .token.operator,
+.post-content pre code.ida-pseudocode .token.punctuation {
+  color: var(--ida-text) !important;
 }
