@@ -1,0 +1,3 @@
+Contact: mailto:2483900740@qq.com
+Preferred-Languages: zh, en
+Canonical: https://www.q7411.xyz/.well-known/security.txt

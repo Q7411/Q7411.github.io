@@ -15,7 +15,7 @@
 dword_E1E8 = 0x1106 dword_E120 = [ 0x27fb, 0x27a4, 0x464e, 0x0e36, 0x7b70, 0x5e7a, 0x1a4a, 0x45c1, 0x2bdf, 0x23bd, 0x3a15, 0x5b83, 0x1e15, 0x5367, 0x50b8, 0x20ca, 0x41f5, 0x57d1, 0x7750, 0x2adf, 0x11f8, 0x09bb, 0x5724, 0x7374, 0x3ce6, 0x646e, 0x010c, 0x6e10, 0x64f4, 0x3263, 0x3137, 0x00b8, 0x229c, 0x7bcd, 0x73bd, 0x480c, 0x14db, 0x68b9, 0x5c8a, 0x1b61, 0x6c59, 0x5707, 0x09e6, 0x1fb9, 0x2ad3, 0x76d4, 0x3113, 0x7c7e, 0x11e0, 0x6c70 ] def sub_62B5(): global dword_E1E8 dword_E1E8 = (1103515245 * dword_E1E8 &#43; 12345) &amp; 0xFFFFFFFF return (dword_E1E8 &gt;&gt; 10) &amp; 0x7FFF def llog(n): a = 0 while n &gt;= 10: n //= 10 a &#43;= 1 return a def sub_62E3(a1): return 0x7E &gt;= (a1 &amp; 0x7F) &gt; 0x20 count = 0 while True: for i in range(50): dword_E120[i] ^= sub_62B5() count &#43;= 1 dword_E1E8 &#43;= 42 &#43; llog(count) if count % 1000000 == 0: print(f&#34;Count: {count}&#34;) flag = bytearray(51) for i in range(50): if not sub_62E3(dword_E120[i]): break flag[i] = dword_E120[i] &amp; 0xFF else: continue if flag[:6] == b&#39;CatCTF&#39;: print(flag.decode()) print(f&#34;Count: {count}&#34;) break flag
 ">
   <title>GFSJ1207-【CatFly】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1207-catfly/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1207-catfly/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -27,15 +27,15 @@ dword_E1E8 = 0x1106 dword_E120 = [ 0x27fb, 0x27a4, 0x464e, 0x0e36, 0x7b70, 0x5e7
 伪随机数生成器 英文叫 PRNG 是一种用确定性算法生成“看起来随机”的数字序列的东西
 题目是一个elf文件 无壳ida打开 第一遍没看出来什么 运行一下 发现中间小猫是循环动 而上方的字体不是 所以我们去找上方的字体的显示地方 通过函数调用约定和代码审计来定位到加密 …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1207-catfly/">
-  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1207-catfly/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1207-【CatFly】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 题目要点 伪随机数生成器算法
 伪随机数生成器 英文叫 PRNG 是一种用确定性算法生成“看起来随机”的数字序列的东西
 题目是一个elf文件 无壳ida打开 第一遍没看出来什么 运行一下 发现中间小猫是循环动 而上方的字体不是 所以我们去找上方的字体的显示地方 通过函数调用约定和代码审计来定位到加密 …">
-  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -58,14 +58,14 @@ dword_E1E8 = 0x1106 dword_E120 = [ 0x27fb, 0x27a4, 0x464e, 0x0e36, 0x7b70, 0x5e7
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.xyz\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.xyz\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -73,7 +73,7 @@ dword_E1E8 = 0x1106 dword_E120 = [ 0x27fb, 0x27a4, 0x464e, 0x0e36, 0x7b70, 0x5e7
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1207-【CatFly】",
-        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj1207-catfly\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj1207-catfly\/"
       }
       
     ]

@@ -15,7 +15,7 @@ int __fastcall sub_4007F0(const char *a1) { char v1; // $v1 size_t i; // [sp&#43
 IDA_400b90 = b&#39;Q|j{g\x00&#39; IDA_400b98 = [0x52, 0xfd, 0x16, 0xa4, 0x89, 0xbd, 0x92, 0x80, 0x13, 0x41, 0x54, 0xa0, 0x8d, 0x45, 0x18, 0x81, 0xde, 0xfc, 0x95, 0xf0, 0x16, 0x79, 0x1a, 0x15, 0x5b, 0x75, 0x1f, 0x0] int __fastcall main(int a1, char **a2, char **a3) { int i; // [sp&#43;18h] [&#43;18h] BYREF char v5[36]; // [sp&#43;1Ch] [&#43;1Ch] BYREF setbuf(stdout, nullptr); setbuf(stdin, nullptr); printf(&#34;Give me your flag:&#34;); scanf(&#34;%32s&#34;, v5); for ( i = 0; i &lt; 32; &#43;&#43;i ) v5[i] ^= 32 - (_BYTE)i; if ( !strncmp(v5, fdata, 5u) ) return sub_4007F0(v5); else return puts(&#34;Wrong&#34;); } int __fastcall sub_4007F0(const char *a1) { char v1; // $v1 size_t i; // [sp&#43;18h] [&#43;18h] for ( i = 5; i &lt; strlen(a1); &#43;&#43;i ) { if ( (i &amp; 1) != 0 ) v1 = (a1[i] &gt;&gt; 2) | (a1[i] &lt;&lt; 6); else v1 = (4 * a1[i]) | (a1[i] &gt;&gt; 6); a1[i] = v1; } if ( !strncmp(a1 &#43; 5, off_410D04, 0x1Bu) ) return puts(&#34;Right!&#34;); else return puts(&#34;Wrong!&#34;); } IDA_400b98 = [0x52, 0xfd, 0x16, 0xa4, 0x89, 0xbd, 0x92, 0x80, 0x13, 0x41, 0x54, 0xa0, 0x8d, 0x45, 0x18, 0x81, 0xde, 0xfc, 0x95, 0xf0, 0x16, 0x79, 0x1a, 0x15, 0x5b, 0x75, 0x1f, 0x0] IDA_400b90 = b&#39;Q|j{g\x00&#39; exp
 ">
   <title>GFSJ0104-【babymips】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -27,15 +27,15 @@ IDA_400b90 = b&#39;Q|j{g\x00&#39; IDA_400b98 = [0x52, 0xfd, 0x16, 0xa4, 0x89, 0x
 main函数一个xor
 int __fastcall main(int a1, char **a2, char **a3) { int i; // [sp&#43;18h] [&#43;18h] BYREF char v5[36]; // [sp&#43;1Ch] [&#43;1Ch] …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/">
-  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0104-【babymips】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" mips 架构 但都简单 xor 左移右移
 main函数一个xor
 int __fastcall main(int a1, char **a2, char **a3) { int i; // [sp&#43;18h] [&#43;18h] BYREF char v5[36]; // [sp&#43;1Ch] [&#43;1Ch] …">
-  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -58,14 +58,14 @@ int __fastcall main(int a1, char **a2, char **a3) { int i; // [sp&#43;18h] [&#43
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.xyz\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.xyz\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -73,7 +73,7 @@ int __fastcall main(int a1, char **a2, char **a3) { int i; // [sp&#43;18h] [&#43
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0104-【babymips】",
-        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0104-babymips\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0104-babymips\/"
       }
       
     ]

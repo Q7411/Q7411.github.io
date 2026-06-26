@@ -14,7 +14,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { size_t i; // 
 bool __cdecl sub_4011C0(char *Str) { int v2; // [esp&#43;50h] [ebp-B0h] char Str2[32]; // [esp&#43;54h] [ebp-ACh] BYREF int v4; // [esp&#43;74h] [ebp-8Ch] int v5; // [esp&#43;78h] [ebp-88h] size_t i; // [esp&#43;7Ch] [ebp-84h] char v7[128]; // [esp&#43;80h] [ebp-80h] BYREF if ( strlen(Str) &lt;= 4 ) return 0; i = 4; v5 = 0; while ( i &lt; strlen(Str) - 1 ) v7[v5&#43;&#43;] = Str[i&#43;&#43;]; v7[v5] = 0; v4 = 0; v2 = 0; memset(Str2, 0, sizeof(Str2)); for ( i = 0; i &lt; strlen(v7); &#43;&#43;i ) { if ( v7[i] &gt;= 97 &amp;&amp; v7[i] &lt;= 122 ) { v7[i] -= 32; v2 = 1; } if ( !v2 &amp;&amp; v7[i] &gt;= 65 &amp;&amp; v7[i] &lt;= 90 ) v7[i] &#43;= 32; Str2[i] = byte_4420B0[i] ^ sub_4013C0(v7[i]); v2 = 0; } return strcmp(&#34;GONDPHyGjPEKruv{{pj]X@rF&#34;, Str2) == 0; } int __cdecl sub_4013C0(int a1) { return (a1 ^ 0x55) &#43; 72; } 数据
 ">
   <title>GFSJ0004-【IgniteMe】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0004-igniteme/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0004-igniteme/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -26,15 +26,15 @@ bool __cdecl sub_4011C0(char *Str) { int v2; // [esp&#43;50h] [ebp-B0h] char Str
 main函数 里面有一个头尾验证和长度验证
 int __cdecl main(int argc, const char **argv, const char **envp) { size_t i; // [esp&#43;4Ch] [ebp-8Ch] char v5[8]; // …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0004-igniteme/">
-  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0004-igniteme/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0004-【IgniteMe】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 大小写互换 异或
 main函数 里面有一个头尾验证和长度验证
 int __cdecl main(int argc, const char **argv, const char **envp) { size_t i; // [esp&#43;4Ch] [ebp-8Ch] char v5[8]; // …">
-  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -57,14 +57,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { size_t i; // 
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.xyz\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.xyz\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -72,7 +72,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { size_t i; // 
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0004-【IgniteMe】",
-        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0004-igniteme\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0004-igniteme\/"
       }
       
     ]

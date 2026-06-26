@@ -13,7 +13,7 @@ main 我进行了简单的命名 能看到
 __int64 __fastcall main(int a1, char **a2, char **a3){__useconds_t *v3; // rbpunsigned int v4; // eaxint *v5; // rcxint v6; // edxunsigned int v7; // eaxsigned __int64 v8; // rcx__int64 v9; // raxchar v10; // blchar v11; // dlvoid (**v12)(void *); // rbpchar *v13; // r12pthread_t *v14; // r13void (*v15)(void *); // rdiunsigned __int64 i; // rcxchar v17; // alint *v18; // rdxint v19; // esiunsigned int v20; // eaxunsigned __int64 v21; // rdxchar *v22; // raxchar *v23; // rdxchar v24; // div3 = useconds;v4 = time(nullptr);srand(v4); // 获取当前时间当作随机数种子do*v3&#43;&#43; = 100 * (rand() % 1000);while ( v3 != (__useconds_t *)&amp;unk_602208 );__isoc99_scanf(&#34;%63s&#34;, input);v5 = input;do{v6 = *v5&#43;&#43;;v7 = ~v6 &amp; (v6 - 16843009) &amp; 0x80808080;}while ( !v7 );if ( (~v6 &amp; (v6 - 16843009) &amp; 0x8080) == 0 ){v7 &gt;&gt;= 16;v5 = (int *)((char *)v5 &#43; 2);}v8 = (char *)v5 - ((char *)input &#43; __CFADD__((_BYTE)v7, (_BYTE)v7) &#43; 3);v9 = 0;v10 = 0;while ( v8 != v9 ){v11 = *((_BYTE *)input &#43; v9) &#43; v9;&#43;&#43;v9;v10 ^= v11;}v12 = (void (**)(void *))&amp;newthread;v13 = nullptr;v14 = &amp;newthread;do{if ( pthread_create(v14, nullptr, (void *(*)(void *))start_routine, v13) )// 创造6个线程{perror(&#34;pthread_create&#34;);exit(-1);}&#43;&#43;v13;&#43;&#43;v14;}while ( v13 != (char *)6 );do{v15 = *v12&#43;&#43;;pthread_join((pthread_t)v15, nullptr);}while ( &amp;free != v12 );for ( i = 0; ; byte_60221F[i] = v10 ^ byte_6020DF[i] ^ v17 ){v18 = input;do{v19 = *v18&#43;&#43;;v20 = ~v19 &amp; (v19 - 16843009) &amp; 0x80808080;}while ( !v20 );if ( (~v19 &amp; (v19 - 16843009) &amp; 0x8080) == 0 ){v20 &gt;&gt;= 16;v18 = (int *)((char *)v18 &#43; 2);}v21 = (char *)v18 - ((char *)input &#43; __CFADD__((_BYTE)v20, (_BYTE)v20) &#43; 3);if ( v21 &lt;= i )break;v17 = *((_BYTE *)flag &#43; i&#43;&#43;);}if ( v21 ){if ( (unsigned __int8)(LOBYTE(flag[0]) - 48) &gt; 0x4Au ){LABEL_28:puts(&#34;Badluck! There is no flag&#34;);return 0;}v22 = (char *)flag &#43; 1;v23 = (char *)(v21 &#43; 6300192);while ( v22 != v23 ){v24 = *v22&#43;&#43;;if ( (unsigned __int8)(v24 - 48) &gt; 0x4Au )goto LABEL_28;}}__printf_chk(1, &#34;Here is the flag:%s\n&#34;, (const char *)flag);return 0;} 有一个点要注意 此处进行的操作等同于strlen 他这个是位运算优化写法
 ">
   <title>GFSJ0382-【first】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0382-first/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0382-first/">
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ __int64 __fastcall main(int a1, char **a2, char **a3){__useconds_t *v3; // rbp
 main 我进行了简单的命名 能看到
 __int64 __fastcall main(int a1, char **a2, char **a3){__useconds_t *v3; // rbpunsigned int v4; // eaxint *v5; // rcx …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0382-first/">
-  <meta property="og:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0382-first/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0382-【first】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 线程问题 爆破
 main 我进行了简单的命名 能看到
 __int64 __fastcall main(int a1, char **a2, char **a3){__useconds_t *v3; // rbpunsigned int v4; // eaxint *v5; // rcx …">
-  <meta name="twitter:image" content="https://q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ __int64 __fastcall main(int a1, char **a2, char **a3){__useconds_t *v3; // rbp
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/q7411.xyz\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/q7411.xyz\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ __int64 __fastcall main(int a1, char **a2, char **a3){__useconds_t *v3; // rbp
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0382-【first】",
-        "item": "https:\/\/q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0382-first\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj0382-first\/"
       }
       
     ]
