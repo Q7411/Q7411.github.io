@@ -4483,7 +4483,18 @@ body.medium-zoom--opened {
 }
 
 .medium-zoom-image--opened {
+  cursor: zoom-out;
   touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+body.image-zoom-can-pan .medium-zoom-image--opened {
+  cursor: grab;
+}
+
+body.image-zoom-panning .medium-zoom-image--opened {
+  cursor: grabbing;
 }
 
 /* IDA-like pseudocode coloring */
@@ -4571,4 +4582,54 @@ body.medium-zoom--opened {
 .post-content pre code.ida-pseudocode .token.operator,
 .post-content pre code.ida-pseudocode .token.punctuation {
   color: var(--ida-text) !important;
+}
+
+/* Code block folding */
+.code-block-wrapper {
+  cursor: default;
+}
+
+.code-block-wrapper:focus {
+  outline: none;
+}
+
+.code-block-wrapper:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.code-block-wrapper pre {
+  transition: max-height var(--transition-normal), opacity var(--transition-fast);
+}
+
+.code-block-wrapper.is-code-collapsed {
+  cursor: zoom-in;
+}
+
+.code-block-wrapper.is-code-collapsed pre,
+.post-layout.three-column:not(.page-layout) .code-block-wrapper.is-code-collapsed pre,
+.post-layout.three-column:not(.page-layout) .post-content .code-block-wrapper.is-code-collapsed pre {
+  position: relative;
+  max-height: 46px !important;
+  overflow: hidden !important;
+}
+
+.code-block-wrapper.is-code-collapsed pre::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 28px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--code-bg));
+}
+
+.code-block-wrapper:has(code.ida-pseudocode).is-code-collapsed pre::after {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--ida-bg));
+}
+
+.code-block-wrapper.is-code-collapsed .copy-btn {
+  opacity: 1;
+  visibility: visible;
 }

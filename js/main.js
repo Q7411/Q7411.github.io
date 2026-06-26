@@ -978,12 +978,47 @@ async function navigate(url, delay = 180) {
   }, delay);
 }
 
+function initCodeBlockFolding(wrapper, pre) {
+  if (!wrapper || !pre || wrapper.dataset.foldReady === 'true') return;
+
+  const setFolded = (folded) => {
+    wrapper.classList.toggle('is-code-collapsed', folded);
+    wrapper.setAttribute('aria-expanded', folded ? 'false' : 'true');
+    wrapper.title = folded ? '双击展开代码块' : '双击折叠代码块';
+  };
+
+  const toggleFold = () => {
+    setFolded(!wrapper.classList.contains('is-code-collapsed'));
+  };
+
+  wrapper.dataset.foldReady = 'true';
+  wrapper.setAttribute('aria-expanded', 'true');
+  wrapper.title = '双击折叠代码块';
+
+  wrapper.addEventListener('dblclick', (event) => {
+    if (event.target.closest('button, a, input, textarea, select')) return;
+    toggleFold();
+  });
+
+  wrapper.addEventListener('keydown', (event) => {
+    if (!['Enter', ' '].includes(event.key)) return;
+    if (event.target.closest('button, a, input, textarea, select')) return;
+    event.preventDefault();
+    toggleFold();
+  });
+
+  wrapper.tabIndex = 0;
+}
+
 function initCodeCopy() {
   const codeBlocks = document.querySelectorAll('.post-content pre, .page-content pre');
   
   codeBlocks.forEach(pre => {
     // 避免重复添加
-    if (pre.parentElement.classList.contains('code-block-wrapper')) return;
+    if (pre.parentElement.classList.contains('code-block-wrapper')) {
+      initCodeBlockFolding(pre.parentElement, pre);
+      return;
+    }
 
     // 提取语言信息
     let lang = '';
@@ -1012,6 +1047,7 @@ function initCodeCopy() {
     }
     pre.parentNode.insertBefore(wrapper, pre);
     wrapper.appendChild(pre);
+    initCodeBlockFolding(wrapper, pre);
 
     // 创建复制按钮
     const copyBtn = document.createElement('button');
@@ -1199,10 +1235,20 @@ function initImageZoom() {
 
     const zoom = mediumZoom(zoomSelector, zoomOptions);
     const baseTransforms = new WeakMap();
+    const baseRects = new WeakMap();
     let openedImages = [];
     let zoomScale = 1;
     let zoomActive = false;
+    let panX = 0;
+    let panY = 0;
     let touchY = null;
+    const dragState = {
+      active: false,
+      pointerId: null,
+      x: 0,
+      y: 0,
+      suppressClick: false,
+    };
 
     const minScale = 1;
     const maxScale = 4;
@@ -1218,18 +1264,52 @@ function initImageZoom() {
         if (!baseTransforms.has(image)) {
           baseTransforms.set(image, image.style.transform || '');
         }
+        if (!baseRects.has(image)) {
+          const rect = image.getBoundingClientRect();
+          baseRects.set(image, {
+            width: rect.width,
+            height: rect.height,
+          });
+        }
         image.style.transformOrigin = 'center center';
       });
     };
 
-    const applyZoomScale = () => {
+    const getPanBounds = () => {
+      const image = openedImages[0];
+      const rect = image ? baseRects.get(image) : null;
+      const width = rect?.width || 0;
+      const height = rect?.height || 0;
+
+      return {
+        x: Math.max(0, (width * zoomScale - window.innerWidth + 48) / 2),
+        y: Math.max(0, (height * zoomScale - window.innerHeight + 48) / 2),
+      };
+    };
+
+    const clampPan = () => {
+      if (zoomScale <= minScale) {
+        panX = 0;
+        panY = 0;
+        return;
+      }
+
+      const bounds = getPanBounds();
+      panX = clamp(panX, -bounds.x, bounds.x);
+      panY = clamp(panY, -bounds.y, bounds.y);
+    };
+
+    const applyZoomTransform = () => {
       registerOpenedImages();
+      clampPan();
       openedImages.forEach(image => {
         const baseTransform = baseTransforms.get(image) || '';
+        image.classList.toggle('image-zoom-pannable', zoomScale > minScale);
         image.style.transform = zoomScale <= minScale
           ? baseTransform
-          : `${baseTransform} scale(${zoomScale})`;
+          : `${baseTransform} translate(${panX / zoomScale}px, ${panY / zoomScale}px) scale(${zoomScale})`;
       });
+      document.body.classList.toggle('image-zoom-can-pan', hasActiveZoom() && zoomScale > minScale);
     };
 
     const resetZoomScale = () => {
@@ -1237,12 +1317,20 @@ function initImageZoom() {
         if (!baseTransforms.has(image)) return;
         image.style.transform = baseTransforms.get(image) || '';
         image.style.transformOrigin = '';
+        image.classList.remove('image-zoom-pannable');
         baseTransforms.delete(image);
+        baseRects.delete(image);
       });
 
       openedImages = [];
       zoomScale = 1;
+      panX = 0;
+      panY = 0;
       touchY = null;
+      dragState.active = false;
+      dragState.pointerId = null;
+      dragState.suppressClick = false;
+      document.body.classList.remove('image-zoom-can-pan', 'image-zoom-panning');
     };
 
     const updateScale = deltaY => {
@@ -1250,18 +1338,73 @@ function initImageZoom() {
       if (Math.abs(nextScale - zoomScale) < 0.001) return;
 
       zoomScale = nextScale;
-      applyZoomScale();
+      applyZoomTransform();
+    };
+
+    const startPan = event => {
+      if (!hasActiveZoom() || zoomScale <= minScale) return;
+      const image = event.target.closest?.('.medium-zoom-image--opened');
+      if (!image) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      dragState.active = true;
+      dragState.pointerId = event.pointerId;
+      dragState.x = event.clientX;
+      dragState.y = event.clientY;
+      dragState.suppressClick = false;
+      document.body.classList.add('image-zoom-panning');
+      try {
+        image.setPointerCapture?.(event.pointerId);
+      } catch (_error) {
+        // Some embedded browsers reject synthetic or already-captured pointers.
+      }
+    };
+
+    const movePan = event => {
+      if (!dragState.active || event.pointerId !== dragState.pointerId) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const deltaX = event.clientX - dragState.x;
+      const deltaY = event.clientY - dragState.y;
+      if (Math.abs(deltaX) + Math.abs(deltaY) > 2) {
+        dragState.suppressClick = true;
+      }
+
+      dragState.x = event.clientX;
+      dragState.y = event.clientY;
+      panX += deltaX;
+      panY += deltaY;
+      applyZoomTransform();
+    };
+
+    const endPan = event => {
+      if (!dragState.active || event.pointerId !== dragState.pointerId) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      dragState.active = false;
+      dragState.pointerId = null;
+      document.body.classList.remove('image-zoom-panning');
     };
 
     zoom.on('open', () => {
       zoomActive = true;
       zoomScale = 1;
+      panX = 0;
+      panY = 0;
       touchY = null;
     });
 
     zoom.on('opened', () => {
       zoomActive = true;
       zoomScale = 1;
+      panX = 0;
+      panY = 0;
       window.requestAnimationFrame(registerOpenedImages);
     });
 
@@ -1282,13 +1425,27 @@ function initImageZoom() {
       updateScale(event.deltaY * wheelSensitivity);
     }, { passive: false, capture: true });
 
+    window.addEventListener('pointerdown', startPan, { passive: false, capture: true });
+    window.addEventListener('pointermove', movePan, { passive: false, capture: true });
+    window.addEventListener('pointerup', endPan, { passive: false, capture: true });
+    window.addEventListener('pointercancel', endPan, { passive: false, capture: true });
+
+    window.addEventListener('click', event => {
+      if (!dragState.suppressClick) return;
+      if (!event.target.closest?.('.medium-zoom-image--opened')) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      dragState.suppressClick = false;
+    }, { capture: true });
+
     window.addEventListener('touchstart', event => {
       if (!hasActiveZoom() || event.touches.length !== 1) return;
       touchY = event.touches[0].clientY;
     }, { passive: true, capture: true });
 
     window.addEventListener('touchmove', event => {
-      if (!hasActiveZoom() || event.touches.length !== 1 || touchY === null) return;
+      if (!hasActiveZoom() || dragState.active || event.touches.length !== 1 || touchY === null) return;
 
       event.preventDefault();
       const currentY = event.touches[0].clientY;
