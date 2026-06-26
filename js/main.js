@@ -724,7 +724,13 @@ function initSemanticCodeHighlight() {
       return;
     }
 
-    if (!['c', 'cpp', 'c++', 'python', 'py', 'javascript', 'js', 'typescript', 'ts'].includes(language)) return;
+    if (!['c', 'cpp', 'c++', 'python', 'py', 'javascript', 'js', 'typescript', 'ts'].includes(language)) {
+      if (shouldUseGenericCodeHighlight(code, language)) {
+        highlightGenericCode(code);
+        code.dataset.semanticHighlight = 'done';
+      }
+      return;
+    }
 
     highlightCodeIdentifiers(code, language);
     code.dataset.semanticHighlight = 'done';
@@ -784,6 +790,181 @@ function highlightAssemblyCode(code) {
     }
     return html;
   }).join('');
+}
+
+function shouldUseGenericCodeHighlight(code, language) {
+  const source = code.textContent || '';
+  if (!source.trim()) return false;
+
+  const ignoredLanguages = new Set([
+    'mermaid', 'terminal', 'console', 'shell-session', 'bash', 'sh', 'shell',
+    'powershell', 'ps1', 'filetree', 'tree', 'diff'
+  ]);
+  if (ignoredLanguages.has(language)) return false;
+
+  const genericLanguages = new Set(['', 'text', 'txt', 'plain', 'plaintext', 'ruby', 'rb', '1c']);
+  const lines = source.split(/\r?\n/).filter(line => line.trim());
+  const codeSignals = [
+    /\bOP_[A-Z0-9_]+\b/g,
+    /\b(?:if|else|for|while|return|def|do|end|class|switch|case)\b/g,
+    /[{}()[\];]/g,
+    /(?:==|!=|<=|>=|\+=|-=|\*=|\/=|\^=|<<|>>|\|\=|&=|=)/g,
+    /(?:0x[0-9A-Fa-f]+|\b\d+\b)/g,
+    /[A-Za-z_][A-Za-z0-9_!?]*\s*\(/g,
+    /[.:][A-Za-z_][A-Za-z0-9_!?]*/g,
+  ].reduce((count, pattern) => count + ((source.match(pattern) || []).length), 0);
+
+  if (genericLanguages.has(language)) {
+    return codeSignals >= 2 || (lines.length === 1 && codeSignals >= 1);
+  }
+  return codeSignals >= Math.max(3, Math.ceil(lines.length / 2));
+}
+
+function highlightGenericCode(code) {
+  const source = code.textContent || '';
+  if (!source.trim()) return;
+
+  const semicolonComments = /\bOP_[A-Z0-9_]+\b/.test(source) || looksLikeAssembly(source);
+  const keywords = new Set([
+    'if', 'else', 'for', 'while', 'do', 'end', 'return', 'break', 'continue',
+    'switch', 'case', 'default', 'def', 'class', 'module', 'begin', 'rescue',
+    'ensure', 'then', 'yield', 'and', 'or', 'not', 'in', 'is'
+  ]);
+  const controlCallWords = new Set(['if', 'for', 'while', 'switch', 'return', 'sizeof']);
+  let previousWord = '';
+  let html = '';
+  let index = 0;
+
+  const appendToken = (tokenClass, value) => {
+    html += `<span class="token semantic-token ${tokenClass}">${escapeHtml(value)}</span>`;
+  };
+
+  const nextNewline = (start) => {
+    const found = source.indexOf('\n', start);
+    return found === -1 ? source.length : found;
+  };
+
+  const previousNonSpace = (start) => {
+    for (let i = start - 1; i >= 0; i--) {
+      if (!/\s/.test(source[i])) return source[i];
+    }
+    return '';
+  };
+
+  const nextNonSpace = (start) => {
+    for (let i = start; i < source.length; i++) {
+      if (!/\s/.test(source[i])) return source[i];
+    }
+    return '';
+  };
+
+  const readString = (quote) => {
+    let end = index + 1;
+    while (end < source.length) {
+      if (source[end] === '\\') {
+        end += 2;
+        continue;
+      }
+      if (source[end] === quote) {
+        end += 1;
+        break;
+      }
+      end += 1;
+    }
+    const value = source.slice(index, end);
+    appendToken('generic-string', value);
+    index = end;
+    previousWord = '';
+  };
+
+  while (index < source.length) {
+    const rest = source.slice(index);
+
+    if (rest.startsWith('/*')) {
+      const closeIndex = source.indexOf('*/', index + 2);
+      const end = closeIndex === -1 ? source.length : closeIndex + 2;
+      appendToken('generic-comment', source.slice(index, end));
+      index = end;
+      previousWord = '';
+      continue;
+    }
+
+    if (rest.startsWith('//')) {
+      const end = nextNewline(index);
+      appendToken('generic-comment', source.slice(index, end));
+      index = end;
+      previousWord = '';
+      continue;
+    }
+
+    if (source[index] === '#' && (index === 0 || /[\s({\[]/.test(source[index - 1]))) {
+      const end = nextNewline(index);
+      appendToken('generic-comment', source.slice(index, end));
+      index = end;
+      previousWord = '';
+      continue;
+    }
+
+    if (semicolonComments && source[index] === ';') {
+      const end = nextNewline(index);
+      appendToken('generic-comment', source.slice(index, end));
+      index = end;
+      previousWord = '';
+      continue;
+    }
+
+    if (source[index] === '"' || source[index] === "'" || source[index] === '`') {
+      readString(source[index]);
+      continue;
+    }
+
+    const numberMatch = rest.match(/^(?:0x[0-9A-Fa-f]+|0b[01]+|\d+(?:\.\d+)?)/);
+    if (numberMatch) {
+      appendToken('generic-number', numberMatch[0]);
+      index += numberMatch[0].length;
+      previousWord = '';
+      continue;
+    }
+
+    const wordMatch = rest.match(/^[@$]?[A-Za-z_][A-Za-z0-9_]*[!?]?/);
+    if (wordMatch) {
+      const word = wordMatch[0];
+      const plainWord = word.replace(/^[@$]/, '');
+      const prev = previousNonSpace(index);
+      const next = nextNonSpace(index + word.length);
+      let tokenClass = '';
+
+      if (/^OP_[A-Z0-9_]+$/.test(plainWord)) {
+        tokenClass = 'generic-keyword';
+      } else if ((prev === '.' || prev === ':') && plainWord) {
+        tokenClass = 'generic-function';
+      } else if (previousWord === 'def') {
+        tokenClass = 'generic-function';
+      } else if (next === '(' && !controlCallWords.has(plainWord)) {
+        tokenClass = 'generic-function';
+      } else if (keywords.has(plainWord)) {
+        tokenClass = 'generic-keyword';
+      }
+
+      if (tokenClass) {
+        appendToken(tokenClass, word);
+      } else {
+        html += escapeHtml(word);
+      }
+      previousWord = plainWord;
+      index += word.length;
+      continue;
+    }
+
+    html += escapeHtml(source[index]);
+    if (!/\s/.test(source[index])) {
+      previousWord = '';
+    }
+    index += 1;
+  }
+
+  code.classList.add('generic-semantic-code');
+  code.innerHTML = html;
 }
 
 function highlightCodeIdentifiers(code, language) {

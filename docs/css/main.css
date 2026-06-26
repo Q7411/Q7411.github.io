@@ -2019,6 +2019,34 @@ a:hover {
   color: var(--code-comment);
 }
 
+.post-content pre code .token.semantic-token.generic-comment,
+.page-content pre code .token.semantic-token.generic-comment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.post-content pre code .token.semantic-token.generic-keyword,
+.page-content pre code .token.semantic-token.generic-keyword {
+  color: var(--code-keyword);
+  font-weight: 500;
+}
+
+.post-content pre code .token.semantic-token.generic-function,
+.page-content pre code .token.semantic-token.generic-function {
+  color: var(--code-function);
+  font-weight: 500;
+}
+
+.post-content pre code .token.semantic-token.generic-string,
+.page-content pre code .token.semantic-token.generic-string {
+  color: var(--code-string);
+}
+
+.post-content pre code .token.semantic-token.generic-number,
+.page-content pre code .token.semantic-token.generic-number {
+  color: var(--code-number);
+}
+
 .post-content pre code .c,
 .post-content pre code .c1,
 .post-content pre code .cm,
@@ -4109,6 +4137,29 @@ details[open] summary {
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.variable,
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.semantic-token.variable {
   color: var(--code-variable);
+}
+
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.semantic-token.generic-comment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.semantic-token.generic-keyword {
+  color: var(--code-keyword);
+  font-weight: 500;
+}
+
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.semantic-token.generic-function {
+  color: var(--code-function);
+  font-weight: 500;
+}
+
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.semantic-token.generic-string {
+  color: var(--code-string);
+}
+
+.post-layout.three-column:not(.page-layout) .post-content pre code .token.semantic-token.generic-number {
+  color: var(--code-number);
 }
 
 .post-layout.three-column:not(.page-layout) .post-content pre code .token.operator,
