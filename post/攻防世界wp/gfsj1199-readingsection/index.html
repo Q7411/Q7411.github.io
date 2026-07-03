@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  
+  
+  <meta name="description" content=" tea &#43; xor
+拿到手发现是一个txt 打开看到是一个LLVM IR文件 我们转成.o文件直接IDA分析
+转换命令
+copy .\ReadingSection.txt .\ReadingSection.ll (Get-Content .\ReadingSection.ll -Raw) ` -replace &#39;@__const\.main\.flag = private unnamed_addr constant \[33 x i8\] c&#34;CAT Hide Your Flag&#34;, align 16&#39;, &#39;@__const.main.flag = private unnamed_addr constant [33 x i8] c&#34;CAT Hide Your Flag\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00&#34;, align 16&#39; | Set-Content .\ReadingSection.ll -Encoding ascii &amp; &#34;C:\msys64\ucrt64\bin\clang.exe&#34; -x ir -c .\ReadingSection.ll -o .\ReadingSection.o 这个报错不影响
+进去能看到一个tea 一个xor
+char __fastcall check() { size_t v0; // rax int v1; // ecx int v2; // eax int v3; // eax int v4; // eax int v5; // eax int v6; // ecx int v7; // eax int v8; // eax int v9; // ecx int v10; // eax int v11; // eax int v12; // eax int v13; // eax int v14; // eax int v15; // eax int v16; // ecx int v17; // eax int v18; // ecx int v19; // eax int v20; // eax int v22; // eax int v23; // eax int v24; // eax int v25; // [rsp&#43;48h] [rbp-38h] int v26; // [rsp&#43;4Ch] [rbp-34h] _QWORD v27[5]; // [rsp&#43;50h] [rbp-30h] int v28; // [rsp&#43;78h] [rbp-8h] int v29; // [rsp&#43;7Ch] [rbp-4h] int v30; // [rsp&#43;80h] [rbp&#43;0h] int v31; // [rsp&#43;84h] [rbp&#43;4h] int v32; // [rsp&#43;88h] [rbp&#43;8h] int v33; // [rsp&#43;8Ch] [rbp&#43;Ch] int v34; // [rsp&#43;90h] [rbp&#43;10h] int v35; // [rsp&#43;94h] [rbp&#43;14h] int v36; // [rsp&#43;98h] [rbp&#43;18h] int v37; // [rsp&#43;9Ch] [rbp&#43;1Ch] int v38; // [rsp&#43;A0h] [rbp&#43;20h] unsigned int v39; // [rsp&#43;A4h] [rbp&#43;24h] unsigned int v40; // [rsp&#43;A8h] [rbp&#43;28h] int v41; // [rsp&#43;ACh] [rbp&#43;2Ch] __int64 v42; // [rsp&#43;B0h] [rbp&#43;30h] __int64 v43; // [rsp&#43;B8h] [rbp&#43;38h] char *v44; // [rsp&#43;C0h] [rbp&#43;40h] int v45; // [rsp&#43;C8h] [rbp&#43;48h] char v46; // [rsp&#43;CFh] [rbp&#43;4Fh] v45 = 0; LOBYTE(v25) = -71; while ( 1 ) { while ( 1 ) { v0 = strlen(yourcat); v1 = -981760591; if ( v45 &lt; v0 ) v1 = 885835314; v2 = v25 &amp; 1; v25 = v1; if ( v2 ) goto LABEL_48; LABEL_58: if ( v25 == -1591015246 ) break; switch ( v25 ) { case -1564550806: goto LABEL_45; case -1164989570: LABEL_43: v22 = v25 &amp; 1; v25 = -1564550806; if ( !v22 ) goto LABEL_58; goto LABEL_70; case -1161762662: goto LABEL_18; case -1115141670: goto LABEL_26; } if ( v25 != -981760591 ) { if ( v25 == -856038568 ) goto LABEL_22; if ( v25 != -482200700 ) { if ( v25 != -307564033 ) { if ( v25 == 631447468 ) goto LABEL_32; if ( v25 != 885835314 ) return v46 &amp; 1; LABEL_6: yourcat[v45] ^= yourcat[v45 &#43; 1]; v3 = v25 &amp; 1; v25 = -1591015246; if ( !v3 ) goto LABEL_79; goto LABEL_58; } LABEL_40: v46 = 0; v20 = v25 &amp; 1; v25 = 1325875719; if ( v20 ) goto LABEL_79; goto LABEL_58; } LABEL_24: &#43;&#43;v28; v12 = v25 &amp; 1; v25 = -1161762662; if ( v12 ) goto LABEL_79; goto LABEL_58; } while ( 2 ) { v44 = yourcat; v42 = 0x29D3CE1E18BC8A17LL; v43 = 0x199C7F4A42F740E3LL; v41 = 0; v5 = v25 &amp; 1; v25 = 684999598; if ( !v5 ) goto LABEL_79; LABEL_48: switch ( v25 ) { case -1164989570: goto LABEL_43; case -1161762662: goto LABEL_18; case -981760591: continue; case -482200700: goto LABEL_24; case -307564033: goto LABEL_40; case 631447468: goto LABEL_32; case 684999598: goto LABEL_12; case 885835314: goto LABEL_6; case 1325875719: return v46 &amp; 1; } } } LABEL_8: &#43;&#43;v45; v4 = v25 &amp; 1; v25 = 2038647993; if ( !v4 ) goto LABEL_48; LABEL_70: while ( v25 == -1564550806 ) { LABEL_45: &#43;&#43;v26; v23 = v25 &amp; 1; v25 = 631447468; if ( v23 ) goto LABEL_58; } switch ( v25 ) { case 232488417: goto LABEL_28; case 332476953: goto LABEL_36; case 457966756: LABEL_16: v40 = *(_DWORD *)&amp;v44[8 * v41]; v39 = *(_DWORD *)&amp;v44[8 * v41 &#43; 4]; v38 = 0; v37 = -897810688; v35 = HIDWORD(v42); v36 = v42; v33 = HIDWORD(v43); v34 = v43; v32 = 4; v31 = 2; v30 = 3; v29 = 20; v28 = 0; v8 = v25 &amp; 1; v25 = -1161762662; if ( !v8 ) goto LABEL_79; goto LABEL_48; } if ( v25 == 631447468 ) break; switch ( v25 ) { case 800030424: goto LABEL_47; case 1325875719: return v46 &amp; 1; case 1842263789: LABEL_30: v27[0] = 0x7180F7B17D077DAALL; v27[1] = 0x57580710E523AFDALL; v27[2] = 0x567478E6717DF71ELL; v27[3] = 0x2E3139F31153C09BLL; v26 = 0; v15 = v25 &amp; 1; v25 = 631447468; if ( !v15 ) goto LABEL_58; goto LABEL_48; } } LABEL_32: v16 = 800030424; if ( (unsigned __int64)v26 &lt; 0x20 ) v16 = 332476953; v17 = v25 &amp; 1; v25 = v16; if ( v17 ) goto LABEL_70; while ( 1 ) { while ( 1 ) { while ( 1 ) { while ( 1 ) { LABEL_79: if ( v25 == -1591015246 ) goto LABEL_8; if ( v25 != -1161762662 ) break; LABEL_18: v9 = -1115141670; if ( v28 &lt; 28 ) v9 = -856038568; v10 = v25 &amp; 1; v25 = v9; if ( !v10 ) goto LABEL_58; } if ( v25 != -1115141670 ) break; LABEL_26: *(_DWORD *)&amp;v44[8 * v41] = v40; *(_DWORD *)&amp;v44[8 * v41 &#43; 4] = v39; v13 = v25 &amp; 1; v25 = 232488417; if ( v13 ) goto LABEL_70; } if ( v25 == -856038568 ) { LABEL_22: v38 &#43;= v37; v40 &#43;= (v35 &#43; (v39 &gt;&gt; (v29 / v32))) ^ (v38 &#43; v39) ^ (v36 &#43; (v39 &lt;&lt; (v31 * v31))); v39 &#43;= (v33 &#43; (v40 &gt;&gt; ((v30 ^ v32) - 2))) ^ (v38 &#43; v40) ^ (v34 &#43; (v40 &lt;&lt; (2 * v31))); v11 = v25 &amp; 1; v25 = -482200700; if ( !v11 ) goto LABEL_48; goto LABEL_58; } if ( v25 != 232488417 ) break; LABEL_28: &#43;&#43;v41; v14 = v25 &amp; 1; v25 = 684999598; if ( !v14 ) goto LABEL_48; } if ( v25 == 332476953 ) { LABEL_36: v18 = -1164989570; if ( yourcat[v26] != *((_BYTE *)v27 &#43; v26) ) v18 = -307564033; v19 = v25 &amp; 1; v25 = v18; if ( !v19 ) goto LABEL_48; goto LABEL_58; } if ( v25 == 457966756 ) goto LABEL_16; if ( v25 != 684999598 ) break; LABEL_12: v6 = 1842263789; if ( v41 &lt; 4 ) v6 = 457966756; v7 = v25 &amp; 1; v25 = v6; if ( !v7 ) goto LABEL_70; } if ( v25 == 800030424 ) { LABEL_47: v46 = 1; v24 = v25 &amp; 1; v25 = 1325875719; if ( v24 ) goto LABEL_70; goto LABEL_48; } if ( v25 != 1325875719 ) goto LABEL_30; return v46 &amp; 1; } 数据
+">
+  <title>GFSJ1199-【ReadingSection】 - Q7411 CTF blog</title>
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1199-readingsection/">
+  <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
+  <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
+  
+  <link rel="stylesheet" href="../../../css/main.57c18cc46597fd4eff33552660dae6cadc9325160869055b5a50900a14bdb119.css">
+  
+  
+  <meta property="og:title" content="GFSJ1199-【ReadingSection】 - Q7411 CTF blog">
+  <meta property="og:description" content=" tea &#43; xor
+拿到手发现是一个txt 打开看到是一个LLVM IR文件 我们转成.o文件直接IDA分析
+转换命令
+copy .\ReadingSection.txt .\ReadingSection.ll (Get-Content .\ReadingSection.ll -Raw) ` …">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1199-readingsection/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GFSJ1199-【ReadingSection】 - Q7411 CTF blog">
+  <meta name="twitter:description" content=" tea &#43; xor
+拿到手发现是一个txt 打开看到是一个LLVM IR文件 我们转成.o文件直接IDA分析
+转换命令
+copy .\ReadingSection.txt .\ReadingSection.ll (Get-Content .\ReadingSection.ll -Raw) ` …">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  
+  
+  
+  <meta property="article:published_time" content="2026-07-02T15:05:43&#43;08:00">
+  <meta property="article:author" content="Q7411">
+  
+
+  
+  
+
+  
+  
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https:\/\/www.q7411.xyz\/"
+      }
+      
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Posts",
+        "item": "https:\/\/www.q7411.xyz\/post/"
+      }
+      
+      
+      ,{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "GFSJ1199-【ReadingSection】",
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/gfsj1199-readingsection\/"
+      }
+      
+    ]
+  }
+  </script>
+  
+  <script>
+    window.SiteConfig = {
+      githubRepo: "Q7411\/Q7411.github.io",
+      avatarUrl: "\/assets\/images\/touxiang.jpg",
+      giscus: {
+        repo: "Q7411\/Q7411.github.io",
+        repoId: "R_kgDOR8Bf7A",
+        category: "General",
+        categoryId: "DIC_kwDOR8Bf7M4C6WUW",
+        enabled: true
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="site-loader" id="site-loader" role="status" aria-live="polite" aria-label="页面加载中">
+    <div class="site-loader-panel">
+      <img src="../../../assets/images/touxiang.jpg" alt="" class="site-loader-avatar" width="96" height="96" decoding="async">
+      <div class="site-loader-brand">Q7411 CTF blog</div>
+      <div class="site-loader-copy">正在加载页面</div>
+      <div class="site-loader-track" aria-hidden="true">
+        <div class="site-loader-bar"></div>
+      </div>
+    </div>
+  </div>
+  <noscript><style>#site-loader{display:none}</style></noscript>
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="logo">
+        <a href="../../../">Q7411 CTF blog</a>
+      </div>
+      <div class="search-container">
+        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-color-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="search-input" placeholder="Search write-ups..." aria-label="搜索框" style="padding-left: 36px;">
+        <div id="search-results"></div>
+      </div>
+      <nav class="site-nav">
+        <a href="../../../">首页</a>
+        
+        <div class="nav-dropdown">
+          <button class="nav-dropbtn" id="nav-dropbtn" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            博文 
+            <svg class="arrow" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="nav-dropdown-content" id="nav-dropdown-content">
+            <a href="../../../categories/">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              分类
+            </a>
+            <a href="../../../archives/">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              归档
+            </a>
+          </div>
+        </div>
+
+        <a href="../../../about/">关于</a>
+        <a href="../../../guestbook/">留言板</a>
+        <button id="theme-toggle" aria-label="Toggle Dark Mode">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+  <main class="site-main container" id="main-content">
+    
+
+
+
+
+
+
+
+
+<div class="post-layout three-column ">
+  
+  
+  
+    <aside class="post-sidebar-left">
+      <div class="toc-container">
+        
+          
+          
+          
+          
+          <div class="toc-category-name">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: text-bottom;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            攻防世界WP
+          </div>
+          
+          <div class="toc-category-posts">
+            
+            
+            
+            
+            
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+            
+              
+            
+              
+            
+
+            
+            
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+            
+              
+            
+              
+            
+
+             
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      
+      
+      
+        
+        
+          
+        
+        
+      
+    
+  
+
+  
+  
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      
+      
+      
+        
+        
+          
+        
+        
+      
+    
+  
+
+
+
+
+  
+  
+    
+  
+
+  <div class="toc-subcategory-group ">
+    <div class="toc-subcategory-title">
+      <svg class="folder-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span class="subcat-name">中级</span>
+      <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="toc-subcategory-content">
+       
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/babyruby/" class="toc-post-link">babyruby</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0213-leaked-license-64/" class="toc-post-link">GFSJ0213-【leaked-license-64】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/strange-language/" class="toc-post-link">strange language</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/crackeme/" class="toc-post-link">crackeme</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0382-first/" class="toc-post-link">GFSJ0382-【first】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0231-pingpong/" class="toc-post-link">GFSJ0231-【pingpong】</a>
+  </div>
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+    </div>
+  </div>
+
+  
+  
+    
+      
+    
+  
+
+  <div class="toc-subcategory-group open">
+    <div class="toc-subcategory-title">
+      <svg class="folder-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span class="subcat-name">简单</span>
+      <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="toc-subcategory-content">
+       
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+
+
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0076-babyre/" class="toc-post-link">GFSJ0076-【BABYRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0810-crazy/" class="toc-post-link">GFSJ0810-【crazy】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1207-catfly/" class="toc-post-link">GFSJ1207-【CatFly】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0164-elrond32/" class="toc-post-link">GFSJ0164-【elrond32】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1036-crypt/" class="toc-post-link">GFSJ1036-【crypt】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0385-apk-%E9%80%86%E5%90%912/" class="toc-post-link">GFSJ0385-【APK-逆向2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0293-debug/" class="toc-post-link">GFSJ0293-【debug】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0781-mysterious/" class="toc-post-link">GFSJ0781-【Mysterious】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0376-srm-50/" class="toc-post-link">GFSJ0376-【srm-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0004-igniteme/" class="toc-post-link">GFSJ0004-【IgniteMe】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0239-reverseme-120/" class="toc-post-link">GFSJ0239-【ReverseMe-120】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0780-76%E5%8F%B7/" class="toc-post-link">GFSJ0780-【76号】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1035-1000click/" class="toc-post-link">GFSJ1035-【1000Click】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1185-%E5%96%B5%E5%96%B5%E6%83%B3%E4%BD%A0%E5%95%A6/" class="toc-post-link">GFSJ1185-【喵喵想你啦】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0240-reversing-x64elf-100/" class="toc-post-link">GFSJ0240-【Reversing-x64Elf-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0122-secret-string-400/" class="toc-post-link">GFSJ0122-【secret-string-400】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0076-babyre-2/" class="toc-post-link">GFSJ0076-【BABYRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0815-windows_reverse1/" class="toc-post-link">GFSJ0815-【Windows_Reverse1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0381-echo-server/" class="toc-post-link">GFSJ0381-【echo-server】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0366-reverse-for-the-holy-grail-350/" class="toc-post-link">GFSJ0366-【reverse-for-the-holy-grail-350】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0777-testre/" class="toc-post-link">GFSJ0777-【testre】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0492-insanity/" class="toc-post-link">GFSJ0492-【insanity】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/" class="toc-post-link">GFSJ0487-【game】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1064-bad_python/" class="toc-post-link">GFSJ1064-【bad_python】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0866-replace/" class="toc-post-link">GFSJ0866-【Replace】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0419-key/" class="toc-post-link">GFSJ0419-【key】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0884-signin/" class="toc-post-link">GFSJ0884-【SignIn】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0874-666/" class="toc-post-link">GFSJ0874-【666】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0386-newbie_calculations/" class="toc-post-link">GFSJ0386-【Newbie_calculations】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0876-babyxor/" class="toc-post-link">GFSJ0876-【BabyXor】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0779-%E6%A2%85%E6%B4%A5%E7%BE%8E%E6%B2%BB%E9%83%8E/" class="toc-post-link">GFSJ0779-【梅津美治郎】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1130-ezmaze/" class="toc-post-link">GFSJ1130-【ezmaze】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/" class="toc-post-link">GFSJ0104-【babymips】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1065-ereere/" class="toc-post-link">GFSJ1065-【ereere】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1194-stupidorangecat2/" class="toc-post-link">GFSJ1194-【StupidOrangeCat2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1200-bugcat/" class="toc-post-link">GFSJ1200-【BugCat】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0165-tt3441810/" class="toc-post-link">GFSJ0165-【tt3441810】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1100-easyre-xctf/" class="toc-post-link">GFSJ1100-【easyre-xctf】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0489-open-source/" class="toc-post-link">GFSJ0489-【open-source】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0418-gametime/" class="toc-post-link">GFSJ0418-【gametime】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0375-serial-150/" class="toc-post-link">GFSJ0375-【serial-150】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0379-crackme/" class="toc-post-link">GFSJ0379-【crackme】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1037-happyctf/" class="toc-post-link">GFSJ1037-【happyctf】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1038-xxxorrr/" class="toc-post-link">GFSJ1038-【xxxorrr】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0212-catch-me/" class="toc-post-link">GFSJ0212-【catch-me】</a>
+  </div>
+
+  <div class="toc-post-item active">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1199-readingsection/" class="toc-post-link">GFSJ1199-【ReadingSection】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0321-guess-the-number/" class="toc-post-link">GFSJ0321-【Guess-the-Number】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0355-shuffle/" class="toc-post-link">GFSJ0355-【Shuffle】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0812-answer_to_everything/" class="toc-post-link">GFSJ0812-【answer_to_everything】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0365-re-for-50-plz-50/" class="toc-post-link">GFSJ0365-【re-for-50-plz-50】</a>
+  </div>
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+    </div>
+  </div>
+
+          </div>
+        
+      </div>
+      <button class="toc-toggle left" id="toc-toggle-left" aria-label="Toggle Categories">分类</button>
+    </aside>
+  
+
+  
+  <div class="post-content-container">
+    
+      <div class="post-header">
+        <h1 class="post-title">GFSJ1199-【ReadingSection】</h1>
+        <div class="post-meta" style="color: var(--text-color-muted); font-size: 0.9em; margin-bottom: 20px;">
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2026-07-02</span>
+          <span style="margin: 0 8px;">|</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M2 12h4l2-9 5 18 3-9h6"></path></svg>约 1112 字</span>
+          <span style="margin: 0 8px;">|</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>阅读约 6 分钟</span>
+        </div>
+      </div>
+    
+    
+    <article class="post-content" itemscope itemtype="http://schema.org/BlogPosting">
+      <div itemprop="articleBody">
+        <blockquote>
+<p>tea + xor</p>
+</blockquote>
+<p>拿到手发现是一个txt 打开看到是一个LLVM IR文件 我们转成.o文件直接IDA分析</p>
+<p>转换命令</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">copy</span><span class="w"> </span><span class="p">.</span><span class="err">\</span><span class="n">ReadingSection</span><span class="p">.</span><span class="na">txt</span><span class="w"> </span><span class="p">.</span><span class="err">\</span><span class="n">ReadingSection</span><span class="p">.</span><span class="na">ll</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">Get</span><span class="o">-</span><span class="n">Content</span><span class="w"> </span><span class="p">.</span><span class="err">\</span><span class="n">ReadingSection</span><span class="p">.</span><span class="na">ll</span><span class="w"> </span><span class="o">-</span><span class="n">Raw</span><span class="p">)</span><span class="w"> </span><span class="err">`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="o">-</span><span class="n">replace</span><span class="w"> </span><span class="err">&#39;</span><span class="nd">@__const</span><span class="err">\</span><span class="p">.</span><span class="na">main</span><span class="err">\</span><span class="p">.</span><span class="na">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">unnamed_addr</span><span class="w"> </span><span class="n">constant</span><span class="w"> </span><span class="err">\</span><span class="o">[</span><span class="n">33</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">i8</span><span class="err">\</span><span class="o">]</span><span class="w"> </span><span class="n">c</span><span class="s">&#34;CAT Hide Your Flag&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="n">16</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nd">@__const.main.flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">unnamed_addr</span><span class="w"> </span><span class="n">constant</span><span class="w"> </span><span class="o">[</span><span class="n">33</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">i8</span><span class="o">]</span><span class="w"> </span><span class="n">c</span><span class="s">&#34;CAT Hide Your Flag\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="n">16</span><span class="err">&#39;</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">Set</span><span class="o">-</span><span class="n">Content</span><span class="w"> </span><span class="p">.</span><span class="err">\</span><span class="n">ReadingSection</span><span class="p">.</span><span class="na">ll</span><span class="w"> </span><span class="o">-</span><span class="n">Encoding</span><span class="w"> </span><span class="n">ascii</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="o">&amp;</span><span class="w"> </span><span class="s">&#34;C:\msys64\ucrt64\bin\clang.exe&#34;</span><span class="w"> </span><span class="o">-</span><span class="n">x</span><span class="w"> </span><span class="n">ir</span><span class="w"> </span><span class="o">-</span><span class="n">c</span><span class="w"> </span><span class="p">.</span><span class="err">\</span><span class="n">ReadingSection</span><span class="p">.</span><span class="na">ll</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="p">.</span><span class="err">\</span><span class="n">ReadingSection</span><span class="p">.</span><span class="na">o</span><span class="w">
+</span></span></span></code></pre></div><p><figure class="post-figure">
+  <img src="../../../assets/images/image-20260702154005-y3fnrob.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>这个报错不影响</p>
+<p>进去能看到一个tea 一个xor</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">char</span><span class="w"> </span><span class="n">__fastcall</span><span class="w"> </span><span class="nf">check</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">size_t</span><span class="w"> </span><span class="n">v0</span><span class="p">;</span><span class="w"> </span><span class="c1">// rax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v1</span><span class="p">;</span><span class="w"> </span><span class="c1">// ecx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v2</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v3</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v4</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v5</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v6</span><span class="p">;</span><span class="w"> </span><span class="c1">// ecx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v7</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v8</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v9</span><span class="p">;</span><span class="w"> </span><span class="c1">// ecx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v10</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v11</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v12</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v13</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v14</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v15</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v16</span><span class="p">;</span><span class="w"> </span><span class="c1">// ecx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v17</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v18</span><span class="p">;</span><span class="w"> </span><span class="c1">// ecx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v19</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v20</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v22</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v23</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v24</span><span class="p">;</span><span class="w"> </span><span class="c1">// eax</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v25</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+48h] [rbp-38h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v26</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+4Ch] [rbp-34h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">_QWORD</span><span class="w"> </span><span class="n">v27</span><span class="o">[</span><span class="n">5</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+50h] [rbp-30h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v28</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+78h] [rbp-8h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v29</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+7Ch] [rbp-4h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v30</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+80h] [rbp+0h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v31</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+84h] [rbp+4h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v32</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+88h] [rbp+8h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v33</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+8Ch] [rbp+Ch]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v34</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+90h] [rbp+10h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v35</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+94h] [rbp+14h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v36</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+98h] [rbp+18h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v37</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+9Ch] [rbp+1Ch]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v38</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+A0h] [rbp+20h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v39</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+A4h] [rbp+24h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v40</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+A8h] [rbp+28h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v41</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+ACh] [rbp+2Ch]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">__int64</span><span class="w"> </span><span class="n">v42</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+B0h] [rbp+30h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">__int64</span><span class="w"> </span><span class="n">v43</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+B8h] [rbp+38h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">v44</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+C0h] [rbp+40h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">v45</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+C8h] [rbp+48h]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">v46</span><span class="p">;</span><span class="w"> </span><span class="c1">// [rsp+CFh] [rbp+4Fh]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">v45</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">LOBYTE</span><span class="p">(</span><span class="n">v25</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">71</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">yourcat</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">981760591</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v45</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">v0</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">885835314</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_58</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="n">1591015246</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">1564550806</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_45</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">1164989570</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_43</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v22</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1564550806</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v22</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_70</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">1161762662</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_18</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">1115141670</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_26</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="n">981760591</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="n">856038568</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_22</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="n">482200700</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="n">307564033</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">631447468</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">885835314</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="n">v46</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_6</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">yourcat</span><span class="o">[</span><span class="n">v45</span><span class="o">]</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">yourcat</span><span class="o">[</span><span class="n">v45</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">v3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1591015246</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v3</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_79</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_40</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v46</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v20</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1325875719</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v20</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_79</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_24</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">++</span><span class="n">v28</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v12</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1161762662</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v12</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_79</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">2</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v44</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yourcat</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v42</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0x29D3CE1E18BC8A17LL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v43</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0x199C7F4A42F740E3LL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v41</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">684999598</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v5</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_79</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_48</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">1164989570</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_43</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">1161762662</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_18</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">981760591</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">continue</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">482200700</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_24</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="o">-</span><span class="n">307564033</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_40</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="n">631447468</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_32</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="n">684999598</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_12</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="n">885835314</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_6</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">case</span><span class="w"> </span><span class="n">1325875719</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">v46</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_8</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">++</span><span class="n">v45</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">2038647993</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v4</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_70</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="n">1564550806</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_45</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">++</span><span class="n">v26</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v23</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">631447468</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v23</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="n">232488417</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_28</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="n">332476953</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_36</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="n">457966756</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_16</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v40</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v44</span><span class="o">[</span><span class="n">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v41</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v39</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v44</span><span class="o">[</span><span class="n">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v41</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">4</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v38</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v37</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">897810688</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v35</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HIDWORD</span><span class="p">(</span><span class="n">v42</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v36</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v42</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v33</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HIDWORD</span><span class="p">(</span><span class="n">v43</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v34</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v43</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">4</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v31</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v30</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v29</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">20</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v28</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1161762662</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v8</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_79</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">631447468</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="n">800030424</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_47</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="n">1325875719</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">v46</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="n">1842263789</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_30</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v27</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0x7180F7B17D077DAALL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v27</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0x57580710E523AFDALL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v27</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0x567478E6717DF71ELL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v27</span><span class="o">[</span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0x2E3139F31153C09BLL</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v26</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v15</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">631447468</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v15</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_32</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">v16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">800030424</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="n">unsigned</span><span class="w"> </span><span class="n">__int64</span><span class="p">)</span><span class="n">v26</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">0x20</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">332476953</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">v17</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v16</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v17</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_70</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">1</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_79</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="n">1591015246</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_8</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="n">1161762662</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_18</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v9</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1115141670</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v28</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">28</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">v9</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">856038568</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v9</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v10</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">-</span><span class="n">1115141670</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_26</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v44</span><span class="o">[</span><span class="n">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v41</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v40</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v44</span><span class="o">[</span><span class="n">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v41</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">4</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v39</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v13</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">232488417</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v13</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_70</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">-</span><span class="n">856038568</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_22</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v38</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">v37</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v40</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">v35</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">v39</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">v29</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">v32</span><span class="p">)))</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">v38</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v39</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">v36</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">v39</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">v31</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v31</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v39</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">v33</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">v40</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">v30</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">v32</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">2</span><span class="p">)))</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">v38</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v40</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">v34</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">v40</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v31</span><span class="p">)));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v11</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">482200700</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v11</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">232488417</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_28</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="o">++</span><span class="n">v41</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v14</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">684999598</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v14</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">332476953</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_36</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v18</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">1164989570</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">yourcat</span><span class="o">[</span><span class="n">v26</span><span class="o">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="o">*</span><span class="p">((</span><span class="n">_BYTE</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">v27</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v26</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">v18</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">307564033</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v19</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v18</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v19</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_58</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">457966756</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_16</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">684999598</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_12</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1842263789</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v41</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">4</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">v6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">457966756</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v6</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">v7</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_70</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">800030424</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nl">LABEL_47</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v46</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v24</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v25</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1325875719</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v24</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_70</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_48</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">v25</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">1325875719</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">LABEL_30</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">v46</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">k</span><span class="o">=[</span><span class="n">415009303</span><span class="p">,</span><span class="n">701746718</span><span class="p">,</span><span class="n">1123500259</span><span class="p">,</span><span class="n">429686602</span><span class="o">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">=</span><span class="n">bytes</span><span class="p">.</span><span class="na">fromhex</span><span class="p">(</span><span class="s">&#34;aa7d077db1f78071daaf23e5100758571ef77d71e67874569bc05311f339312e&#34;</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p>exp</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">m</span><span class="o">=</span><span class="n">0xffffffff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">k</span><span class="o">=[</span><span class="n">415009303</span><span class="p">,</span><span class="n">701746718</span><span class="p">,</span><span class="n">1123500259</span><span class="p">,</span><span class="n">429686602</span><span class="o">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">d</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">897810688</span><span class="p">)</span><span class="o">&amp;</span><span class="n">m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">=</span><span class="n">bytes</span><span class="p">.</span><span class="na">fromhex</span><span class="p">(</span><span class="s">&#34;aa7d077db1f78071daaf23e5100758571ef77d71e67874569bc05311f339312e&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">r</span><span class="o">=</span><span class="n">bytearray</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="n">32</span><span class="p">,</span><span class="n">8</span><span class="p">):</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">struct</span><span class="p">.</span><span class="na">unpack</span><span class="p">(</span><span class="s">&#34;&lt;II&#34;</span><span class="p">,</span><span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">8</span><span class="o">]</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">s</span><span class="o">=</span><span class="n">d</span><span class="o">*</span><span class="n">28</span><span class="o">&amp;</span><span class="n">m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">28</span><span class="p">):</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">b</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="p">((((</span><span class="n">a</span><span class="o">&lt;&lt;</span><span class="n">4</span><span class="p">)</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="p">)</span><span class="o">^</span><span class="p">((</span><span class="n">a</span><span class="o">+</span><span class="n">s</span><span class="p">)</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="o">^</span><span class="p">((</span><span class="n">a</span><span class="o">&gt;&gt;</span><span class="n">5</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">[</span><span class="n">3</span><span class="o">]</span><span class="p">)))</span><span class="o">&amp;</span><span class="n">m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">a</span><span class="o">=</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="p">((((</span><span class="n">b</span><span class="o">&lt;&lt;</span><span class="n">4</span><span class="p">)</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="p">)</span><span class="o">^</span><span class="p">((</span><span class="n">b</span><span class="o">+</span><span class="n">s</span><span class="p">)</span><span class="o">&amp;</span><span class="n">m</span><span class="p">)</span><span class="o">^</span><span class="p">((</span><span class="n">b</span><span class="o">&gt;&gt;</span><span class="n">5</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="p">)))</span><span class="o">&amp;</span><span class="n">m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">s</span><span class="o">=</span><span class="p">(</span><span class="n">s</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">&amp;</span><span class="n">m</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">r</span><span class="o">+=</span><span class="n">struct</span><span class="p">.</span><span class="na">pack</span><span class="p">(</span><span class="s">&#34;&lt;II&#34;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">=</span><span class="n">bytearray</span><span class="p">(</span><span class="n">32</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">f</span><span class="o">[</span><span class="n">31</span><span class="o">]=</span><span class="n">r</span><span class="o">[</span><span class="n">31</span><span class="o">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">range</span><span class="p">(</span><span class="n">30</span><span class="p">,</span><span class="o">-</span><span class="n">1</span><span class="p">,</span><span class="o">-</span><span class="n">1</span><span class="p">):</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">f</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">r</span><span class="o">[</span><span class="n">i</span><span class="o">]^</span><span class="n">f</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="n">1</span><span class="o">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="s">&#34;CatCTF{&#34;</span><span class="o">+</span><span class="n">f</span><span class="p">.</span><span class="na">decode</span><span class="p">()</span><span class="o">+</span><span class="s">&#34;}&#34;</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p>flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">CatCTF</span><span class="p">{</span><span class="n">We1C0ME</span><span class="o">-</span><span class="n">2</span><span class="o">-</span><span class="n">CA7C7F</span><span class="err">&#39;</span><span class="n">s_ReVerSe</span><span class="o">-</span><span class="n">W0r1d</span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+      </div>
+    </article>
+
+    
+      <div class="post-navigation">
+        <div class="nav-prev">
+          
+            <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0321-guess-the-number/">← GFSJ0321-【Guess-the-Number】</a>
+          
+        </div>
+        <div class="nav-next">
+          
+            <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0212-catch-me/">GFSJ0212-【catch-me】 →</a>
+          
+        </div>
+      </div>
+    
+
+    
+      <div class="comments" id="comments"
+           data-mapping="specific"
+           data-term="post-GFSJ1199-【ReadingSection】">
+        <h2>评论</h2>
+        <div id="giscus-container"></div>
+        <noscript>
+          <p class="giscus-status is-error">评论区需要启用 JavaScript 后才能加载。</p>
+        </noscript>
+      </div>
+    
+  </div>
+
+  
+  
+    <aside class="post-sidebar-right">
+      <div class="sidebar-author-info">
+        <a href="../../../about/">
+          <img src="../../../assets/images/touxiang.jpg" alt="Q7411" class="sidebar-avatar" width="80" height="80">
+        </a>
+        <div class="sidebar-author-name">Q7411</div>
+        
+          <a href="https://github.com/Q7411" class="github-btn" target="_blank" rel="noopener">GitHub 主页</a>
+        
+      </div>
+
+      <div class="toc-container toc-right">
+        <div class="toc-post-title">本页目录</div>
+        <div class="toc-content-wrapper">
+          <nav id="TableOfContents"></nav>
+        </div>
+      </div>
+      <button class="toc-toggle right" id="toc-toggle-right" aria-label="Toggle Outline">大纲</button>
+    </aside>
+  
+</div>
+
+  </main>
+
+  
+  <div class="fab-container" id="fab-container">
+    <button id="font-size-toggle" class="fab-btn" aria-label="Toggle Font Size" title="切换字体大小">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13"></path><path d="M12 22V8"></path><path d="M8 12h8"></path></svg>
+    </button>
+    <button id="back-to-top" class="fab-btn" aria-label="Back to Top" title="返回顶部">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 2026 Q7411. Powered by Hugo.
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-powershell.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-docker.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" defer></script>
+  
+  
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  
+  
+  <script>
+    
+    window.siteConfig = {
+      searchIndexUrl: "\/index.json"
+    };
+  </script>
+  
+  <script src="../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+</body>
+</html>
