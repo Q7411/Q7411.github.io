@@ -17,7 +17,7 @@ __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx __int64 i
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0212-【catch-me】 - Q7411 CTF blog">
@@ -2691,19 +2691,19 @@ __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx …">
 </span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>动调获取v3 也就是 <code>0xB11924E1</code> 我们xor一下获得 <code>0x4ff2da0a</code></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260702145520-wy0i02t.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260702145520-wy0i02t.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>我们设置一下环境变量 至于ASIS这个 只要不为0好像都行</p>
 <p>在虚拟机里面运行</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">ASIS</span><span class="o">=</span><span class="n">$</span><span class="err">&#39;\</span><span class="n">x0a</span><span class="err">\</span><span class="n">xda</span><span class="err">\</span><span class="n">xf2</span><span class="err">\</span><span class="n">x4f</span><span class="err">&#39;</span><span class="w"> </span><span class="n">CTF</span><span class="o">=</span><span class="n">$</span><span class="err">&#39;\</span><span class="n">x0a</span><span class="err">\</span><span class="n">xda</span><span class="err">\</span><span class="n">xf2</span><span class="err">\</span><span class="n">x4f</span><span class="err">&#39;</span><span class="w"> </span><span class="n">gdb</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="n">Catch_Me</span><span class="w">
 </span></span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260702150124-w0et5m8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260702150124-w0et5m8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>也可以</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">export</span><span class="w"> </span><span class="n">ASIS</span><span class="o">=</span><span class="n">$</span><span class="err">&#39;\</span><span class="n">x0a</span><span class="err">\</span><span class="n">xda</span><span class="err">\</span><span class="n">xf2</span><span class="err">\</span><span class="n">x4f</span><span class="err">&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="n">export</span><span class="w"> </span><span class="n">CTF</span><span class="o">=</span><span class="n">$</span><span class="err">&#39;\</span><span class="n">x0a</span><span class="err">\</span><span class="n">xda</span><span class="err">\</span><span class="n">xf2</span><span class="err">\</span><span class="n">x4f</span><span class="err">&#39;</span><span class="w">
 </span></span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260702150413-okuok57.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260702150413-okuok57.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>运行完成后删除</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">unset</span><span class="w"> </span><span class="n">ASIS</span><span class="w">

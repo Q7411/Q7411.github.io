@@ -19,7 +19,7 @@ dword_E1E8 = 0x1106 dword_E120 = [ 0x27fb, 0x27a4, 0x464e, 0x0e36, 0x7b70, 0x5e7
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ1207-【CatFly】 - Q7411 CTF blog">
@@ -2644,21 +2644,21 @@ dword_E1E8 = 0x1106 dword_E120 = [ 0x27fb, 0x27a4, 0x464e, 0x0e36, 0x7b70, 0x5e7
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">题目是一个elf文件</span> <span class="n">无壳ida打开</span> <span class="n">第一遍没看出来什么</span> <span class="n">运行一下</span> <span class="n">发现中间小猫是循环动</span> <span class="n">而上方的字体不是</span> <span class="n">所以我们去找上方的字体的显示地方</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260518163842-tym7tu4.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260518163842-tym7tu4.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">通过函数调用约定和代码审计来定位到加密函数的位置</span> <span class="n">高端用词</span> <span class="n">哈哈哈哈</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260518171811-7z2xm6i.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260518171811-7z2xm6i.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">加密位置做了一个异或</span> <span class="n">和</span> <span class="n">伪随机数的生成的操作</span> <span class="n">还有对于dword_E1E8的增加</span> <span class="n">遂我们知道了</span> <span class="n">这个题目需要的是爆破而不是解密</span> <span class="n">爆破推荐使用c语言来写</span> <span class="n">而不是python</span> <span class="n">python运行慢</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260518172309-1bzgg78.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260518172309-1bzgg78.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260518172351-zbupie5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260518172351-zbupie5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260528194718-2p6brp2.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260528194718-2p6brp2.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>exp</p>
 <p>从网上扒下来的 哈哈哈 爆破要很久很久 他这个得1亿多次</p>

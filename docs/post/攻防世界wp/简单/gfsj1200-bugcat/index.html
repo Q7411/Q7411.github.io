@@ -27,7 +27,7 @@ dump出来有挺多的花指令
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ1200-【BugCat】 - Q7411 CTF blog">
@@ -2657,14 +2657,14 @@ dump出来有挺多的花指令
 <p>拿到题目查壳发现是一个upx 看十六进制发现变成CAT了 修改回去发现还是脱壳不了 然后尝试手脱壳</p>
 <p>由于是UPX使用ESP定律来手脱壳 在pushad之后下一个硬件断点</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626192922-j455aej.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626192922-j455aej.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626192956-syd8utk.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626192956-syd8utk.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后理想状态是运行到了popad之后 然后找大跳点 但是这次没有到理想状态</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626193108-4tcdhed.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626193108-4tcdhed.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>发现触发了异常 但是我们又不知道哪里触发了异常 我们要去找 一个地方 一个最常见的地方 TLS 回调 也就是作者最容易放暗桩的位置 TLS Callback 是 Windows 加载器在程序正式入口点之前自动执行的函数 也就是我们打开程序的流程是这样的</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">加载</span><span class="w"> </span><span class="n">EXE</span><span class="w">
@@ -2676,26 +2676,26 @@ dump出来有挺多的花指令
 </span></span></span><span class="line"><span class="cl"><span class="n">进入</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">WinMain</span><span class="w">
 </span></span></span></code></pre></div><p>所以我们要在TLS那里下一个断点 也就是设置中的</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626194919-k1t2vp5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626194919-k1t2vp5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>下了之后断点断在了TLS开始的地方我们要往后运行查看有无什么操作</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626195322-cy4xbx7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626195322-cy4xbx7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>运行到这里发现进行了一个条件断点检测 因为下一个条件断点 就是把目标地址原来的第 1 个字节临时改成0xCC 所以我们挺多方法进行绕过的</p>
 <p>我这里选择直接nop</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626195541-iso469d.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626195541-iso469d.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后就运行到了popad后面 发现下面就是一个相对于其他函数的大跳位置 也就是 <code>402FC7</code> 这个位置</p>
 <p>我们进去然后dump出来就好了</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626195806-oii3v4t.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626195806-oii3v4t.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>dump出来有挺多的花指令</p>
 <h3 id="花指令">花指令</h3>
 <p><figure class="post-figure">
-  <img src="assets/image-20260626195915-jm8xf8b.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260626195915-jm8xf8b.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>去除花指令的脚本 让AI写的 有点多 懒得写。。。。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="w">

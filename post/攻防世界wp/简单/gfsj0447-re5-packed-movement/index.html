@@ -22,7 +22,7 @@ import ida_bytes start = 0x8048000 end = 0x8061000 charset = b&#34;0123456789abc
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0447-【re5-packed-movement】 - Q7411 CTF blog">
@@ -2655,7 +2655,7 @@ import ida_bytes start = 0x8048000 end = 0x8061000 charset = b&#34;0123456789abc
 <p>所以我们还是使用混淆版本的来求解</p>
 <p>进去查看字符串 很少 能看到有两个wrong 和 两个 well 我们可以查看一下调用</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260711100901-4xgned8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260711100901-4xgned8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>能看到有一个 wrong 是有很多调用的 那么movfuscator 混淆 是将全部都转成mov 那也就意味着 for while 这一类的循环也是被很多的mov来转义了 那这个很多的wrong 是不是很像 这类的比较</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">u_i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="w">
@@ -2666,7 +2666,7 @@ import ida_bytes start = 0x8048000 end = 0x8061000 charset = b&#34;0123456789abc
 </span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="n">exit</span><span class="p">()</span><span class="w">
 </span></span></span></code></pre></div><p>所以我们能看到 如此类的赋值 在wrong的上面 不禁让我膜拜大佬 太厉害了</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260711101418-wuhkxc7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260711101418-wuhkxc7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>可以ALT+B 来找这样的指令 但是这样效率很慢 所以我们使用ida脚本 ()</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">ida_bytes</span><span class="w">
@@ -2686,7 +2686,7 @@ import ida_bytes start = 0x8048000 end = 0x8061000 charset = b&#34;0123456789abc
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="w">
 </span></span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260711101944-j7de72e.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260711101944-j7de72e.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>flag</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">ALEXCTF</span><span class="p">{</span><span class="n">M0Vfusc4t0r_w0rk5_l1ke_m4g1c</span><span class="p">}</span><span class="w">

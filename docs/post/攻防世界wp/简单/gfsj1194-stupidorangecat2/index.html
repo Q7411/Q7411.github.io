@@ -23,7 +23,7 @@ int sub_401ED0() { int i; // [esp&#43;D0h] [ebp-20h] int flOldProtect[2]; // [es
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ1194-【StupidOrangeCat2】 - Q7411 CTF blog">
@@ -2647,30 +2647,30 @@ int sub_401ED0() { int i; // [esp&#43;D0h] [ebp-20h] int flOldProtect[2]; // [es
 </blockquote>
 <p>一个很好的题目 出题人很有水平 拿到题目先运行 这个先运行 其实没啥大问题 除了有些出题人脑残做了个勒索或者一个病毒放在里面 需要你来解密那种不能运行 不过一般都有提醒的 说多了都是痛 给我电脑整重装系统了</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260611180731-pbqjri7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611180731-pbqjri7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>好了言归正传  简单玩了一下能看到 要求输入了一个翻译 能看出来这个只有两个字 而且有分割 所以猜测是摩斯 解密出来真是摩斯</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260611181541-zi359vl.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611181541-zi359vl.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>喵呜喵呜/呜喵/喵/呜呜喵喵呜喵/呜呜/喵呜/呜呜喵喵呜喵/喵呜呜喵/呜呜喵喵呜喵/呜喵喵喵喵/喵喵喵喵呜/呜呜喵喵呜喵/喵呜喵喵/呜呜喵喵呜喵/呜呜呜喵喵/喵喵喵喵呜</p>
 <p>喵 \ <code>-</code> 呜 \ <code>.</code> / = <code> </code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="o">-.-.</span> <span class="o">.-</span> <span class="o">-</span> <span class="o">..--.-</span> <span class="o">..</span> <span class="o">-.</span> <span class="o">..--.-</span> <span class="o">-..-</span> <span class="o">..--.-</span> <span class="o">.----</span> <span class="o">----.</span> <span class="o">..--.-</span> <span class="o">-.--</span> <span class="o">..--.-</span> <span class="o">...--</span> <span class="o">----.</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">CAT_IN_X_19_Y_39</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260611183038-f636xw7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611183038-f636xw7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>到下一个路径 也就是要找key</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260611183510-ibmiog9.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611183510-ibmiog9.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>ida打开 我们能看到是 有很多提示的 有flag</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260611190503-5hqn2wq.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611190503-5hqn2wq.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>我们去找key 看看哪里调用了 发现无法反编译 往下看看 能看到一团不能反编译的东西 再往下还有</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260611191209-cpyg1or.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611191209-cpyg1or.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>我们再往下看是谁调用了下面一坨东西</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">sub_401ED0</span><span class="p">()</span>
@@ -3083,7 +3083,7 @@ int sub_401ED0() { int i; // [esp&#43;D0h] [ebp-20h] int flOldProtect[2]; // [es
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>然后找到了这句话 发现前面有一个字符串 应该是key 然后进去到加密函数里面 发现是一个SM4 <code>byte_4531F0</code> 是 SM4 S-box <code>byte_4532F0</code> 是 FK <code>byte_453300</code> 是 CK 然后找一下魔改点 发现没有 我们直接去解密</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260611201747-v8hnpa5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260611201747-v8hnpa5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后接着去解 就可以了</p>
 <p>flag</p>

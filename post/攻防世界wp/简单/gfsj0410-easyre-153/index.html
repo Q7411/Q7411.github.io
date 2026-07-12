@@ -18,7 +18,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int pipedes[2
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0410-【easyre-153】 - Q7411 CTF blog">
@@ -2644,7 +2644,7 @@ int __cdecl main(int argc, const char **argv, const char …">
 </blockquote>
 <p>查壳发现是 UPX 我们直接去脱壳 由于是ELF文件 所以可以实用kali自带的upx软件来脱壳 也是upx -d <del>(其实是我win版的upx 怎么试都没脱下来)</del></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260710153245-rzil0ax.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260710153245-rzil0ax.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>main函数</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="w"> </span><span class="n">__cdecl</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">envp</span><span class="p">)</span><span class="w">
@@ -2714,7 +2714,7 @@ pipedes[1]  // 写入端
 </span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>但是看流程图发现 有很多 但是只显示了一个flag_is_not_here 我们看看</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260710162005-dps05ue.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260710162005-dps05ue.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>发现是 有一个恒跳转 那我们nop一下 就好了</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">mov</span><span class="w">     </span><span class="o">[</span><span class="n">ebp</span><span class="o">+</span><span class="n">var_D</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">al</span><span class="w">

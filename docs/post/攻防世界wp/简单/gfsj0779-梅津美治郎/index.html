@@ -17,7 +17,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { const CHAR *v
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0779-【梅津美治郎】 - Q7411 CTF blog">
@@ -2641,7 +2641,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { const CHAR *v
 </blockquote>
 <p>简单看一下main函数 运行一下 考点是第二段密码 所以我们去找相对应的解密函数</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260610202449-dytdscm.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260610202449-dytdscm.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">__cdecl</span> <span class="n">main</span><span class="p">(</span><span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -2798,16 +2798,16 @@ __debugbreak();
 </code></pre><p><code>__debugbreak()</code> 会触发异常，从而进入 VEH 回调函数 <code>sub_40157F</code></p>
 <p>所以我们就知道 来动调一下看看吧 到这里就能看到他的值是多少了</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260610204026-m9emx8e.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260610204026-m9emx8e.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260610204112-w5yhswv.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260610204112-w5yhswv.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">u1nnf2lg</span>
 </span></span></code></pre></div><p>异或2可得</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">w3lld0ne</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260610204227-yejv2lw.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260610204227-yejv2lw.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure>flag</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">flag</span><span class="p">{</span><span class="n">r0b0RUlez</span><span class="err">!</span><span class="n">_w3lld0ne</span><span class="p">}</span>
 </span></span></code></pre></div>

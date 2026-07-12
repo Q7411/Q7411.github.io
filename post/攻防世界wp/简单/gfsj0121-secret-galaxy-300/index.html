@@ -20,7 +20,7 @@ int __libc_csu_gala() { int result; // eax sc = off_409014; unk_40DAA4 = &amp;by
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0121-【secret-galaxy-300】 - Q7411 CTF blog">
@@ -2646,11 +2646,11 @@ They say there is an inhabited galaxy next to ours.We&#39;ve got a strange progr
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">They</span><span class="w"> </span><span class="n">say</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">inhabited</span><span class="w"> </span><span class="n">galaxy</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">ours</span><span class="p">.</span><span class="na">We</span><span class="err">&#39;</span><span class="n">ve</span><span class="w"> </span><span class="n">got</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">strange</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">gives</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">nearby</span><span class="w"> </span><span class="n">galaxies</span><span class="p">.</span><span class="w"> </span><span class="n">At</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">glance</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">would</span><span class="w"> </span><span class="n">think</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">says</span><span class="w"> </span><span class="n">nothing</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="n">one</span><span class="p">...</span><span class="w">
 </span></span></span></code></pre></div><p>这一题給了三个附件 然后运行一下exe文件 給了5个地标 然后ida打开看了看没啥东西 再看第一个elf文件 也是一样的 然后看第二个elf 发现有不一样的</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260711103225-8zeaizn.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260711103225-8zeaizn.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>不一样的点是 他出现了第六个星系 那么我们的题目简介也说了 秘密的星系</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260711103425-kffno53.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260711103425-kffno53.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>查看调用 发现了flag格式 因为有下划线 哈哈哈哈</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">int</span><span class="w"> </span><span class="nf">__libc_csu_gala</span><span class="p">()</span><span class="w">

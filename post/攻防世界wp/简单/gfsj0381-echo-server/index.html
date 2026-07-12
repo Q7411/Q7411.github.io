@@ -24,7 +24,7 @@ F8C60EB40BF66919A77C4BD88D45DEF4 ">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0381-【echo-server】 - Q7411 CTF blog">
@@ -2654,32 +2654,32 @@ F8C60EB40BF66919A77C4BD88D45DEF4 ">
 </blockquote>
 <p>打开到这里 第一个nop点位 然后对下面的一坨按u+p</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260604215035-y7pwxs1.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260604215035-y7pwxs1.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后变这样 发现是一个jmp永跳 跳的还是它下一位 所以按u 然后nop第一个字节就可以</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260604215305-fxz27uf.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260604215305-fxz27uf.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后再按u+p 这样</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260604215430-ly1fbop.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260604215430-ly1fbop.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>能看到这个永跳了一个错误地址按u看看</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260605134734-9zf0cnp.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260605134734-9zf0cnp.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>发现是一个字符串 <code>F1@gA</code> 看下面cmp 是正确的字符串 通过了但是没有给flag 程序也退出了</p>
 <p>这个patch掉E8</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260605150121-xcj224w.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260605150121-xcj224w.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>同时能看到上面的有一个跳转 根据<code>dword_804A088</code> 我们查看调用发现传了一个 1 那我们把jzpatch成jmp那不就好了吗  然后运行输入解出flag</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260605152141-2btu6rw.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260605152141-2btu6rw.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>运行如果出错了 如下报错可运行如下命令 <code>~/Desktop/ida9.3</code> 这个是我自己的文件夹路径</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260605134252-0txpgbg.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260605134252-0txpgbg.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">architecture</span> <span class="n">i386</span>
 </span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
@@ -2699,7 +2699,7 @@ F8C60EB40BF66919A77C4BD88D45DEF4 ">
 </span></span><span class="line"><span class="cl"><span class="n">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&#34;$HOME/ctf-libcrypto10/usr/lib/i386-linux-gnu:$HOME/ctf-libcrypto10/lib/i386-linux-gnu&#34;</span> \
 </span></span><span class="line"><span class="cl"><span class="o">./</span><span class="n">flower_removed_bypass</span><span class="o">.</span><span class="n">elf</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260604215619-je2z8vo.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260604215619-je2z8vo.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>flag</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">F8C60EB40BF66919A77C4BD88D45DEF4</span>

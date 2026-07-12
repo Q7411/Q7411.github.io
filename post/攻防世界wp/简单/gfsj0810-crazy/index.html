@@ -17,7 +17,7 @@ flag{tMx~qdstOs~crvtwb~aOba}qddtbrtcd} ">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0810-【crazy】 - Q7411 CTF blog">
@@ -2639,13 +2639,13 @@ flag{tMx~qdstOs~crvtwb~aOba}qddtbrtcd} ">
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">拿到题目查壳发现是C</span><span class="o">++</span><span class="n">写的</span> <span class="n">IDA打开</span> <span class="n">其实主要的就是我画框的位置</span> <span class="n">找到关键点就行</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260518133918-jstasp7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260518133918-jstasp7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">HighTemplar</span><span class="p">::</span><span class="n">HighTemplar</span> <span class="n">里面存放着密文</span> <span class="s2">&#34;327a6c4304ad5938eaf0efb6cc3e53dc&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">其中有三个迷惑点</span> <span class="n">就是func1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="n">其实也很好看出来</span> <span class="n">因为下面就是一个判断</span> <span class="n">v23</span> <span class="n">而func都没有加密v23</span>
 </span></span><span class="line"><span class="cl"><span class="n">HighTemplar</span><span class="p">::</span><span class="n">calculate</span> <span class="n">里面存放着加密逻辑</span> <span class="n">很简单的加密</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260518140215-89daja7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260518140215-89daja7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>exp</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;327a6c4304ad5938eaf0efb6cc3e53dc&#39;</span>

@@ -27,7 +27,7 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { size_t v3; 
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0876-【BabyXor】 - Q7411 CTF blog">
@@ -2707,7 +2707,7 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { size_t v3; 
 <p>手脱壳</p>
 </blockquote>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609201908-8fppkct.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609201908-8fppkct.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>为什么说是自写壳呢 关键是这一行</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="p">(</span><span class="n">Heur</span><span class="p">)</span> <span class="n">Packer</span><span class="p">:</span> <span class="n">Generic</span> <span class="p">[</span><span class="n">Pushal</span> <span class="n">at</span> <span class="n">EP</span> <span class="o">+</span> <span class="n">Last</span> <span class="n">section</span> <span class="n">EP</span><span class="p">]</span>
@@ -2716,33 +2716,33 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { size_t v3; 
 入口点可能在最后一个 section
 </code></pre><p>哎呀 其实是你die查壳之后打开IDA发现怎么没法反编译啊 又没有SMC 又没有花指令 但是有函数没法反编译 这时候就想到自写壳了 哈哈哈哈</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609211351-idtkyll.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609211351-idtkyll.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 
 <p>ESP定律 这个里面有介绍 这里只实操</p>
 <p>由于是32位程序 我使用的是ollydbg 吾爱破解的</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609210533-jnk0big.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609210533-jnk0big.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>能看到开头就是pushad 运行一下让他压栈</p>
 <p>然后右击ESP 在数据内存转到</p>
 <p>然后</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609210658-6g9ah3v.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609210658-6g9ah3v.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后F9运行</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609210739-kiv56xw.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609210739-kiv56xw.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>然后右击<figure class="post-figure">
-  <img src="assets/image-20260609210752-bgbrwa1.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609210752-bgbrwa1.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609210800-975w5u8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609210800-975w5u8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>直接脱壳保存 有一个方式一方式二 方式一脱完壳不能运行但可以静态分析 方式二都可以 脱完壳的</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260609205002-6qdoxrn.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260609205002-6qdoxrn.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <ol>
 <li>静态分析</li>
@@ -2854,13 +2854,13 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { size_t v3; 
 <p>由于我们能看到都是异或 然后通过查看最后一个main里面的最后一个函数能看到是一个拼接函数 那拼接肯定会有显示呀 所以我们直接在这里下断点</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">sub_40101E</span><span class="p">(</span><span class="n">v8</span><span class="p">,</span> <span class="n">Src</span><span class="p">,</span> <span class="n">v5</span><span class="p">);</span>
 </span></span></code></pre></div><p><figure class="post-figure">
-  <img src="assets/image-20260610201255-23lhamc.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260610201255-23lhamc.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>flag</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">flag</span><span class="p">{</span><span class="mi">2378</span><span class="n">b077</span><span class="o">-</span><span class="mi">7</span><span class="n">d6e</span><span class="o">-</span><span class="mi">4564</span><span class="o">-</span><span class="n">bdca</span><span class="o">-</span><span class="mi">7</span><span class="n">eec8eede9a2</span><span class="p">}</span>
 </span></span></code></pre></div><p>一把梭</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260610201545-ym7p0z8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260610201545-ym7p0z8.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 
       </div>

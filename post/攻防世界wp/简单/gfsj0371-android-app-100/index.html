@@ -17,7 +17,7 @@ package com.example.ctf2; import android.app.Activity; import android.os.Build; 
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
   
   
   <meta property="og:title" content="GFSJ0371-【android-app-100】 - Q7411 CTF blog">
@@ -2937,7 +2937,7 @@ package com.example.ctf2; import android.app.Activity; import android.os.Build; 
 </span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>那么我们直接打开apk 输入这个验证码 就能出flag 但是我输入进去显示错误呢 有无大佬讲解一波</p>
 <p><figure class="post-figure">
-  <img src="assets/image-20260711211032-x51q00t.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+  <img src="../../../../assets/images/image-20260711211032-x51q00t.png" alt="image"  loading="lazy" decoding="async" class="post-img">
 </figure></p>
 <p>那我么就逆一下他的逻辑吧 能看到 <code>processObjectArrayFromNative</code>函数返回了 return v26; 同时v26 = *v22; 然后</p>
 <p><code>*v22 = 92060626;</code> 所以 processObjectArrayFromNative就会返回 92060626;</p>
