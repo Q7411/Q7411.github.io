@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@ __int64 __fastcall main() { _main(); printf(&#34;Welcome to the maze game. Try t
 bool __fastcall check(char *ch_0) { int v2; // eax char *v3; // rcx unsigned int v4; // r8d unsigned int v5; // edx char *v6; // r11 char v7; // al v2 = strlen(ch_0); if ( v2 &gt; 0 ) { v3 = ch_0; v4 = 0; v5 = 0; v6 = &amp;ch_0[v2 - 1 &#43; 1]; while ( 1 ) { v7 = *v3; if ( *v3 == 115 ) { &#43;&#43;v5; } else if ( v7 &gt; 115 ) { if ( v7 != 119 ) return 0; --v5; } else if ( v7 == 97 ) { --v4; } else { if ( v7 != 100 ) return 0; &#43;&#43;v4; } if ( !realmap[10 * v5 &#43; v4] || v5 &gt; 9 || v4 &gt; 9 ) break; if ( v6 == &#43;&#43;v3 ) return v4 == 9 &amp;&amp; v5 == 9; } } return 0; } 生成表的函数
 ">
   <title>GFSJ1130-【ezmaze】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1130-ezmaze/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1130-ezmaze/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ1130-【ezmaze】 - Q7411 CTF blog">
@@ -26,15 +26,15 @@ bool __fastcall check(char *ch_0) { int v2; // eax char *v3; // rcx unsigned int
 main函数
 __int64 __fastcall main() { _main(); printf(&#34;Welcome to the maze game. Try to get out of the maze and get the flag.\n&#34;); initmap(); …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1130-ezmaze/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1130-ezmaze/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1130-【ezmaze】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 迷宫
 main函数
 __int64 __fastcall main() { _main(); printf(&#34;Welcome to the maze game. Try to get out of the maze and get the flag.\n&#34;); initmap(); …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -57,14 +57,14 @@ __int64 __fastcall main() { _main(); printf(&#34;Welcome to the maze game. Try t
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -72,7 +72,7 @@ __int64 __fastcall main() { _main(); printf(&#34;Welcome to the maze game. Try t
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1130-【ezmaze】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1130-ezmaze\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1130-ezmaze\/"
       }
       
     ]
@@ -88,7 +88,7 @@ __int64 __fastcall main() { _main(); printf(&#34;Welcome to the maze game. Try t
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

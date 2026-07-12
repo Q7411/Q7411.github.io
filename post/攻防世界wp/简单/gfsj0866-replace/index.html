@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@ main
 int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr00_4 char Buffer[40]; // [esp&#43;4h] [ebp-2Ch] BYREF memset(Buffer, 0, sizeof(Buffer)); printf(&#34;Welcome The System\nPlease Input Key:&#34;); gets_s(Buffer, 0x28u); v3 = strlen(Buffer); if ( (unsigned int)(v3 - 35) &lt;= 2 ) { if ( sub_401090((int)Buffer, v3) == 1 ) printf(&#34;Well Done!\n&#34;); else printf(&#34;Your Wrong!\n&#34;); } return 0; } int __fastcall sub_401090(int a1, int a2) { int v4; // edx char v5; // al int v6; // esi int v7; // edi char v8; // al int v9; // eax char v10; // cl int v11; // eax int v12; // ecx if ( a2 != 35 ) return -1; v4 = 0; while ( 1 ) { v5 = *(_BYTE *)(v4 &#43; a1); v6 = (v5 &gt;&gt; 4) % 16; // 高四位 v7 = ((16 * v5) &gt;&gt; 4) % 16; // 低四位 v8 = a2a49f69c38395c[2 * v4]; if ( v8 &lt; 48 || v8 &gt; 57 ) v9 = v8 - 87; else // &#39;0&#39; ~ &#39;9&#39; 转成 0 ~ 9 &#39;a&#39; ~ &#39;f&#39; 转成 10 ~ 15 v9 = v8 - 48; v10 = a2a49f69c38395c[2 * v4 &#43; 1]; v11 = 16 * v9; if ( v10 &lt; 48 || v10 &gt; 57 ) v12 = v10 - 87; // 同上 else v12 = v10 - 48; if ( (unsigned __int8)RijnDael_AES_LONG_4021A0[16 * v6 &#43; v7] != ((v11 &#43; v12) ^ 0x19) ) break; if ( &#43;&#43;v4 &gt;= 35 ) return 1; } return -1; } 这段校验本质是对每个输入字符做一次 AES S-box 查表 然后和密文异或 0x19 后比较 直接反查 S-box 就能还原 35 字节输入
 ">
   <title>GFSJ0866-【Replace】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0866-replace/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0866-replace/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0866-【Replace】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr
 main
 int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr00_4 char Buffer[40]; // [esp&#43;4h] [ebp-2Ch] …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0866-replace/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0866-replace/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0866-【Replace】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" UPX &#43;AES S-box 查表
 main
 int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr00_4 char Buffer[40]; // [esp&#43;4h] [ebp-2Ch] …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0866-【Replace】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0866-replace\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0866-replace\/"
       }
       
     ]
@@ -87,7 +87,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // kr
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@ main函数
 int __cdecl main(int argc, const char **argv, const char **envp) { int pipedes[2]; // [esp&#43;18h] [ebp-38h] BYREF __pid_t v5; // [esp&#43;20h] [ebp-30h] int v6; // [esp&#43;24h] [ebp-2Ch] BYREF _BYTE buf[30]; // [esp&#43;2Eh] [ebp-22h] BYREF unsigned int v8; // [esp&#43;4Ch] [ebp-4h] v8 = __readgsdword(0x14u); pipe(pipedes); v5 = fork(); if ( !v5 ) { puts(&#34;\nOMG!!!! I forgot kid&#39;s id&#34;); write(pipedes[1], &#34;69800876143568214356928753&#34;, 0x1Du); puts(&#34;Ready to exit &#34;); exit(0); } read(pipedes[0], buf, 0x1Du); __isoc99_scanf(&#34;%d&#34;, &amp;v6); if ( v6 == v5 ) { if ( loc_80485F7 == 204 ) { puts(&#34;:D&#34;); exit(1); } printf(&#34;\nYou got the key\n &#34;); lol(buf); } wait(nullptr); return 0; } 能看到一个进程判断 一个软断点判断
 ">
   <title>GFSJ0410-【easyre-153】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0410-【easyre-153】 - Q7411 CTF blog">
@@ -27,8 +27,8 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int pipedes[2
 main函数
 int __cdecl main(int argc, const char **argv, const char …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0410-【easyre-153】 - Q7411 CTF blog">
@@ -36,7 +36,7 @@ int __cdecl main(int argc, const char **argv, const char …">
 查壳发现是 UPX 我们直接去脱壳 由于是ELF文件 所以可以实用kali自带的upx软件来脱壳 也是upx -d (其实是我win版的upx 怎么试都没脱下来)
 main函数
 int __cdecl main(int argc, const char **argv, const char …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@ int __cdecl main(int argc, const char **argv, const char …">
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -74,7 +74,7 @@ int __cdecl main(int argc, const char **argv, const char …">
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0410-【easyre-153】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0410-easyre-153\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0410-easyre-153\/"
       }
       
     ]
@@ -90,7 +90,7 @@ int __cdecl main(int argc, const char **argv, const char …">
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@ main函数 能看到我们的比较是比较一个md5值 一般这种题目都�
 int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; // [rsp&#43;1Ch] [rbp-104h] BYREF int v6; // [rsp&#43;20h] [rbp-100h] BYREF signed int i; // [rsp&#43;24h] [rbp-FCh] unsigned int seed; // [rsp&#43;28h] [rbp-F8h] int v9; // [rsp&#43;2Ch] [rbp-F4h] _BYTE v10[96]; // [rsp&#43;30h] [rbp-F0h] BYREF char v11[16]; // [rsp&#43;90h] [rbp-90h] BYREF char v12[32]; // [rsp&#43;A0h] [rbp-80h] BYREF char s[32]; // [rsp&#43;C0h] [rbp-60h] BYREF char s1[40]; // [rsp&#43;E0h] [rbp-40h] BYREF unsigned __int64 v15; // [rsp&#43;108h] [rbp-18h] v15 = __readfsqword(0x28u); seed = 0; puts(&#34;Welcome to Pub Zorro!!&#34;); printf(&#34;Straight to the point. How many drinks you want?&#34;); __isoc99_scanf(&#34;%d&#34;, &amp;v5); if ( v5 &lt;= 0 ) { printf(&#34;You are too drunk!! Get Out!!&#34;); exit(-1); } printf(&#34;OK. I need details of all the drinks. Give me %d drink ids:&#34;, v5); for ( i = 0; i &lt; v5; &#43;&#43;i ) { __isoc99_scanf(&#34;%d&#34;, &amp;v6); if ( v6 &lt;= 16 || v6 &gt; 0xFFFF ) { puts(&#34;Invalid Drink Id.&#34;); printf(&#34;Get Out!!&#34;); exit(-1); } seed ^= v6; } i = seed; v9 = 0; while ( i ) { &#43;&#43;v9; i &amp;= i - 1; } if ( v9 != 10 ) { puts(&#34;Looks like its a dangerous combination of drinks right there.&#34;); puts(&#34;Get Out, you will get yourself killed&#34;); exit(-1); } srand(seed); MD5_Init(v10); for ( i = 0; i &lt;= 29; &#43;&#43;i ) { v9 = rand() % 1000; sprintf(s, &#34;%d&#34;, v9); v3 = strlen(s); MD5_Update((__int64)v10, (__int64)s, v3); v12[i] = v9 ^ LOBYTE(dword_6020C0[i]); } v12[i] = 0; MD5_Final(v11, v10); for ( i = 0; i &lt;= 15; &#43;&#43;i ) sprintf(&amp;s1[2 * i], &#34;%02x&#34;, (unsigned __int8)v11[i]); if ( strcmp(s1, &#34;5eba99aff105c9ff6a1a913e343fec67&#34;) ) { puts(&#34;Try different mix, This mix is too sloppy&#34;); exit(-1); } return printf(&#34;\nYou choose right mix and here is your reward: The flag is nullcon{%s}\n&#34;, v12); } 然后第一个接收 收了一个总数 然后第二个接收 是drink id 然后对每一个id进行xor 然后有一个判断 v9 必须等于10 那v9是什么呢
 ">
   <title>GFSJ0202-【zorropub】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0202-zorropub/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0202-zorropub/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0202-【zorropub】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; //
 main函数 能看到我们的比较是比较一个md5值 一般这种题目都是爆破
 int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; // [rsp&#43;1Ch] [rbp-104h] …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0202-zorropub/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0202-zorropub/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0202-【zorropub】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 寻找seed
 main函数 能看到我们的比较是比较一个md5值 一般这种题目都是爆破
 int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; // [rsp&#43;1Ch] [rbp-104h] …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; //
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; //
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0202-【zorropub】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0202-zorropub\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0202-zorropub\/"
       }
       
     ]
@@ -87,7 +87,7 @@ int __fastcall main(int a1, char **a2, char **a3) { size_t v3; // rax int v5; //
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

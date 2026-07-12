@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@ int __fastcall main(int argc, const char **argv, const char **envp) { unsigned i
 __int64 __fastcall sub_140001120(_DWORD *a1, __int64 a2, int a3) { __int64 result; // rax int i; // [rsp&#43;0h] [rbp-28h] int j; // [rsp&#43;0h] [rbp-28h] int v6; // [rsp&#43;4h] [rbp-24h] int v7; // [rsp&#43;8h] [rbp-20h] int v8; // [rsp&#43;Ch] [rbp-1Ch] _DWORD *v9; // [rsp&#43;10h] [rbp-18h] *a1 = 0; a1[1] = 0; v9 = a1 &#43; 2; for ( i = 0; i &lt; 256; &#43;&#43;i ) v9[i] = i; v6 = 0; result = 0; LOBYTE(v7) = 0; for ( j = 0; j &lt; 256; &#43;&#43;j ) { v8 = v9[j]; v7 = (unsigned __int8)(*(_BYTE *)(a2 &#43; v6) &#43; v8 &#43; v7); v9[j] = v9[v7]; v9[v7] = v8; if ( &#43;&#43;v6 &gt;= a3 ) v6 = 0; result = (unsigned int)(j &#43; 1); } return result; } int *__fastcall sub_140001240(int *a1, __int64 a2, int a3) { int i; // [rsp&#43;0h] [rbp-28h] int v5; // [rsp&#43;4h] [rbp-24h] int v6; // [rsp&#43;8h] [rbp-20h] int v7; // [rsp&#43;Ch] [rbp-1Ch] int v8; // [rsp&#43;10h] [rbp-18h] _DWORD *v9; // [rsp&#43;18h] [rbp-10h] v5 = *a1; v6 = a1[1]; v9 = a1 &#43; 2; for ( i = 0; i &lt; a3; &#43;&#43;i ) { v5 = (unsigned __int8)(v5 &#43; 1); v7 = v9[v5]; v6 = (unsigned __int8)(v7 &#43; v6); v8 = v9[v6]; v9[v5] = v8; v9[v6] = v7; *(_BYTE *)(a2 &#43; i) ^= LOBYTE(v9[(unsigned __int8)(v8 &#43; v7)]); } *a1 = v5; a1[1] = v6; return a1; } 数据
 ">
   <title>GFSJ1036-【crypt】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1036-crypt/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1036-crypt/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ1036-【crypt】 - Q7411 CTF blog">
@@ -26,15 +26,15 @@ __int64 __fastcall sub_140001120(_DWORD *a1, __int64 a2, int a3) { __int64 resul
 main
 int __fastcall main(int argc, const char **argv, const char **envp) { unsigned int v3; // eax unsigned int v4; // eax void *v5; // rax …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1036-crypt/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1036-crypt/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1036-【crypt】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" ^&#43;rc4
 main
 int __fastcall main(int argc, const char **argv, const char **envp) { unsigned int v3; // eax unsigned int v4; // eax void *v5; // rax …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -57,14 +57,14 @@ int __fastcall main(int argc, const char **argv, const char **envp) { unsigned i
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -72,7 +72,7 @@ int __fastcall main(int argc, const char **argv, const char **envp) { unsigned i
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1036-【crypt】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1036-crypt\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1036-crypt\/"
       }
       
     ]
@@ -88,7 +88,7 @@ int __fastcall main(int argc, const char **argv, const char **envp) { unsigned i
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@
 int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream *v3; // eax std::ostream *v4; // eax std::ostream *v6; // eax std::ostream *v7; // eax unsigned __int8 *v8; // [esp&#43;5Ch] [ebp-70h] unsigned __int8 *v9; // [esp&#43;60h] [ebp-6Ch] main::__l2::&lt;lambda_7686c8adb828765130ce2b0d457195d9&gt; cmp; // [esp&#43;68h] [ebp-64h] BYREF unsigned __int8 key[24]; // [esp&#43;6Ch] [ebp-60h] BYREF char item; // [esp&#43;87h] [ebp-45h] char *v13; // [esp&#43;88h] [ebp-44h] char *v14; // [esp&#43;8Ch] [ebp-40h] std::string *p_str; // [esp&#43;90h] [ebp-3Ch] main::__l2::&lt;lambda_1b3a4e77a09e1a7ed440bad3aa4c443b&gt; add; // [esp&#43;94h] [ebp-38h] BYREF std::vector&lt;unsigned char&gt; v; // [esp&#43;98h] [ebp-34h] BYREF std::string str; // [esp&#43;A4h] [ebp-28h] BYREF int v19; // [esp&#43;C8h] [ebp-4h] std::string::string(&amp;str); v19 = 0; v3 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;please input flag&#34;); std::ostream::operator&lt;&lt;(v3, std::endl&lt;char,std::char_traits&lt;char&gt;&gt;); std::operator&gt;&gt;&lt;char&gt;(&amp;std::cin, &amp;str); if ( std::string::length(&amp;str) == 24 ) // flaglen(24) { std::vector&lt;unsigned char&gt;::vector&lt;unsigned char&gt;(&amp;v); LOBYTE(v19) = 1; lambda_1b3a4e77a09e1a7ed440bad3aa4c443b_::_lambda_1b3a4e77a09e1a7ed440bad3aa4c443b_(&amp;add, &amp;v); p_str = &amp;str; v14 = std::string::_Unchecked_begin(&amp;str); v13 = std::string::_Unchecked_end(&amp;str); while ( v14 != v13 ) { item = *v14; lambda_1b3a4e77a09e1a7ed440bad3aa4c443b_::operator()(&amp;add, item); &#43;&#43;v14; } qmemcpy(key, &#34;rxusoCqxw{yqK`{KZqag{r`i&#34;, sizeof(key)); lambda_7686c8adb828765130ce2b0d457195d9_::_lambda_7686c8adb828765130ce2b0d457195d9_( &amp;cmp, (unsigned __int8 (*)[24])key); v9 = std::vector&lt;unsigned char&gt;::_Unchecked_begin(&amp;v); v8 = std::vector&lt;unsigned char&gt;::_Unchecked_end(&amp;v); while ( v9 != v8 ) { if ( !lambda_7686c8adb828765130ce2b0d457195d9_::operator()(&amp;cmp, *v9) ) { v6 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;error&#34;); std::ostream::operator&lt;&lt;(v6, std::endl&lt;char,std::char_traits&lt;char&gt;&gt;); LOBYTE(v19) = 0; std::vector&lt;unsigned char&gt;::~vector&lt;unsigned char&gt;(&amp;v); v19 = -1; std::string::~string(&amp;str); return 0; } &#43;&#43;v9; } v7 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;good job&#34;); std::ostream::operator&lt;&lt;(v7, std::endl&lt;char,std::char_traits&lt;char&gt;&gt;); LOBYTE(v19) = 0; std::vector&lt;unsigned char&gt;::~vector&lt;unsigned char&gt;(&amp;v); v19 = -1; std::string::~string(&amp;str); return 0; } else { v4 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;not enought&#34;); std::ostream::operator&lt;&lt;(v4, std::endl&lt;char,std::char_traits&lt;char&gt;&gt;); v19 = -1; std::string::~string(&amp;str); return 0; } } 加密函数 xor 0x14
 ">
   <title>GFSJ1037-【happyctf】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1037-happyctf/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1037-happyctf/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ1037-【happyctf】 - Q7411 CTF blog">
@@ -27,8 +27,8 @@ int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream 
 进去之后看看main函数 flag长度24 输入flag
 int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream *v3; // eax …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1037-happyctf/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1037-happyctf/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1037-【happyctf】 - Q7411 CTF blog">
@@ -36,7 +36,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream 
 拿到题目 一个exe 一个pdb 美滋滋
 进去之后看看main函数 flag长度24 输入flag
 int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream *v3; // eax …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream 
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -74,7 +74,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream 
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1037-【happyctf】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1037-happyctf\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1037-happyctf\/"
       }
       
     ]
@@ -90,7 +90,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { std::ostream 
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

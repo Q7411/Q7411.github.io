@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@ mian函数 能看到只有一个简单的xor 然后v11是我们输入的 byte_6B
 __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, __int64 a5, __int64 a6) { int v6; // edx int v7; // ecx int v8; // r8d int v9; // r9d _BYTE v11[136]; // [rsp&#43;10h] [rbp-B0h] BYREF int v12; // [rsp&#43;98h] [rbp-28h] char v13; // [rsp&#43;9Fh] [rbp-21h] int v14; // [rsp&#43;A0h] [rbp-20h] unsigned __int8 v15; // [rsp&#43;A6h] [rbp-1Ah] char v16; // [rsp&#43;A7h] [rbp-19h] int v17; // [rsp&#43;A8h] [rbp-18h] int v18; // [rsp&#43;ACh] [rbp-14h] int v19; // [rsp&#43;B0h] [rbp-10h] int v20; // [rsp&#43;B4h] [rbp-Ch] _BOOL4 v21; // [rsp&#43;B8h] [rbp-8h] int i; // [rsp&#43;BCh] [rbp-4h] sub_407470((__int64)&#34;Give me the password: &#34;, a2, a3, a4, a5, a6); sub_4075A0((unsigned int)&#34;%s&#34;, (unsigned int)v11, v6, v7, v8, v9, a2); for ( i = 0; v11[i]; &#43;&#43;i ) ; v21 = i == 22; v20 = 10; do { v17 = (int)sub_406D90() % 22; v19 = 0; v16 = byte_6B4270[v17]; v15 = v11[v17]; v14 = v17 &#43; 1; v18 = 0; while ( v18 &lt; v14 ) { &#43;&#43;v18; v19 = 1828812941 * v19 &#43; 12345; } v13 = v19 ^ v15; if ( v16 != ((unsigned __int8)v19 ^ v15) ) v21 = 0; --v20; } while ( v20 ); if ( v21 ) v12 = sub_407470((__int64)&#34;Congras\n&#34;); else v12 = sub_407470((__int64)&#34;Oh no!\n&#34;); return 0; } 所以 密文 操作 数据都找到了
 ">
   <title>GFSJ0294-【hackme】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0294-【hackme】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, __
 mian函数 能看到只有一个简单的xor 然后v11是我们输入的 byte_6B4270应该是密文 那密文中的v17就是一个一个的下标
 __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0294-【hackme】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" xor
 mian函数 能看到只有一个简单的xor 然后v11是我们输入的 byte_6B4270应该是密文 那密文中的v17就是一个一个的下标
 __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, �
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, �
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0294-【hackme】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0294-hackme\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0294-hackme\/"
       }
       
     ]
@@ -87,7 +87,7 @@ __int64 __fastcall sub_400F8E(__int64 a1, __int64 a2, __int64 a3, __int64 a4, �
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

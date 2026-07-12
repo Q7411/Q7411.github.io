@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@
 package com.example.ctf2; import android.app.Activity; import android.os.Build; import android.os.Bundle; import android.widget.Button; import android.widget.EditText; import android.widget.TextView; /* JADX INFO: loaded from: classes.dex */ public class MainActivity extends Activity { Button a; EditText b; TextView c; int d = 123; String e = &#34;Code&#34;; static { System.loadLibrary(&#34;adnjni&#34;); } public native int IsCorrect(String str); @Override // android.app.Activity public void onCreate(Bundle bundle) { super.onCreate(bundle); setContentView(R.layout.activity_main); this.a = (Button) findViewById(R.id.Btn); this.b = (EditText) findViewById(R.id.edit_message); this.c = (TextView) findViewById(R.id.text_id); this.e = Build.SERIAL; this.d = 114366; this.a.setOnClickListener(new a(this)); } public native int processObjectArrayFromNative(String str); } 能看到注册了两个nat 我们再看看其他函数 这里面都是数据
 ">
   <title>GFSJ0371-【android-app-100】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0371-android-app-100/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0371-android-app-100/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0371-【android-app-100】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ package com.example.ctf2; import android.app.Activity; import android.os.Build; 
 下载附件之后改apk后缀 jadx打开
 package com.example.ctf2; import android.app.Activity; import android.os.Build; import android.os.Bundle; import …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0371-android-app-100/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0371-android-app-100/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0371-【android-app-100】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" apk逆向
 下载附件之后改apk后缀 jadx打开
 package com.example.ctf2; import android.app.Activity; import android.os.Build; import android.os.Bundle; import …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ package com.example.ctf2; import android.app.Activity; import android.os.Build; 
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ package com.example.ctf2; import android.app.Activity; import android.os.Build; 
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0371-【android-app-100】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0371-android-app-100\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0371-android-app-100\/"
       }
       
     ]
@@ -87,7 +87,7 @@ package com.example.ctf2; import android.app.Activity; import android.os.Build; 
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

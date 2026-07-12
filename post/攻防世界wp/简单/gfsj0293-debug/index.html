@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@
 using System; using System.Security.Cryptography; using System.Text; // Token: 0x02000003 RID: 3 internal class ᜅ { // Token: 0x06000005 RID: 5 RVA: 0x0000212B File Offset: 0x0000032B private static int ᜀ(int A_0, int A_1) { return (new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113 })[A_1] ^ A_0; } // Token: 0x06000006 RID: 6 RVA: 0x00002144 File Offset: 0x00000344 private static string ᜀ(string A_0) { byte[] bytes = Encoding.ASCII.GetBytes(A_0); return &#34;flag{&#34; &#43; BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(bytes)).Replace(&#34;-&#34;, &#34;&#34;) &#43; &#34;}&#34;; } // Token: 0x06000007 RID: 7 RVA: 0x0000218C File Offset: 0x0000038C private static void ᜀ(string A_0, int A_1, ref string A_2) { int num = 0; if (0 &lt; A_0.Length) { do { char c = A_0[num]; int num2 = 1; do { c = Convert.ToChar(ᜅ.ᜀ(Convert.ToInt32(c), num2)); num2&#43;&#43;; } while (num2 &lt; 15); A_2 &#43;= c; num&#43;&#43;; } while (num &lt; A_0.Length); } A_2 = ᜅ.ᜀ(A_2); } // Token: 0x06000008 RID: 8 RVA: 0x000021F0 File Offset: 0x000003F0 private static void ᜀ(string[] A_0) { string text = null; string text2 = string.Format(&#34;{0}&#34;, DateTime.Now.Hour &#43; 1); string text3 = &#34;CreateByTenshine&#34;; ᜅ.ᜀ(text3, Convert.ToInt32(text2), ref text); string text4 = Console.ReadLine(); if (text4 == text) { Console.WriteLine(&#34;u got it!&#34;); Console.ReadKey(true); } else { Console.Write(&#34;wrong&#34;); } Console.ReadKey(true); } } 两种解密 一个逆 一个动调 这个在dnspy中不显示这个菲律宾文字 我看了半天怎么没有名字 我还纳闷呢 我复制出来就显示了
 ">
   <title>GFSJ0293-【debug】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0293-【debug】 - Q7411 CTF blog">
@@ -27,8 +27,8 @@ using System; using System.Security.Cryptography; using System.Text; // Token: 0
 这个查壳发现有混淆但是是简单题 所以直接dnspy打开 发现是一个 简单异或 还有md5加密
 using System; using System.Security.Cryptography; using …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0293-【debug】 - Q7411 CTF blog">
@@ -36,7 +36,7 @@ using System; using System.Security.Cryptography; using …">
 涉及工具 de4dot.exe
 这个查壳发现有混淆但是是简单题 所以直接dnspy打开 发现是一个 简单异或 还有md5加密
 using System; using System.Security.Cryptography; using …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@ using System; using System.Security.Cryptography; using …">
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -74,7 +74,7 @@ using System; using System.Security.Cryptography; using …">
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0293-【debug】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0293-debug\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0293-debug\/"
       }
       
     ]
@@ -90,7 +90,7 @@ using System; using System.Security.Cryptography; using …">
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

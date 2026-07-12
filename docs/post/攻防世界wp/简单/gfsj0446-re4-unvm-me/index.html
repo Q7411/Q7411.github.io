@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@ pycdc 反编译一下
 import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662B855846C2C8L, 0x5F04850FEC81A27AB5FC98BEFA4EB40CL, 0xECF8DCAC7503E63A6A3667C5FB94F610L, 0xC0FD15AE2C3931BC1E140523AE934722L, 0x569F606FD6DA5D612F10CFB95C0BDE6DL, 0x68CB5A1CF54C078BF0E7E89584C1A4EL, 0xC11E2CD82D1F9FBD7E4D6EE9581FF3BDL, 0x1DF4C637D625313720F45706A48FF20FL, 0x3122EF3A001AAECDB8DD9D843C029E06L, 0xADB778A0F729293E7E0B19B96A4C5A61L, 0x938C747C6A051B3E163EB802A325148EL, 0x38543C5E820DD9403B57BEFF6020596DL] print &#39;Can you turn me back to python ? ...&#39; flag = raw_input(&#39;well as you wish.. what is the flag: &#39;) if len(flag) &gt; 69: print &#39;nice try&#39; exit() if len(flag) % 5 != 0: print &#39;nice try&#39; exit() for i in range(0, len(flag), 5): s = flag[i:i &#43; 5] if int(&#39;0x&#39; &#43; md5.new(s).hexdigest(), 16) != md5s[i / 5]: print &#39;nice try&#39; exit() continue print &#39;Congratz now you have the flag&#39; 每 5 个字符一组计算 MD5，并依次与 13 个哈希比较 爆破一手 刚下了一个这个hashcat 超快
 ">
   <title>GFSJ0446-【re4-unvm-me】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0446-【re4-unvm-me】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662
 pycdc 反编译一下
 import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662B855846C2C8L, 0x5F04850FEC81A27AB5FC98BEFA4EB40CL, …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0446-【re4-unvm-me】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" pyc反编译
 pycdc 反编译一下
 import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662B855846C2C8L, 0x5F04850FEC81A27AB5FC98BEFA4EB40CL, …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0446-【re4-unvm-me】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0446-re4-unvm-me\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0446-re4-unvm-me\/"
       }
       
     ]
@@ -87,7 +87,7 @@ import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

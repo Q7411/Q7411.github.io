@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -15,11 +15,11 @@ int __cdecl main(int argc, const char **argv, const char **envp) { HANDLE FileA;
 int sub_401220() { HMODULE LibraryA; DWORD CurrentProcessId; CurrentProcessId = GetCurrentProcessId(); hProcess = OpenProcess(0x1F0FFFu, 0, CurrentProcessId); LibraryA = LoadLibraryA(LibFileName); WriteFile_0 = (BOOL (__stdcall *)(HANDLE, LPCVOID, DWORD, LPDWORD, LPOVERLAPPED))GetProcAddress(LibraryA, ProcName); lpAddress = WriteFile_0; if ( !WriteFile_0 ) return sub_401370((int)&amp;unk_40A044); unk_40C9B4 = *(_DWORD *)lpAddress; unk_40C9B8 = *((_BYTE *)lpAddress &#43; 4); byte_40C9BC = -23; dword_40C9BD = (char *)sub_401080 - (char *)lpAddress - 5; return sub_4010D0(); } GetCurrentProcessId 用来获取当前进程 ID
 ">
   <title>GFSJ0078-【EASYHOOK】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0078-easyhook/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0078-easyhook/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0078-【EASYHOOK】 - Q7411 CTF blog">
@@ -27,15 +27,15 @@ int sub_401220() { HMODULE LibraryA; DWORD CurrentProcessId; CurrentProcessId = 
 主函数代码如下
 int __cdecl main(int argc, const char **argv, const char **envp) { HANDLE FileA; DWORD NumberOfBytesWritten; char Buffer[32]; …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0078-easyhook/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0078-easyhook/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0078-【EASYHOOK】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" hook
 主函数代码如下
 int __cdecl main(int argc, const char **argv, const char **envp) { HANDLE FileA; DWORD NumberOfBytesWritten; char Buffer[32]; …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -58,14 +58,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { HANDLE FileA;
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -73,7 +73,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { HANDLE FileA;
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0078-【EASYHOOK】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0078-easyhook\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0078-easyhook\/"
       }
       
     ]
@@ -89,7 +89,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { HANDLE FileA;
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

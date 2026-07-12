@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@
 # Source Generated with Decompyle&#43;&#43; # File: C:/Users/Q/Downloads/pyre.cpython-36.pyc.repaired.pyc (Python 3.6) from ctypes import * from Crypto.Util.number import bytes_to_long from Crypto.Util.number import long_to_bytes def encrypt(v, k): v0 = c_uint32(v[0]) v1 = c_uint32(v[1]) sum1 = c_uint32(0) delta = 195935983 for i in range(32): v0.value &#43;= (v1.value &lt;&lt; 4 ^ v1.value &gt;&gt; 7) &#43; v1.value ^ sum1.value &#43; k[sum1.value &amp; 3] sum1.value &#43;= delta v1.value &#43;= (v0.value &lt;&lt; 4 ^ v0.value &gt;&gt; 7) &#43; v0.value ^ sum1.value &#43; k[sum1.value &gt;&gt; 9 &amp; 3] return (v0.value, v1.value) if __name__ == &#39;__main__&#39;: flag = input(&#39;please input your flag:&#39;) k = [ 255, 187, 51, 68] if len(flag) != 32: print(&#39;wrong!&#39;) exit(-1) a = [] for i in range(0, 32, 8): v1 = bytes_to_long(bytes(flag[i:i &#43; 4], &#39;ascii&#39;)) v2 = bytes_to_long(bytes(flag[i &#43; 4:i &#43; 8], &#39;ascii&#39;)) a &#43;= encrypt([ v1, v2], k) enc = [ 0xEEC7D402, 0x99E9363F, 0x853BDE61, 558171287, 0x908F94B0, 1715140098, 986348143, 1948615354] for i in range(8): if enc[i] != a[i]: print(&#39;wrong!&#39;) exit(-1) print(&#39;flag is flag{%s}&#39; % flag) 是一个XTEA 加密脚本 flag长度32位
 ">
   <title>GFSJ1064-【bad_python】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1064-bad_python/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1064-bad_python/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ1064-【bad_python】 - Q7411 CTF blog">
@@ -27,8 +27,8 @@
 然后反编译一下
 # Source Generated with Decompyle&#43;&#43; # File: …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1064-bad_python/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1064-bad_python/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1064-【bad_python】 - Q7411 CTF blog">
@@ -36,7 +36,7 @@
 拿到pyc之后反编译发现不对 是一个破损的pyc文件 我们要去修复一下
 然后反编译一下
 # Source Generated with Decompyle&#43;&#43; # File: …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -74,7 +74,7 @@
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1064-【bad_python】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1064-bad_python\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1064-bad_python\/"
       }
       
     ]
@@ -90,7 +90,7 @@
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@ main 只有一层
 package com.example.activitytest; import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.Toast; import androidx.appcompat.app.AppCompatActivity; import java.security.MessageDigest; import java.security.NoSuchAlgorithmException; /* JADX INFO: loaded from: classes.dex */ public class FirstActivity extends AppCompatActivity implements View.OnClickListener { Button button; EditText password; EditText username; @Override // androidx.fragment.app.FragmentActivity, androidx.activity.ComponentActivity, androidx.core.app.ComponentActivity, android.app.Activity protected void onCreate(Bundle bundle) { super.onCreate(bundle); setContentView(R.layout.first_layout); this.button = (Button) findViewById(R.id.login_button); this.username = (EditText) findViewById(R.id.username); this.password = (EditText) findViewById(R.id.password); this.button.setOnClickListener(this); } @Override // android.view.View.OnClickListener public void onClick(View view) { String string = this.username.getText().toString(); String string2 = this.password.getText().toString(); if (checkUsername(string) &amp;&amp; checkPass(string2)) { Toast.makeText(this, &#34;登录成功&#34;, 0).show(); Toast.makeText(this, &#34;flag{&#34; &#43; string &#43; string2 &#43; &#34;}&#34;, 0).show(); return; } Toast.makeText(this, &#34;登录失败&#34;, 0).show(); } public boolean checkUsername(String str) { if (str != null) { try { if (str.length() != 0 &amp;&amp; str != null) { MessageDigest messageDigest = MessageDigest.getInstance(&#34;MD5&#34;); messageDigest.reset(); messageDigest.update(&#34;zhishixuebao&#34;.getBytes()); String hexString = toHexString(messageDigest.digest(), &#34;&#34;); StringBuilder sb = new StringBuilder(); for (int i = 0; i &lt; hexString.length(); i &#43;= 2) { sb.append(hexString.charAt(i)); } return (sb.toString()).equals(str); } return false; } catch (NoSuchAlgorithmException e) { e.printStackTrace(); } } return false; } public boolean checkPass(String str) { if (str == null) { return false; } char[] charArray = str.toCharArray(); if (charArray.length != 15) { return false; } for (int i = 0; i &lt; charArray.length; i&#43;&#43;) { charArray[i] = (char) ((((255 - i) &#43; 2) - 98) - charArray[i]); if (charArray[i] != &#39;0&#39; || i &gt;= 15) { return false; } } return true; } private static String toHexString(byte[] bArr, String str) { StringBuilder sb = new StringBuilder(); for (byte b : bArr) { String hexString = Integer.toHexString(b &amp; 255); if (hexString.length() == 1) { sb.append(&#39;0&#39;); } sb.append(hexString); sb.append(str); } return sb.toString(); } } flag 用户名和密码拼接
 ">
   <title>GFSJ1092-【easyEZbaby_app】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1092-easyezbaby_app/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1092-easyezbaby_app/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ1092-【easyEZbaby_app】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ package com.example.activitytest; import android.os.Bundle; import android.view.
 main 只有一层
 package com.example.activitytest; import android.os.Bundle; import android.view.View; import android.widget.Button; import …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1092-easyezbaby_app/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1092-easyezbaby_app/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1092-【easyEZbaby_app】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" apk逆向
 main 只有一层
 package com.example.activitytest; import android.os.Bundle; import android.view.View; import android.widget.Button; import …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ package com.example.activitytest; import android.os.Bundle; import android.view.
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ package com.example.activitytest; import android.os.Bundle; import android.view.
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1092-【easyEZbaby_app】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1092-easyezbaby_app\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1092-easyezbaby_app\/"
       }
       
     ]
@@ -87,7 +87,7 @@ package com.example.activitytest; import android.os.Bundle; import android.view.
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

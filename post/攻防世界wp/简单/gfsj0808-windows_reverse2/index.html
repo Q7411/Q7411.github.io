@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,11 +14,11 @@
 int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1024]; // [esp&#43;8h] [ebp-C04h] BYREF char v5[1024]; // [esp&#43;408h] [ebp-804h] BYREF char v6[1024]; // [esp&#43;808h] [ebp-404h] BYREF memset(v5, 0, sizeof(v5)); memset(v6, 0, sizeof(v6)); printf(&#34;input code:&#34;); scanf(&#34;%s&#34;, v5); if ( !sub_7511F0(v5) ) { printf(&#34;invalid input\n&#34;); exit(0); } sub_751240(v6); memset(Buffer, 0, sizeof(Buffer)); sprintf(Buffer, &#34;DDCTF{%s}&#34;, v6); if ( !strcmp(Buffer, aDdctfReverse) ) printf(&#34;You&#39;ve got it !!! %s\n&#34;, Buffer); else printf(&#34;Something wrong. Try again...\n&#34;); return 0; } 很简单的操作 一个数字和大写字符判断
 ">
   <title>GFSJ0808-【Windows_Reverse2】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0808-【Windows_Reverse2】 - Q7411 CTF blog">
@@ -27,8 +27,8 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
 脱壳完成后
 int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1024]; …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0808-【Windows_Reverse2】 - Q7411 CTF blog">
@@ -36,7 +36,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
 能看到是ASProtect壳 然后程序入口还有pushad 我们直接使用esp定律来脱壳
 脱壳完成后
 int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1024]; …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -74,7 +74,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0808-【Windows_Reverse2】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0808-windows_reverse2\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0808-windows_reverse2\/"
       }
       
     ]
@@ -90,7 +90,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

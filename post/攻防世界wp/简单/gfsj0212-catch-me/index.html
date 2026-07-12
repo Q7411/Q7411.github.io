@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,11 +13,11 @@ main函数 能看到getenv 获取了环境变量 ASIS &amp;&amp; CTF ^ v3 的值
 __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx __int64 i; // rax __m128i si128; // xmm0 __m128i v6; // xmm1 __m128i v7; // xmm3 __m128i v8; // xmm0 __m128i v9; // xmm3 __m128i v10; // xmm1 __m128i v11; // xmm4 __m128i v12; // xmm0 __m128i v13; // xmm0 v3 = sub_400820((unsigned int)dword_6012B4, a2, a3); byte_6012A8[0] = HIBYTE(v3); byte_6012A9 = BYTE2(v3) &amp; 0xFD; byte_6012AA = BYTE1(v3) &amp; 0xDF; byte_6012AB = v3 &amp; 0xBF; if ( getenv(&#34;ASIS&#34;) &amp;&amp; (*(_DWORD *)getenv(&#34;CTF&#34;) ^ v3) == 0xFEEBFEEB ) dword_6012AC = *(_DWORD *)getenv(&#34;ASIS&#34;); for ( i = 0; i != 33; &#43;&#43;i ) haystack[i] ^= byte_6012A8[i &amp; 7]; si128 = _mm_load_si128((const __m128i *)haystack); v6 = _mm_unpacklo_epi8(si128, (__m128i)0LL); v7 = _mm_unpackhi_epi8(si128, (__m128i)0LL); v8 = _mm_add_epi32( _mm_unpackhi_epi16(v7, (__m128i)0LL), _mm_add_epi32( _mm_add_epi32(_mm_unpackhi_epi16(v6, (__m128i)0LL), _mm_unpacklo_epi16(v6, (__m128i)0LL)), _mm_unpacklo_epi16(v7, (__m128i)0LL))); v9 = _mm_load_si128((const __m128i *)&amp;xmmword_601290); v10 = _mm_unpackhi_epi8(v9, (__m128i)0LL); v11 = _mm_unpacklo_epi8(v9, (__m128i)0LL); v12 = _mm_add_epi32( _mm_add_epi32( _mm_add_epi32( _mm_add_epi32(v8, _mm_unpacklo_epi16(v11, (__m128i)0LL)), _mm_unpackhi_epi16(v11, (__m128i)0LL)), _mm_unpacklo_epi16(v10, (__m128i)0LL)), _mm_unpackhi_epi16(v10, (__m128i)0LL)); v13 = _mm_add_epi32(v12, _mm_srli_si128(v12, 8)); if ( _mm_cvtsi128_si32(_mm_add_epi32(v13, _mm_srli_si128(v13, 4))) != 2388 ) strcpy(haystack, &#34;bad_bad_bad_bad_bad_bad&#34;); printf(&#34;Flag: ASIS{%s}\n&#34;, haystack); if ( strstr(haystack, &#34;bad_&#34;) ) puts(&#34;this flag is absolutely fake &#34;); return 0; } 动调获取v3 也就是 0xB11924E1 我们xor一下获得 0x4ff2da0a
 ">
   <title>GFSJ0212-【catch-me】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/">
+  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../css/main.4e0cd9ec8f8f98a6a55e71abd161fc89ba2333118a52777c8ba868bf7fbc4197.css">
+  <link rel="stylesheet" href="../../../../css/main.cbc76ba4ae358725031e3cdc0a93d31727a8f05c82675dfff39b054d86cc8eac.css">
   
   
   <meta property="og:title" content="GFSJ0212-【catch-me】 - Q7411 CTF blog">
@@ -25,15 +25,15 @@ __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx __int64 i
 main函数 能看到getenv 获取了环境变量 ASIS &amp;&amp; CTF ^ v3 的值最后等于 0xFEEBFEEB
 __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/">
-  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/">
+  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0212-【catch-me】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 基础类型 xor
 main函数 能看到getenv 获取了环境变量 ASIS &amp;&amp; CTF ^ v3 的值最后等于 0xFEEBFEEB
 __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx …">
-  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx …">
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https:\/\/www.q7411.xyz\/"
+        "item": "http:\/\/localhost:1313\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "https:\/\/www.q7411.xyz\/post/"
+        "item": "http:\/\/localhost:1313\/post/"
       }
       
       
@@ -71,7 +71,7 @@ __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx …">
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0212-【catch-me】",
-        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0212-catch-me\/"
+        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0212-catch-me\/"
       }
       
     ]
@@ -87,7 +87,7 @@ __int64 __fastcall main(int a1, char **a2, char **a3) { int v3; // ebx …">
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: true
+        enabled: false
       }
     };
   </script>

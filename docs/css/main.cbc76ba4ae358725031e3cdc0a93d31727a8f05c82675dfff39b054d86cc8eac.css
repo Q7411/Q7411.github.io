@@ -2307,7 +2307,6 @@ a:hover {
 }
 
 .toc-container {
-  --toc-primary-header-height: 44px;
   position: sticky;
   top: calc(100px + var(--space-16)); /* 进一步增大 top 距离，确保无论怎样滚动顶部圆角都不会被导航栏遮挡 */
   background-color: var(--sidebar-bg);
@@ -2342,17 +2341,13 @@ a:hover {
 .toc-category-name {
   display: flex;
   align-items: center;
-  position: sticky;
-  top: calc(-1 * var(--space-6));
-  z-index: 4;
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--color-primary);
   font-weight: 700;
-  margin: calc(-1 * var(--space-6)) 0 var(--space-4);
-  padding: var(--space-4) 0 var(--space-3);
-  background-color: var(--sidebar-bg);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--border-color);
   white-space: normal;
   word-break: break-word;
@@ -2422,7 +2417,7 @@ a:hover {
 
 .toc-subcategory-group.open > .toc-subcategory-title {
   position: sticky;
-  top: var(--toc-primary-header-height);
+  top: 0;
   z-index: 3;
   background-color: var(--sidebar-bg);
   border-bottom: 1px solid var(--border-color);
