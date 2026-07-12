@@ -1,0 +1,3238 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  
+  
+  <meta name="description" content=" SMC &#43; 摩斯密码 &#43; SM4 &#43; RC5
+一个很好的题目 出题人很有水平 拿到题目先运行 这个先运行 其实没啥大问题 除了有些出题人脑残做了个勒索或者一个病毒放在里面 需要你来解密那种不能运行 不过一般都有提醒的 说多了都是痛 给我电脑整重装系统了
+好了言归正传 简单玩了一下能看到 要求输入了一个翻译 能看出来这个只有两个字 而且有分割 所以猜测是摩斯 解密出来真是摩斯
+喵呜喵呜/呜喵/喵/呜呜喵喵呜喵/呜呜/喵呜/呜呜喵喵呜喵/喵呜呜喵/呜呜喵喵呜喵/呜喵喵喵喵/喵喵喵喵呜/呜呜喵喵呜喵/喵呜喵喵/呜呜喵喵呜喵/呜呜呜喵喵/喵喵喵喵呜
+喵 \ - 呜 \ . / = -.-. .- - ..--.- .. -. ..--.- -..- ..--.- .---- ----. ..--.- -.-- ..--.- ...-- ----. CAT_IN_X_19_Y_39 到下一个路径 也就是要找key
+ida打开 我们能看到是 有很多提示的 有flag
+我们去找key 看看哪里调用了 发现无法反编译 往下看看 能看到一团不能反编译的东西 再往下还有
+我们再往下看是谁调用了下面一坨东西
+int sub_401ED0() { int i; // [esp&#43;D0h] [ebp-20h] int flOldProtect[2]; // [esp&#43;E8h] [ebp-8h] BYREF __CheckForDebuggerJustMyCode(&amp;unk_46401A); if ( unk_462A40 == 32 ) { VirtualProtect(dword_402780, 0x7C5u, 0x40u, (PDWORD)flOldProtect); for ( i = 0; i &lt; 1989; &#43;&#43;i ) *((_BYTE *)dword_402780 &#43; i) ^= unk_462A40; } return 0; } 这里进行了一个SMC 解密就可以了
+">
+  <title>GFSJ1194-【StupidOrangeCat2】 - Q7411 CTF blog</title>
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1194-stupidorangecat2/">
+  <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
+  <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
+  
+  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  
+  
+  <meta property="og:title" content="GFSJ1194-【StupidOrangeCat2】 - Q7411 CTF blog">
+  <meta property="og:description" content=" SMC &#43; 摩斯密码 &#43; SM4 &#43; RC5
+一个很好的题目 出题人很有水平 拿到题目先运行 这个先运行 其实没啥大问题 除了有些出题人脑残做了个勒索或者一个病毒放在里面 需要你来解密那种不能运行 不过一般都有提醒的 说多了都是痛 给我电脑整重装系统了
+好了言归正传 简单玩了一下能看到 要求输入了 …">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1194-stupidorangecat2/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GFSJ1194-【StupidOrangeCat2】 - Q7411 CTF blog">
+  <meta name="twitter:description" content=" SMC &#43; 摩斯密码 &#43; SM4 &#43; RC5
+一个很好的题目 出题人很有水平 拿到题目先运行 这个先运行 其实没啥大问题 除了有些出题人脑残做了个勒索或者一个病毒放在里面 需要你来解密那种不能运行 不过一般都有提醒的 说多了都是痛 给我电脑整重装系统了
+好了言归正传 简单玩了一下能看到 要求输入了 …">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  
+  
+  
+  <meta property="article:published_time" content="2026-07-12T10:17:01&#43;08:00">
+  <meta property="article:author" content="Q7411">
+  
+
+  
+  
+
+  
+  
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https:\/\/www.q7411.xyz\/"
+      }
+      
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Posts",
+        "item": "https:\/\/www.q7411.xyz\/post/"
+      }
+      
+      
+      ,{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "GFSJ1194-【StupidOrangeCat2】",
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1194-stupidorangecat2\/"
+      }
+      
+    ]
+  }
+  </script>
+  
+  <script>
+    window.SiteConfig = {
+      githubRepo: "Q7411\/Q7411.github.io",
+      avatarUrl: "\/assets\/images\/touxiang.jpg",
+      giscus: {
+        repo: "Q7411\/Q7411.github.io",
+        repoId: "R_kgDOR8Bf7A",
+        category: "General",
+        categoryId: "DIC_kwDOR8Bf7M4C6WUW",
+        enabled: true
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="site-loader" id="site-loader" role="status" aria-live="polite" aria-label="页面加载中">
+    <div class="site-loader-panel">
+      <img src="../../../../assets/images/touxiang.jpg" alt="" class="site-loader-avatar" width="96" height="96" decoding="async">
+      <div class="site-loader-brand">Q7411 CTF blog</div>
+      <div class="site-loader-copy">正在加载页面</div>
+      <div class="site-loader-track" aria-hidden="true">
+        <div class="site-loader-bar"></div>
+      </div>
+    </div>
+  </div>
+  <noscript><style>#site-loader{display:none}</style></noscript>
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="logo">
+        <a href="../../../../">Q7411 CTF blog</a>
+      </div>
+      <div class="search-container">
+        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-color-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="search-input" placeholder="Search write-ups..." aria-label="搜索框" style="padding-left: 36px;">
+        <div id="search-results"></div>
+      </div>
+      <nav class="site-nav">
+        <a href="../../../../">首页</a>
+        
+        <div class="nav-dropdown">
+          <button class="nav-dropbtn" id="nav-dropbtn" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            博文 
+            <svg class="arrow" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="nav-dropdown-content" id="nav-dropdown-content">
+            <a href="../../../../categories/">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              分类
+            </a>
+            <a href="../../../../archives/">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              归档
+            </a>
+          </div>
+        </div>
+
+        <a href="../../../../about/">关于</a>
+        <a href="../../../../guestbook/">留言板</a>
+        <button id="theme-toggle" aria-label="Toggle Dark Mode">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+  <main class="site-main container" id="main-content">
+    
+
+
+
+
+
+
+
+
+<div class="post-layout three-column ">
+  
+  
+  
+    <aside class="post-sidebar-left">
+      <div class="toc-container">
+        
+          
+          
+          
+          
+          <div class="toc-category-name">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: text-bottom;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            攻防世界WP
+          </div>
+          
+          <div class="toc-category-posts">
+            
+            
+            
+            
+            
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+            
+              
+            
+              
+            
+
+            
+            
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+            
+              
+            
+              
+            
+
+             
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      
+      
+      
+        
+        
+          
+        
+        
+      
+    
+  
+
+  
+  
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      
+      
+      
+        
+        
+          
+        
+        
+      
+    
+  
+
+
+
+
+  
+  
+    
+  
+
+  <div class="toc-subcategory-group ">
+    <div class="toc-subcategory-title">
+      <svg class="folder-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span class="subcat-name">中等</span>
+      <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="toc-subcategory-content">
+       
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+
+
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/babyruby/" class="toc-post-link">babyruby</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/crackeme/" class="toc-post-link">crackeme</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0213-leaked-license-64/" class="toc-post-link">GFSJ0213-【leaked-license-64】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0231-pingpong/" class="toc-post-link">GFSJ0231-【pingpong】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0382-first/" class="toc-post-link">GFSJ0382-【first】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0932-babydsp/" class="toc-post-link">GFSJ0932-【babydsp】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/strange-language/" class="toc-post-link">strange language</a>
+  </div>
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+    </div>
+  </div>
+
+  
+  
+    
+      
+    
+  
+
+  <div class="toc-subcategory-group open">
+    <div class="toc-subcategory-title">
+      <svg class="folder-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span class="subcat-name">简单</span>
+      <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="toc-subcategory-content">
+       
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+
+
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0004-igniteme/" class="toc-post-link">GFSJ0004-【IgniteMe】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0076-babyre-2/" class="toc-post-link">GFSJ0076-【BABYRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0076-babyre/" class="toc-post-link">GFSJ0076-【BABYRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0078-easyhook/" class="toc-post-link">GFSJ0078-【EASYHOOK】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0104-babymips/" class="toc-post-link">GFSJ0104-【babymips】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0120-parallel-comparator-200/" class="toc-post-link">GFSJ0120-【parallel-comparator-200】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0121-secret-galaxy-300/" class="toc-post-link">GFSJ0121-【secret-galaxy-300】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0122-secret-string-400/" class="toc-post-link">GFSJ0122-【secret-string-400】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0123-simple-check-100/" class="toc-post-link">GFSJ0123-【simple-check-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0134-re1-100/" class="toc-post-link">GFSJ0134-【re1-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0164-elrond32/" class="toc-post-link">GFSJ0164-【elrond32】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0165-tt3441810/" class="toc-post-link">GFSJ0165-【tt3441810】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0186-notsequence/" class="toc-post-link">GFSJ0186-【notsequence】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0202-zorropub/" class="toc-post-link">GFSJ0202-【zorropub】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/" class="toc-post-link">GFSJ0212-【catch-me】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0239-reverseme-120/" class="toc-post-link">GFSJ0239-【ReverseMe-120】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0240-reversing-x64elf-100/" class="toc-post-link">GFSJ0240-【Reversing-x64Elf-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/" class="toc-post-link">GFSJ0270-【2ex1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/" class="toc-post-link">GFSJ0293-【debug】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/" class="toc-post-link">GFSJ0294-【hackme】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0321-guess-the-number/" class="toc-post-link">GFSJ0321-【Guess-the-Number】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0355-shuffle/" class="toc-post-link">GFSJ0355-【Shuffle】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0365-re-for-50-plz-50/" class="toc-post-link">GFSJ0365-【re-for-50-plz-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0366-reverse-for-the-holy-grail-350/" class="toc-post-link">GFSJ0366-【reverse-for-the-holy-grail-350】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0371-android-app-100/" class="toc-post-link">GFSJ0371-【android-app-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0372-dmd-50/" class="toc-post-link">GFSJ0372-【dmd-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0375-serial-150/" class="toc-post-link">GFSJ0375-【serial-150】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0376-srm-50/" class="toc-post-link">GFSJ0376-【srm-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0379-crackme/" class="toc-post-link">GFSJ0379-【crackme】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0381-echo-server/" class="toc-post-link">GFSJ0381-【echo-server】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0385-apk-%E9%80%86%E5%90%912/" class="toc-post-link">GFSJ0385-【APK-逆向2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0386-newbie_calculations/" class="toc-post-link">GFSJ0386-【Newbie_calculations】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/" class="toc-post-link">GFSJ0410-【easyre-153】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/" class="toc-post-link">GFSJ0417-【deedeedee】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0418-gametime/" class="toc-post-link">GFSJ0418-【gametime】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0419-key/" class="toc-post-link">GFSJ0419-【key】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0444-re2-cpp-is-awesome/" class="toc-post-link">GFSJ0444-【re2-cpp-is-awesome】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/" class="toc-post-link">GFSJ0446-【re4-unvm-me】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0447-re5-packed-movement/" class="toc-post-link">GFSJ0447-【re5-packed-movement】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0487-game/" class="toc-post-link">GFSJ0487-【game】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0489-open-source/" class="toc-post-link">GFSJ0489-【open-source】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0490-simple-unpack/" class="toc-post-link">GFSJ0490-【simple-unpack】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0492-insanity/" class="toc-post-link">GFSJ0492-【insanity】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0747-easyre/" class="toc-post-link">GFSJ0747-【EasyRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0777-testre/" class="toc-post-link">GFSJ0777-【testre】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0779-%E6%A2%85%E6%B4%A5%E7%BE%8E%E6%B2%BB%E9%83%8E/" class="toc-post-link">GFSJ0779-【梅津美治郎】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0780-76%E5%8F%B7/" class="toc-post-link">GFSJ0780-【76号】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0781-mysterious/" class="toc-post-link">GFSJ0781-【Mysterious】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/" class="toc-post-link">GFSJ0808-【Windows_Reverse2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0810-crazy/" class="toc-post-link">GFSJ0810-【crazy】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0812-answer_to_everything/" class="toc-post-link">GFSJ0812-【answer_to_everything】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0815-windows_reverse1/" class="toc-post-link">GFSJ0815-【Windows_Reverse1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0866-replace/" class="toc-post-link">GFSJ0866-【Replace】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0871-%E6%B5%81%E6%B5%AA%E8%80%85/" class="toc-post-link">GFSJ0871-【流浪者】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0874-666/" class="toc-post-link">GFSJ0874-【666】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0876-babyxor/" class="toc-post-link">GFSJ0876-【BabyXor】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0884-signin/" class="toc-post-link">GFSJ0884-【SignIn】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0893-easyre1/" class="toc-post-link">GFSJ0893-【easyRE1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1028-lucknum/" class="toc-post-link">GFSJ1028-【lucknum】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1031-reverse_re3/" class="toc-post-link">GFSJ1031-【reverse_re3】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1035-1000click/" class="toc-post-link">GFSJ1035-【1000Click】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1036-crypt/" class="toc-post-link">GFSJ1036-【crypt】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1037-happyctf/" class="toc-post-link">GFSJ1037-【happyctf】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1038-xxxorrr/" class="toc-post-link">GFSJ1038-【xxxorrr】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1064-bad_python/" class="toc-post-link">GFSJ1064-【bad_python】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1065-ereere/" class="toc-post-link">GFSJ1065-【ereere】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1092-easyezbaby_app/" class="toc-post-link">GFSJ1092-【easyEZbaby_app】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1094-easyxor/" class="toc-post-link">GFSJ1094-【easyxor】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1095-toddler_regs/" class="toc-post-link">GFSJ1095-【toddler_regs】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1100-easyre-xctf/" class="toc-post-link">GFSJ1100-【easyre-xctf】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1101-mine-/" class="toc-post-link">GFSJ1101-【Mine-】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1130-ezmaze/" class="toc-post-link">GFSJ1130-【ezmaze】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1185-%E5%96%B5%E5%96%B5%E6%83%B3%E4%BD%A0%E5%95%A6/" class="toc-post-link">GFSJ1185-【喵喵想你啦】</a>
+  </div>
+
+  <div class="toc-post-item active">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1194-stupidorangecat2/" class="toc-post-link">GFSJ1194-【StupidOrangeCat2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1199-readingsection/" class="toc-post-link">GFSJ1199-【ReadingSection】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1200-bugcat/" class="toc-post-link">GFSJ1200-【BugCat】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1201-the-cat-did-it/" class="toc-post-link">GFSJ1201-【The cat did it】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1207-catfly/" class="toc-post-link">GFSJ1207-【CatFly】</a>
+  </div>
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+    </div>
+  </div>
+
+          </div>
+        
+      </div>
+      <button class="toc-toggle left" id="toc-toggle-left" aria-label="Toggle Categories">分类</button>
+    </aside>
+  
+
+  
+  <div class="post-content-container">
+    
+      <div class="post-header">
+        <h1 class="post-title">GFSJ1194-【StupidOrangeCat2】</h1>
+        <div class="post-meta" style="color: var(--text-color-muted); font-size: 0.9em; margin-bottom: 20px;">
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2026-07-12</span>
+          <span style="margin: 0 8px;">|</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M2 12h4l2-9 5 18 3-9h6"></path></svg>约 1846 字</span>
+          <span style="margin: 0 8px;">|</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>阅读约 9 分钟</span>
+        </div>
+      </div>
+    
+    
+    <article class="post-content" itemscope itemtype="http://schema.org/BlogPosting">
+      <div itemprop="articleBody">
+        <blockquote>
+<p>SMC + 摩斯密码 + SM4 + RC5</p>
+</blockquote>
+<p>一个很好的题目 出题人很有水平 拿到题目先运行 这个先运行 其实没啥大问题 除了有些出题人脑残做了个勒索或者一个病毒放在里面 需要你来解密那种不能运行 不过一般都有提醒的 说多了都是痛 给我电脑整重装系统了</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260611180731-pbqjri7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>好了言归正传  简单玩了一下能看到 要求输入了一个翻译 能看出来这个只有两个字 而且有分割 所以猜测是摩斯 解密出来真是摩斯</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260611181541-zi359vl.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>喵呜喵呜/呜喵/喵/呜呜喵喵呜喵/呜呜/喵呜/呜呜喵喵呜喵/喵呜呜喵/呜呜喵喵呜喵/呜喵喵喵喵/喵喵喵喵呜/呜呜喵喵呜喵/喵呜喵喵/呜呜喵喵呜喵/呜呜呜喵喵/喵喵喵喵呜</p>
+<p>喵 \ <code>-</code> 呜 \ <code>.</code> / = <code> </code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="o">-.-.</span> <span class="o">.-</span> <span class="o">-</span> <span class="o">..--.-</span> <span class="o">..</span> <span class="o">-.</span> <span class="o">..--.-</span> <span class="o">-..-</span> <span class="o">..--.-</span> <span class="o">.----</span> <span class="o">----.</span> <span class="o">..--.-</span> <span class="o">-.--</span> <span class="o">..--.-</span> <span class="o">...--</span> <span class="o">----.</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">CAT_IN_X_19_Y_39</span>
+</span></span></code></pre></div><p><figure class="post-figure">
+  <img src="assets/image-20260611183038-f636xw7.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>到下一个路径 也就是要找key</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260611183510-ibmiog9.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>ida打开 我们能看到是 有很多提示的 有flag</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260611190503-5hqn2wq.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>我们去找key 看看哪里调用了 发现无法反编译 往下看看 能看到一团不能反编译的东西 再往下还有</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260611191209-cpyg1or.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>我们再往下看是谁调用了下面一坨东西</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">sub_401ED0</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">i</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">D0h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">20</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">flOldProtect</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">E8h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">__CheckForDebuggerJustMyCode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unk_46401A</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span> <span class="n">unk_462A40</span> <span class="o">==</span> <span class="mi">32</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">VirtualProtect</span><span class="p">(</span><span class="n">dword_402780</span><span class="p">,</span> <span class="mh">0x7C5</span><span class="n">u</span><span class="p">,</span> <span class="mh">0x40</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">PDWORD</span><span class="p">)</span><span class="n">flOldProtect</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1989</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="o">*</span><span class="p">((</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">dword_402780</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">^=</span> <span class="n">unk_462A40</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这里进行了一个SMC 解密就可以了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">s</span><span class="o">=</span><span class="mh">0x402780</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1989</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">patch_byte</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="n">get_wide_byte</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">^</span><span class="mi">32</span><span class="p">)</span>
+</span></span></code></pre></div><p>解密出来的是真的迷宫图 也就是我们刚刚看到的所玩的游戏 里面还有一个假的图 有兴趣的可以看看</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">sub_402780</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v1</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">3</span><span class="n">DFh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">82</span><span class="n">Dh</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v2</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">3</span><span class="n">EBh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">821</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v3</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">454</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">7</span><span class="n">B8h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v4</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">460</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">7</span><span class="n">ACh</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">i</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">46</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">7</span><span class="n">A0h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">j</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">46</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">7</span><span class="n">A0h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">Buffer</span><span class="p">[</span><span class="mi">42</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">478</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">794</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">__int16</span> <span class="n">v8</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="n">A2h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">76</span><span class="n">Ah</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v9</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="n">A4h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">768</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v10</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="n">D0h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">73</span><span class="n">Ch</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v11</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">4</span><span class="n">FCh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">710</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v12</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">528</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mf">6E4</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v13</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">554</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">6</span><span class="n">B8h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v14</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">580</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">68</span><span class="n">Ch</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v15</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">5</span><span class="n">ACh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">660</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v16</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">5</span><span class="n">D8h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">634</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v17</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">604</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">608</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v18</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">630</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">5</span><span class="n">DCh</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v19</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">65</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">5</span><span class="n">B0h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v20</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">688</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">584</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v21</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">6</span><span class="n">B4h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">558</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v22</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mf">6E0</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">52</span><span class="n">Ch</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v23</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">70</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">500</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v24</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">738</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">4</span><span class="n">D4h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v25</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">764</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">4</span><span class="n">A8h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v26</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">790</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">47</span><span class="n">Ch</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">_WORD</span> <span class="n">v27</span><span class="p">[</span><span class="mi">22</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">7</span><span class="n">BCh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">450</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v28</span><span class="p">[</span><span class="mi">1060</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mf">7E8</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">424</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">__CheckForDebuggerJustMyCode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unk_46401A</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;@为冒险者,请在迷宫中寻找笨橘猫吧!!</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">(</span><span class="n">Buffer</span><span class="p">,</span> <span class="s2">&#34;00000000000000000000000000000000000000000&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v8</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v9</span><span class="p">,</span> <span class="s2">&#34;0 0 0 0!    0     0 0 0 0 0*    0     0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v9</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v10</span><span class="p">,</span> <span class="s2">&#34;0 0 0 00000 00000 0 0 0 0 00000 00000 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v10</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v11</span><span class="p">,</span> <span class="s2">&#34;0 0               0 0 0               0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v11</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v12</span><span class="p">,</span> <span class="s2">&#34;0 000 000 0 000 0 0 0 000 000 0 000 0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v12</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v13</span><span class="p">,</span> <span class="s2">&#34;0 0     0 0 0   0 0 0 0     0 0 0   0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v13</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v14</span><span class="p">,</span> <span class="s2">&#34;0 0 0 00000 000 000 0 0 0 00000 000 000 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v14</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v15</span><span class="p">,</span> <span class="s2">&#34;0 0 0     0   0 0     0 0     0   0 0   0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v15</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v16</span><span class="p">,</span> <span class="s2">&#34;0 000 0 0 000 0 0 0 0 000 0 0 000 0 0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v16</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v17</span><span class="p">,</span> <span class="s2">&#34;0     0 0 0 0 0 0 0 0     0 0 0 0 0 0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v17</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v18</span><span class="p">,</span> <span class="s2">&#34;0 00000 000 000 0 0 0 00000 000 000 0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v18</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v19</span><span class="p">,</span> <span class="s2">&#34;0     0       0   0 0     0       0   0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v19</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v20</span><span class="p">,</span> <span class="s2">&#34;000 0 0 0 000 0 0 0 000 0 0 0 000 0 0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v20</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v21</span><span class="p">,</span> <span class="s2">&#34;0 0 0 0 0 0   0 0 0 0 0 0 0 0 0   0 0 0 0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v21</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v22</span><span class="p">,</span> <span class="s2">&#34;0 0000000 0 000 00000 0000000 0 000 00000&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v22</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v23</span><span class="p">,</span> <span class="s2">&#34;0@  0   0 0         0   0   0 0         0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v23</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v24</span><span class="p">,</span> <span class="s2">&#34;0 0 0 0 0 00000000000 0 0 0 0 00000000000&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v24</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v25</span><span class="p">,</span> <span class="s2">&#34;0 0 0 0             0 0 0 0             0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v25</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v26</span><span class="p">,</span> <span class="s2">&#34;000 0 00000 0 000 00000 0 00000 0 000 000&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v26</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">((</span><span class="n">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v27</span><span class="p">,</span> <span class="s2">&#34;0         0 0   0   0         0 0   0   0&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v27</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strcpy</span><span class="p">(</span><span class="n">v28</span><span class="p">,</span> <span class="s2">&#34;00000000000000000000000000000000000000000&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v28</span><span class="p">[</span><span class="mi">42</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1014</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v4</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v3</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">puts</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span> <span class="n">v4</span> <span class="o">!=</span> <span class="mi">7</span> <span class="o">||</span> <span class="n">v3</span> <span class="o">!=</span> <span class="mi">40</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">v4</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">v3</span> <span class="o">==</span> <span class="mi">7</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;当你寻找到这里的时候，你发现它是可恶的偷猫人！？</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;你被抓起来了...</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">Sleep</span><span class="p">(</span><span class="mh">0x1388</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">_loaddll</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">v4</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">v3</span> <span class="o">==</span> <span class="mi">27</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;好耶！！！你终于找到了笨橘猫</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;她的毛上都沾满了污泥，毛发都结成了一块一块</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;原本灵动皎洁的眼睛都变得黯淡无光</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;你非常的心疼,你想立马上去带她回家</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;但是她好像有话和你说，你能解出她的话语嘛...</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;笨橘猫:喵呜喵呜/呜喵/喵/呜呜喵喵呜喵/呜呜/喵呜/呜呜喵喵呜喵/喵呜呜喵/呜呜喵喵呜喵/呜喵喵喵喵/喵喵喵喵呜/呜呜喵喵呜喵/喵呜喵喵/呜呜喵喵呜喵/呜呜呜喵喵/喵喵喵喵呜</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">sub_402F60</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="n">v1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">HIBYTE</span><span class="p">(</span><span class="n">v27</span><span class="p">[</span><span class="mi">19</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">__int8</span><span class="p">)</span><span class="s2">&#34;T&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">v4</span> <span class="o">==</span> <span class="mi">19</span> <span class="o">&amp;&amp;</span> <span class="n">v3</span> <span class="o">==</span> <span class="mi">39</span> <span class="o">&amp;&amp;</span> <span class="n">v1</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;你找到了这只可怜的流浪小猫</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;但是你们不知道怎么逃出这个迷宫</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;小猫经常在这片区域流浪</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;这时小猫告诉你，他知道出口在哪里</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;但是需要你先找到开启出口的钥匙，你能找到它嘛!!!</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">sub_402410</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="n">LOBYTE</span><span class="p">(</span><span class="n">v15</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">__int8</span><span class="p">)</span><span class="s2">&#34; &#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">((</span><span class="n">void</span> <span class="p">(</span><span class="n">__thiscall</span> <span class="o">*</span><span class="p">)(</span><span class="nb">int</span> <span class="p">(</span><span class="o">***</span><span class="p">)()))</span><span class="o">**</span><span class="n">off_46200C</span><span class="p">)(</span><span class="n">off_46200C</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v2</span> <span class="o">=</span> <span class="n">_getch</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">((</span><span class="n">void</span> <span class="p">(</span><span class="n">__thiscall</span> <span class="o">*</span><span class="p">)(</span><span class="nb">int</span> <span class="p">(</span><span class="o">***</span><span class="p">)()))</span><span class="o">**</span><span class="n">off_46200C</span><span class="p">)(</span><span class="n">off_46200C</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">switch</span> <span class="p">(</span> <span class="n">v2</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="mi">44</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">48</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span><span class="o">++</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">-</span> <span class="mi">44</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">48</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span><span class="o">--</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">48</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v3</span><span class="o">--</span><span class="p">]</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span> <span class="n">v2</span> <span class="o">==</span> <span class="mi">100</span> <span class="o">&amp;&amp;</span> <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">48</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v3</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">          <span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">v4</span> <span class="o">+</span> <span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sub_42AD51</span><span class="p">((</span><span class="nb">int</span><span class="p">)</span><span class="s2">&#34;cls&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">40</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">puts</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Buffer</span><span class="p">[</span><span class="mi">44</span> <span class="o">*</span> <span class="n">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_42AD51</span><span class="p">((</span><span class="nb">int</span><span class="p">)</span><span class="s2">&#34;cls&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Sleep</span><span class="p">(</span><span class="mh">0x1F4</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;感谢你找到了笨橘猫并且带小猫咪跑了出来</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;为了奖励你flag就是CatCTF{第一段翻译+_+第二段key}</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;非常感谢你的爱心，让我们一起爱护流浪猫吧!!!</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;其中笨橘猫的那段话语彩蛋你发现了嘛!?</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_42AD51</span><span class="p">((</span><span class="nb">int</span><span class="p">)</span><span class="s2">&#34;pause&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>但是还是不行啊 这个图我们解过了 对不对 这个时候我们要回到我们一开始的地方 也就是显示key对不对的地方 能够发现能显示了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">sub_402410</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">j</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">D0h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">1</span><span class="n">A0h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="n">__int8</span> <span class="n">v2</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">DFh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">191</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v3</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">EBh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">185</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v4</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">10</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">164</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v5</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">124</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">14</span><span class="n">Ch</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v6</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">13</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">134</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v7</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">170</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">100</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v8</span><span class="p">[</span><span class="mi">28</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">188</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="n">E8h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v9</span><span class="p">[</span><span class="mi">28</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">1</span><span class="n">F8h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">78</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">i</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">268</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">__CheckForDebuggerJustMyCode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unk_46401A</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v5</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1821724372</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v5</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">310169419</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v5</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">295936376</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v5</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">519352180</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_401AB0</span><span class="p">(</span><span class="n">v7</span><span class="p">,</span> <span class="n">dword_462018</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_4021B0</span><span class="p">((</span><span class="nb">int</span><span class="p">)</span><span class="n">v7</span><span class="p">,</span> <span class="n">v9</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">26</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v8</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v9</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;请输入你找到的key</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span> <span class="n">v3</span> <span class="o">!=</span> <span class="mi">10</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v3</span> <span class="o">=</span> <span class="n">j___fgetchar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="p">((</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v6</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">v2</span><span class="o">++</span><span class="p">)</span> <span class="o">=</span> <span class="n">v3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span> <span class="n">v2</span> <span class="o">&gt;</span> <span class="mh">0x11</span><span class="n">u</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;长度错误&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sleep</span><span class="p">(</span><span class="mh">0x1388</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_loaddll</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v6</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">SHIBYTE</span><span class="p">(</span><span class="n">v6</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">6</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">SBYTE2</span><span class="p">(</span><span class="n">v6</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">6</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">SBYTE1</span><span class="p">(</span><span class="n">v6</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">6</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">SLOBYTE</span><span class="p">(</span><span class="n">v6</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">6</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mi">24</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_401950</span><span class="p">(</span><span class="n">v6</span><span class="p">,</span> <span class="n">v4</span><span class="p">,</span> <span class="n">v8</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">v4</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">v5</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;这把钥匙好像打不开大门</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">Sleep</span><span class="p">(</span><span class="mh">0x1388</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">_loaddll</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;成功了，大门已经打开，快点跑出去吧！！！</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>发现是一个RC5  看着并没有魔改 从网上找一个解密脚本就可以了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">__cdecl</span> <span class="n">sub_4021B0</span><span class="p">(</span><span class="nb">int</span> <span class="n">a1</span><span class="p">,</span> <span class="n">_DWORD</span> <span class="o">*</span><span class="n">a2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">result</span><span class="p">;</span> <span class="o">//</span> <span class="n">eax</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">v3</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">13</span><span class="n">Ch</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">v4</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">13</span><span class="n">Ch</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v5</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">D4h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">74</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v6</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">ECh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">5</span><span class="n">Ch</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">v7</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">F8h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">50</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">v8</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">104</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">44</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">v9</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">110</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">38</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v10</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">11</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">2</span><span class="n">Ch</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">i</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">128</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">20</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v12</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">134</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">14</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">int</span> <span class="n">v13</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">140</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">8</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">__CheckForDebuggerJustMyCode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unk_46401A</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v13</span> <span class="o">=</span> <span class="mh">0xB7E15163</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v12</span> <span class="o">=</span> <span class="mh">0x9E3779B9</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v10</span> <span class="o">=</span> <span class="n">dword_462010</span> <span class="o">/</span> <span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v6</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v7</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v8</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v9</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">*</span><span class="n">a2</span> <span class="o">=</span> <span class="mh">0xB7E15163</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dword_46201C</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v12</span> <span class="o">+</span> <span class="n">a2</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dword_462020</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v5</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="n">dword_462018</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v5</span><span class="p">[</span><span class="n">i</span> <span class="o">/</span> <span class="n">v10</span><span class="p">]</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">unsigned</span> <span class="n">__int8</span> <span class="o">*</span><span class="p">)(</span><span class="n">i</span> <span class="o">+</span> <span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">v5</span><span class="p">[</span><span class="n">i</span> <span class="o">/</span> <span class="n">v10</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">dword_46201C</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">dword_46201C</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v3</span> <span class="o">=</span> <span class="p">((</span><span class="n">v6</span> <span class="o">+</span> <span class="n">v7</span> <span class="o">+</span> <span class="n">a2</span><span class="p">[</span><span class="n">v9</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">dword_462010</span> <span class="o">-</span> <span class="p">((</span><span class="n">dword_462010</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)))</span> <span class="o">|</span> <span class="p">((</span><span class="n">v6</span> <span class="o">+</span> <span class="n">v7</span> <span class="o">+</span> <span class="n">a2</span><span class="p">[</span><span class="n">v9</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">dword_462010</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a2</span><span class="p">[</span><span class="n">v9</span><span class="p">]</span> <span class="o">=</span> <span class="n">v3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v7</span> <span class="o">=</span> <span class="n">v3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v9</span> <span class="o">=</span> <span class="p">(</span><span class="n">v9</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">dword_46201C</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v4</span> <span class="o">=</span> <span class="p">((</span><span class="n">v6</span> <span class="o">+</span> <span class="n">v3</span> <span class="o">+</span> <span class="n">v5</span><span class="p">[</span><span class="n">v8</span><span class="p">])</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">dword_462010</span> <span class="o">-</span> <span class="p">((</span><span class="n">dword_462010</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">v6</span> <span class="o">+</span> <span class="n">v3</span><span class="p">))))</span> <span class="o">|</span> <span class="p">((</span><span class="n">v6</span> <span class="o">+</span> <span class="n">v3</span> <span class="o">+</span> <span class="n">v5</span><span class="p">[</span><span class="n">v8</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">dword_462010</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">v6</span> <span class="o">+</span> <span class="n">v3</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v5</span><span class="p">[</span><span class="n">v8</span><span class="p">]</span> <span class="o">=</span> <span class="n">v4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v6</span> <span class="o">=</span> <span class="n">v4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v8</span> <span class="o">=</span> <span class="p">(</span><span class="n">v8</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">dword_462020</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>exp</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">MASK</span> <span class="o">=</span> <span class="mh">0xffffffff</span>
+</span></span><span class="line"><span class="cl"><span class="n">P</span> <span class="o">=</span> <span class="mh">0xB7E15163</span>
+</span></span><span class="line"><span class="cl"><span class="n">Q</span> <span class="o">=</span> <span class="mh">0x9E3779B9</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="mi">32</span>
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="mi">12</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="mi">26</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">rol</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n</span> <span class="o">&amp;=</span> <span class="mi">31</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">&amp;=</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">((</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="mi">32</span> <span class="o">-</span> <span class="n">n</span><span class="p">)))</span> <span class="o">&amp;</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">ror</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n</span> <span class="o">&amp;=</span> <span class="mi">31</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">&amp;=</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">32</span> <span class="o">-</span> <span class="n">n</span><span class="p">)))</span> <span class="o">&amp;</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">16</span>
+</span></span><span class="line"><span class="cl"><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span> <span class="o">%</span> <span class="p">(</span><span class="mi">255</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">L</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">4</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">))</span> <span class="o">&amp;</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">t</span>
+</span></span><span class="line"><span class="cl"><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">Q</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="o">=</span> <span class="n">B</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">rol</span><span class="p">((</span><span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">rol</span><span class="p">((</span><span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">t</span>
+</span></span><span class="line"><span class="cl">    <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decrypt_block</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">B</span> <span class="o">=</span> <span class="n">ror</span><span class="p">((</span><span class="n">B</span> <span class="o">-</span> <span class="n">S</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">^</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl">        <span class="n">A</span> <span class="o">=</span> <span class="n">ror</span><span class="p">((</span><span class="n">A</span> <span class="o">-</span> <span class="n">S</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="o">^</span> <span class="n">B</span>
+</span></span><span class="line"><span class="cl">        <span class="n">A</span> <span class="o">&amp;=</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">        <span class="n">B</span> <span class="o">&amp;=</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">B</span> <span class="o">-</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="n">MASK</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cipher</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mi">1821724372</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mi">310169419</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mi">295936376</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span><span class="mi">519352180</span> <span class="o">&amp;</span> <span class="n">MASK</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">plain_words</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">decrypt_block</span><span class="p">(</span><span class="n">cipher</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cipher</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plain_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plain_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">plain_words</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</span></span></code></pre></div><p>解出来第二段key</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">LIKE_OR_LOVE_CAT</span>
+</span></span></code></pre></div><p>所以我们的flag就是</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">CatCTF</span><span class="p">{</span><span class="n">CAT_IN_X_19_Y_39_LIKE_OR_LOVE_CAT</span><span class="p">}</span>
+</span></span></code></pre></div><p>其实这题的正常解密就是这样 当然还有不正常的 哈哈哈</p>
+<p>当你没有看到哪个谜语是摩斯的时候 你就要去找请输入你的翻译了</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="nb">int</span> <span class="n">sub_402F60</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v1</span><span class="p">[</span><span class="mi">27</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">D0h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">114</span><span class="n">h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="n">__int8</span> <span class="n">v2</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">EBh</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="n">F9h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v3</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="n">F7h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="n">EDh</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">i</span><span class="p">;</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">100</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="n">E4h</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v5</span><span class="p">[</span><span class="mi">140</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">10</span><span class="n">Ch</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="n">D8h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v6</span><span class="p">[</span><span class="mi">28</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">198</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">4</span><span class="n">Ch</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v7</span><span class="p">[</span><span class="mi">28</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">1</span><span class="n">B4h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">30</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">  <span class="n">char</span> <span class="n">v8</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span> <span class="o">//</span> <span class="p">[</span><span class="n">esp</span><span class="o">+</span><span class="mi">1</span><span class="n">D0h</span><span class="p">]</span> <span class="p">[</span><span class="n">ebp</span><span class="o">-</span><span class="mi">14</span><span class="n">h</span><span class="p">]</span> <span class="n">BYREF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="n">__CheckForDebuggerJustMyCode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unk_46401A</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">qmemcpy</span><span class="p">(</span><span class="n">v8</span><span class="p">,</span> <span class="s2">&#34;wuwuwuyoucatchme&#34;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;请输入你的翻译</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span> <span class="n">v3</span> <span class="o">!=</span> <span class="mi">10</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v3</span> <span class="o">=</span> <span class="n">j___fgetchar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">v7</span><span class="p">[</span><span class="n">v2</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">v3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">74</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">117</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">31</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">121</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">112</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">63</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="mi">39</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mi">72</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">74</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="mi">77</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">68</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">v1</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_403DF0</span><span class="p">(</span><span class="n">v5</span><span class="p">,</span> <span class="n">v8</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sub_403630</span><span class="p">(</span><span class="n">v5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">v7</span><span class="p">,</span> <span class="n">v6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">0x10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span> <span class="n">v6</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;笨橘猫好像不是这个意思，再想想吧!!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">Sleep</span><span class="p">(</span><span class="mh">0x1388</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">_loaddll</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;你终于弄懂笨橘猫在说什么了</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;原来是这样，笨橘猫看见了可怜的小猫咪流浪街头</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;而且这时有可怕的偷猫人想要偷走小猫，笨橘猫带着小猫逃跑</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;跑进了下水管道，但是下水道太黑和小猫失散了..</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">printf</span><span class="p">(</span><span class="s2">&#34;快去找到小猫吧，她已经在地图上出现了</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>然后找到了这句话 发现前面有一个字符串 应该是key 然后进去到加密函数里面 发现是一个SM4 <code>byte_4531F0</code> 是 SM4 S-box <code>byte_4532F0</code> 是 FK <code>byte_453300</code> 是 CK 然后找一下魔改点 发现没有 我们直接去解密</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260611201747-v8hnpa5.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>然后接着去解 就可以了</p>
+<p>flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">CatCTF</span><span class="p">{</span><span class="n">CAT_IN_X_19_Y_39_LIKE_OR_LOVE_CAT</span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+      </div>
+    </article>
+
+    
+      <div class="post-navigation">
+        <div class="nav-prev">
+          
+            <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1199-readingsection/">← GFSJ1199-【ReadingSection】</a>
+          
+        </div>
+        <div class="nav-next">
+          
+            <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1185-%E5%96%B5%E5%96%B5%E6%83%B3%E4%BD%A0%E5%95%A6/">GFSJ1185-【喵喵想你啦】 →</a>
+          
+        </div>
+      </div>
+    
+
+    
+      <div class="comments" id="comments"
+           data-mapping="specific"
+           data-term="post-GFSJ1194-【StupidOrangeCat2】">
+        <h2>评论</h2>
+        <div id="giscus-container"></div>
+        <noscript>
+          <p class="giscus-status is-error">评论区需要启用 JavaScript 后才能加载。</p>
+        </noscript>
+      </div>
+    
+  </div>
+
+  
+  
+    <aside class="post-sidebar-right">
+      <div class="sidebar-author-info">
+        <a href="../../../../about/">
+          <img src="../../../../assets/images/touxiang.jpg" alt="Q7411" class="sidebar-avatar" width="80" height="80">
+        </a>
+        <div class="sidebar-author-name">Q7411</div>
+        
+          <a href="https://github.com/Q7411" class="github-btn" target="_blank" rel="noopener">GitHub 主页</a>
+        
+      </div>
+
+      <div class="toc-container toc-right">
+        <div class="toc-post-title">本页目录</div>
+        <div class="toc-content-wrapper">
+          <nav id="TableOfContents"></nav>
+        </div>
+      </div>
+      <button class="toc-toggle right" id="toc-toggle-right" aria-label="Toggle Outline">大纲</button>
+    </aside>
+  
+</div>
+
+  </main>
+
+  
+  <div class="fab-container" id="fab-container">
+    <button id="font-size-toggle" class="fab-btn" aria-label="Toggle Font Size" title="切换字体大小">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13"></path><path d="M12 22V8"></path><path d="M8 12h8"></path></svg>
+    </button>
+    <button id="back-to-top" class="fab-btn" aria-label="Back to Top" title="返回顶部">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 2026 Q7411. Powered by Hugo.
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-powershell.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-docker.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" defer></script>
+  
+  
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  
+  
+  <script>
+    
+    window.siteConfig = {
+      searchIndexUrl: "\/index.json"
+    };
+  </script>
+  
+  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+</body>
+</html>

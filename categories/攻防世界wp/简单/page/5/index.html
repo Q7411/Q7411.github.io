@@ -14,7 +14,7 @@
   <link rel="icon" type="image/jpeg" href="../../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../../../css/main.57c18cc46597fd4eff33552660dae6cadc9325160869055b5a50900a14bdb119.css">
+  <link rel="stylesheet" href="../../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
   
   
   <meta property="og:title" content="攻防世界WP/简单 - Q7411 CTF blog">
@@ -135,87 +135,31 @@
       
       
         <article class="card fade-in" style="animation-delay: 0ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/">GFSJ0104-【babymips】</a></h3>
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/">GFSJ0410-【easyre-153】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-11T13:08:18&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-11
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              3 分钟
+              2 分钟
             </span>
           </div>
-          <p class="summary"> mips 架构 但都简单 xor 左移右移
-main函数一个xor
-int __fastcall main(int a1, char **a2, char **a3) { int i; // [sp+18h] [+18h] BYREF …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0104-babymips/" class="read-more" aria-label="阅读全文：GFSJ0104-【babymips】">阅读全文</a>
+          <p class="summary"> 花指令
+查壳发现是 UPX 我们直接去脱壳 由于是ELF文件 所以可以实用kali自带的upx软件来脱壳 也是upx -d (其实是我win版的upx 怎么试都没脱下来)
+main函数
+int __cdecl main(int argc, …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/" class="read-more" aria-label="阅读全文：GFSJ0410-【easyre-153】">阅读全文</a>
         </article>
       
         <article class="card fade-in" style="animation-delay: 100ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1065-ereere/">GFSJ1065-【ereere】</a></h3>
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/">GFSJ0417-【deedeedee】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-11T12:42:15&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-11
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              4 分钟
-            </span>
-          </div>
-          <p class="summary"> RC4 + base64换表
-main函数 能看到是有一个base字符串的
-int sub_400BC8() { int result; // $v0 int v1; // [sp+18h] [+18h] int v2; // …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1065-ereere/" class="read-more" aria-label="阅读全文：GFSJ1065-【ereere】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 200ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1194-stupidorangecat2/">GFSJ1194-【StupidOrangeCat2】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-11T20:19:28&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-11
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              9 分钟
-            </span>
-          </div>
-          <p class="summary"> SMC + 摩斯密码 + SM4 + RC5
-一个很好的题目 出题人很有水平 拿到题目先运行 这个先运行 其实没啥大问题 除了有些出题人脑残做了个勒索或者一个病毒放在里面 需要你来解密那种不能运行 不过一般都有提醒的 说多了都是痛 给我电 …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1194-stupidorangecat2/" class="read-more" aria-label="阅读全文：GFSJ1194-【StupidOrangeCat2】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 300ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1200-bugcat/">GFSJ1200-【BugCat】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-11T20:19:30&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-11
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              12 分钟
-            </span>
-          </div>
-          <p class="summary"> 脱壳 花指令 异常处理 爆破
-脱壳 拿到题目查壳发现是一个upx 看十六进制发现变成CAT了 修改回去发现还是脱壳不了 然后尝试手脱壳
-由于是UPX使用ESP定律来手脱壳 在pushad之后下一个硬件断点
-然后理想状态是运行到了popad …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1200-bugcat/" class="read-more" aria-label="阅读全文：GFSJ1200-【BugCat】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 400ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0165-tt3441810/">GFSJ0165-【tt3441810】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-11T20:35:47&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-11
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
@@ -224,56 +168,17 @@ int sub_400BC8() { int result; // $v0 int v1; // [sp+18h] [+18h] int v2; // …<
             </span>
           </div>
           <p class="summary"> 签到
-题目给了一个文本
-00400080 68 66 6C 00 00 48 BF 01 00 00 00 00 00 00 00 48 00400090 8D 34 24 48 BA 02 00 00 00 00 00 00 00 48 …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0165-tt3441810/" class="read-more" aria-label="阅读全文：GFSJ0165-【tt3441810】">阅读全文</a>
+动调题目給了一个hex 我们去解密
+676c60677a74326d716c6074325f6c6575347172316773616c6d686e665f68735e6773385e345e3377657379316e327d …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/" class="read-more" aria-label="阅读全文：GFSJ0417-【deedeedee】">阅读全文</a>
         </article>
       
-        <article class="card fade-in" style="animation-delay: 500ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1100-easyre-xctf/">GFSJ1100-【easyre-xctf】</a></h3>
+        <article class="card fade-in" style="animation-delay: 200ms;">
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0418-gametime/">GFSJ0418-【gametime】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-12T16:41:45&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-12
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              1 分钟
-            </span>
-          </div>
-          <p class="summary"> UPX
-脱壳后打开
-int __fastcall main(int argc, const char **argv, const char **envp) { _main(); puts_0(&#34;Very easy …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1100-easyre-xctf/" class="read-more" aria-label="阅读全文：GFSJ1100-【easyre-xctf】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 600ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0489-open-source/">GFSJ0489-【open-source】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-12T16:53:22&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-12
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              1 分钟
-            </span>
-          </div>
-          <p class="summary"> 约束求解
-源码
-一共三个约束
-#include &lt;stdio.h&gt; #include &lt;string.h&gt; int main(int argc, char *argv[]) { if (argc != 4) { …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0489-open-source/" class="read-more" aria-label="阅读全文：GFSJ0489-【open-source】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 700ms;">
-          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0418-gametime/">GFSJ0418-【gametime】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-30T18:37:33&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-30
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
@@ -284,7 +189,104 @@ int __fastcall main(int argc, const char **argv, const char **envp) { _main(); p
           <p class="summary"> 简单游戏逆向
 题目简介
 Premise - A game that requires a user to type either space (&#39;s&#39;), &#39;m&#39; or &#39;x&#39; when …</p>
-          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0418-gametime/" class="read-more" aria-label="阅读全文：GFSJ0418-【gametime】">阅读全文</a>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0418-gametime/" class="read-more" aria-label="阅读全文：GFSJ0418-【gametime】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 300ms;">
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0419-key/">GFSJ0419-【key】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              4 分钟
+            </span>
+          </div>
+          <p class="summary"> xor
+main函数
+void sub_401100() { int v0; // esi int v1; // esi unsigned int v2; // edi void **v3; // ebx void **v4; // …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0419-key/" class="read-more" aria-label="阅读全文：GFSJ0419-【key】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 400ms;">
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0444-re2-cpp-is-awesome/">GFSJ0444-【re2-cpp-is-awesome】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              2 分钟
+            </span>
+          </div>
+          <p class="summary"> 签到
+mian函数 能看到就一个判断
+__int64 __fastcall main(int a1, char **a2, char **a3) { char *v3; // rbx __int64 v4; // rax __int64 …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0444-re2-cpp-is-awesome/" class="read-more" aria-label="阅读全文：GFSJ0444-【re2-cpp-is-awesome】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 500ms;">
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/">GFSJ0446-【re4-unvm-me】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              1 分钟
+            </span>
+          </div>
+          <p class="summary"> pyc反编译
+pycdc 反编译一下
+import md5 md5s = [ 0x831DAA3C843BA8B087C895F0ED305CE7L, 0x6722F7A07246C6AF20662B855846C2C8L, …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/" class="read-more" aria-label="阅读全文：GFSJ0446-【re4-unvm-me】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 600ms;">
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0447-re5-packed-movement/">GFSJ0447-【re5-packed-movement】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              1 分钟
+            </span>
+          </div>
+          <p class="summary"> movfuscator 混淆
+使用工具来解混淆的效果不是很好 看着还不如不解混淆呢
+工具链接 github.com/kirschju/demovfuscator
+所以我们还是使用混淆版本的来求解
+进去查看字符串 很少 能看到有两个 …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0447-re5-packed-movement/" class="read-more" aria-label="阅读全文：GFSJ0447-【re5-packed-movement】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 700ms;">
+          <h3><a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0487-game/">GFSJ0487-【game】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              4 分钟
+            </span>
+          </div>
+          <p class="summary"> 签到 xor
+main函数
+int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; // [esp+0h] [ebp-FCh] char …</p>
+          <a href="../../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0487-game/" class="read-more" aria-label="阅读全文：GFSJ0487-【game】">阅读全文</a>
         </article>
       
     </div>
@@ -315,7 +317,7 @@ Premise - A game that requires a user to type either space (&#39;s&#39;), &#39;m
         <a href="../../../../../categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/page/6/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="../../../../../categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/page/7/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="../../../../../categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/page/10/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>

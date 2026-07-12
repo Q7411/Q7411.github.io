@@ -1,0 +1,3219 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  
+  
+  <meta name="description" content=" JS VM &#43; HOOK
+题目给了一个html 一个js源码 粗略查看是VM 说到VM 我们可以手动逆过去 但是那样很耗时间也费神 所以我们要使用一些技巧 题目源码如下
+function createRegisters(obj){ obj.registers = []; for(i=0; i &lt; 256; &#43;&#43;i){ obj.registers.push(0); } }; function Machine() { createRegisters(this); this.code = [0] this.PC = 0; this.callstack = []; this.pow = Math.pow(2,32) }; Machine.prototype = { opcodesCount: 16, run: run, loadcode: function(code){this.code = code}, end: function(){this.code=[]} }; function run(){ while(this.PC &lt; this.code.length){ var command = parseCommand.call(this) command.execute(this); } //this.end() } function getOpcodeObject(){ var opNum = (this.code[this.PC] % this.opcodesCount); this.PC &#43;= 1; return eval(&#39;new Opcode&#39;&#43;opNum); } function parseCommand(){ var opcode = getOpcodeObject.call(this); opcode.consumeArgs(this); return opcode; } var opcCreate = &#34;&#34;; for(i=0;i&lt;16;&#43;&#43;i){ opcCreate &#43;= &#34;function Opcode&#34;&#43;i&#43;&#34;(){this.args=[]}\n&#34;; } eval(opcCreate); function makeFromImm(obj) { var res = obj.code[obj.PC &#43; 2]; res &lt;&lt;=8; res &#43;= obj.code[obj.PC &#43; 1]; res &lt;&lt;=8; res &#43;= obj.code[obj.PC]; res &lt;&lt;=8; res &#43;= obj.code[obj.PC&#43;3]; res = res &gt;&gt;&gt; 0; return res; } function getRegImm(obj){ this.args[0] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[1] = makeFromImm(obj); obj.PC &#43;= 4; } function getImm(obj){ this.args[0] = makeFromImm(obj); obj.PC &#43;= 4;	} function getTwoRegs(obj){ this.args[0] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[1] = obj.code[obj.PC]; obj.PC &#43;= 1; } function getThreeRegs(obj){ this.args[0] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[1] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[2] = obj.code[obj.PC]; obj.PC &#43;= 1; } function getRegString(obj){ this.args[0] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[1] = getString(obj); } function getRegRegString(obj){ this.args[0] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[1] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[2] = getString(obj); } function getRegTwoString(obj){ this.args[0] = obj.code[obj.PC]; obj.PC &#43;= 1; this.args[1] = getString(obj); this.args[2] = getString(obj); } function getString(obj){ var res = &#34;&#34;; while(obj.code[obj.PC] != 0) { res &#43;= String.fromCharCode(obj.code[obj.PC]); obj.PC &#43;= 1; } obj.PC &#43;= 1; return res; } Opcode0.prototype = { consumeArgs : function(obj){}, execute: function(){} }; Opcode1.prototype = { consumeArgs: getRegImm, execute: function(obj){ obj.registers[this.args[0]] = (obj.registers[this.args[0]] &#43; this.args[1]) % 0x100000000; } } Opcode2.prototype = { consumeArgs: getTwoRegs,	execute: function(obj){ obj.registers[this.args[0]] = (obj.registers[this.args[0]] &#43; obj.registers[this.args[1]]) % 0x100000000; } } Opcode3.prototype = { consumeArgs: getRegImm, execute: function(obj){ obj.registers[this.args[0]] = ((obj.registers[this.args[0]] - this.args[1]) % 0x100000000) &gt;&gt;&gt; 0; } } Opcode4.prototype = { consumeArgs: getTwoRegs, execute: function(obj){ obj.regsiters[this.args[0]] = ((obj.registers[this.args[0]] - this.registers[this.args[1]])%100000000) &gt;&gt;&gt; 0 } } Opcode5.prototype = { consumeArgs: getThreeRegs, execute: function(obj){ var mult = obj.registers[this.args[0]] * obj.registers[this.args[1]]; console.log(mult.toString(16)); obj.registers[this.args[2]] = (mult / obj.pow) &gt;&gt;&gt; 0; obj.registers[this.args[2]&#43;1] = (mult &amp; 0xffffffff) &gt;&gt;&gt; 0; } } Opcode6.prototype = { consumeArgs: getThreeRegs, execute: function(obj){ var divs = obj.registers[this.args[0]] * obj.pow &#43; obj.registers[this.args[0]&#43;1]; obj.registers[this.args[2]] = (divs / obj.registers[this.args[1]]) &gt;&gt;&gt; 0; obj.registers[this.args[2]&#43;1]= (divs % obj.registers[this.args[1]]) &gt;&gt;&gt; 0; } } Opcode7.prototype = { consumeArgs: getRegImm, execute: function(obj) { obj.registers[this.args[0]] = this.args[1]; }	} Opcode8.prototype = { consumeArgs: getImm, execute: function(obj){ obj.callstack.push(obj.PC); obj.PC = this.args[0]; } } Opcode9.prototype = { consumeArgs: getImm, execute: function(obj){ obj.PC = (obj.PC &#43; this.args[0]) % obj.code.length; } } Opcode10.prototype = { consumeArgs: function(){}, execute: function(obj){ obj.PC = obj.callstack.pop(); } } Opcode11.prototype = { consumeArgs: getRegString, execute: function(obj){ obj.registers[this.args[0]] = eval(&#39;new &#39;&#43;this.args[1]); } } Opcode12.prototype = { consumeArgs: getRegTwoString, execute: function(obj){ obj.registers[this.args[0]][this.args[1]] = Function(this.args[2]); } } Opcode13.prototype = { consumeArgs: getRegRegString, execute: function(obj){ obj.registers[this.args[0]] = obj.registers[this.args[1]][this.args[2]]; } } Opcode14.prototype = { consumeArgs: getRegRegString, execute: function(obj){ obj.registers[this.args[1]][this.args[2]] = obj.registers[this.args[0]]; } } Opcode15.prototype = { consumeArgs: getRegRegString, execute: function(obj){ obj.registers[this.args[0]] = obj.registers[this.args[1]][this.args[2]](); } } function check(){ machine = new Machine; machine.loadcode([11, 1, 79, 98, 106, 101, 99, 116, 0, 12, 1, 120, 0, 114, 101, 116, 117, 114, 110, 32, 100, 111, 99, 117, 109, 101, 110, 116, 46, 103, 101, 116, 69, 108, 101, 109, 101, 110, 116, 115, 66, 121, 84, 97, 103, 78, 97, 109, 101, 40, 39, 105, 110, 112, 117, 116, 39, 41, 91, 48, 93, 46, 118, 97, 108, 117, 101, 47, 47, 0, 15, 3, 1, 120, 0, 14, 3, 1, 117, 115, 101, 114, 105, 110, 112, 117, 116, 0, 12, 1, 121, 0, 119, 105, 110, 100, 111, 119, 46, 109, 97, 99, 104, 105, 110, 101, 46, 101, 110, 100, 32, 61, 32, 102, 117, 110, 99, 116, 105, 111, 110, 40, 41, 123, 116, 104, 105, 115, 46, 99, 111, 100, 101, 61, 91, 93, 59, 116, 104, 105, 115, 46, 80, 67, 61, 49, 55, 51, 125, 47, 47, 0, 15, 3, 1, 121, 0, 12, 1, 122, 0, 97, 108, 101, 114, 116, 40, 49, 41, 59, 47, 47, 11, 234, 79, 98, 106, 101, 99, 116, 255, 9, 255, 255, 255, 12, 10, 97, 108, 101, 114, 116, 40, 50, 41, 59, 47, 47, 12, 234, 120, 255, 118, 97, 114, 32, 102, 61, 119, 105, 110, 100, 111, 119, 46, 109, 97, 99, 104, 105, 110, 101, 46, 114, 101, 103, 105, 115, 116, 101, 114, 115, 91, 49, 93, 46, 117, 115, 101, 114, 105, 110, 112, 117, 116, 47, 47, 10, 118, 97, 114, 32, 105, 32, 61, 32, 102, 46, 108, 101, 110, 103, 116, 104, 47, 47, 10, 118, 97, 114, 32, 110, 111, 110, 99, 101, 32, 61, 32, 39, 103, 114, 111, 107, 101, 39, 59, 47, 47, 10, 118, 97, 114, 32, 106, 32, 61, 32, 48, 59, 47, 47, 10, 118, 97, 114, 32, 111, 117, 116, 32, 61, 32, 91, 93, 59, 47, 47, 10, 118, 97, 114, 32, 101, 113, 32, 61, 32, 116, 114, 117, 101, 59, 47, 47, 10, 119, 104, 105, 108, 101, 40, 106, 32, 60, 32, 105, 41, 123, 47, 47, 10, 111, 117, 116, 46, 112, 117, 115, 104, 40, 102, 46, 99, 104, 97, 114, 67, 111, 100, 101, 65, 116, 40, 106, 41, 32, 94, 32, 110, 111, 110, 99, 101, 46, 99, 104, 97, 114, 67, 111, 100, 101, 65, 116, 40, 106, 37, 53, 41, 41, 47, 47, 10, 106, 43, 43, 59, 47, 47, 10, 125, 47, 47, 10, 118, 97, 114, 32, 101, 120, 32, 61, 32, 32, 91, 49, 44, 32, 51, 48, 44, 32, 49, 52, 44, 32, 49, 50, 44, 32, 54, 57, 44, 32, 49, 52, 44, 32, 49, 44, 32, 56, 53, 44, 32, 55, 53, 44, 32, 53, 48, 44, 32, 52, 48, 44, 32, 51, 55, 44, 32, 52, 56, 44, 32, 50, 52, 44, 32, 49, 48, 44, 32, 53, 54, 44, 32, 53, 53, 44, 32, 52, 54, 44, 32, 53, 54, 44, 32, 54, 48, 93, 59, 47, 47, 10, 105, 102, 32, 40, 101, 120, 46, 108, 101, 110, 103, 116, 104, 32, 61, 61, 32, 111, 117, 116, 46, 108, 101, 110, 103, 116, 104, 41, 32, 123, 47, 47, 10, 106, 32, 61, 32, 48, 59, 47, 47, 10, 119, 104, 105, 108, 101, 40, 106, 32, 60, 32, 101, 120, 46, 108, 101, 110, 103, 116, 104, 41, 123, 47, 47, 10, 105, 102, 40, 101, 120, 91, 106, 93, 32, 33, 61, 32, 111, 117, 116, 91, 106, 93, 41, 47, 47, 10, 101, 113, 32, 61, 32, 102, 97, 108, 115, 101, 59, 47, 47, 10, 106, 32, 43, 61, 32, 49, 59, 47, 47, 10, 125, 47, 47, 10, 105, 102, 40, 101, 113, 41, 123, 47, 47, 10, 97, 108, 101, 114, 116, 40, 39, 89, 79, 85, 32, 87, 73, 78, 33, 39, 41, 59, 47, 47, 10, 125, 101, 108, 115, 101, 123, 10, 97, 108, 101, 114, 116, 40, 39, 78, 79, 80, 69, 33, 39, 41, 59, 10, 125, 125, 101, 108, 115, 101, 123, 97, 108, 101, 114, 116, 40, 39, 78, 79, 80, 69, 33, 39, 41, 59, 125, 47, 47, 255, 9, 255, 255, 255, 12, 10, 97, 108, 101, 114, 116, 40, 51, 41, 59, 47, 47, 15, 1, 234, 120, 255, 9, 255, 255, 255, 12, 10, 97, 108, 101, 114, 116, 40, 52, 41, 59, 47, 47, 10, 97, 108, 101, 114, 116, 40, 53, 41, 59, 47, 47, 10, 97, 108, 101, 114, 116, 40, 54, 41, 59, 47, 47, 10, 97, 108, 101, 114, 116, 40, 55, 41, 59, 47, 47, 0, 12, 1, 103, 0, 118, 97, 114, 32, 105, 32, 61, 48, 59, 119, 104, 105, 108, 101, 40, 105, 60, 119, 105, 110, 100, 111, 119, 46, 109, 97, 99, 104, 105, 110, 101, 46, 99, 111, 100, 101, 46, 108, 101, 110, 103, 116, 104, 41, 123, 105, 102, 40, 119, 105, 110, 100, 111, 119, 46, 109, 97, 99, 104, 105, 110, 101, 46, 99, 111, 100, 101, 91, 105, 93, 32, 61, 61, 32, 50, 53, 53, 32, 41, 32, 119, 105, 110, 100, 111, 119, 46, 109, 97, 99, 104, 105, 110, 101, 46, 99, 111, 100, 101, 91, 105, 93, 32, 61, 32, 48, 59, 105, 43, 43, 125, 47, 47, 0, 12, 1, 104, 0, 119, 105, 110, 100, 111, 119, 46, 109, 97, 99, 104, 105, 110, 101, 46, 80, 67, 61, 49, 55, 50, 47, 47, 0, 15, 0, 1, 103, 0, 15, 0, 1, 104, 0]) machine.run(); } 能看到源码是这样的 我们要知道这是在一个html中 我们可以通过js来调试这个程序 我也做了一个opcode的列表 以防有些不理解的
+">
+  <title>GFSJ0122-【secret-string-400】 - Q7411 CTF blog</title>
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0122-secret-string-400/">
+  <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
+  <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
+  
+  <link rel="stylesheet" href="../../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
+  
+  
+  <meta property="og:title" content="GFSJ0122-【secret-string-400】 - Q7411 CTF blog">
+  <meta property="og:description" content=" JS VM &#43; HOOK
+题目给了一个html 一个js源码 粗略查看是VM 说到VM 我们可以手动逆过去 但是那样很耗时间也费神 所以我们要使用一些技巧 题目源码如下
+function createRegisters(obj){ obj.registers = []; for(i=0; i …">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0122-secret-string-400/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GFSJ0122-【secret-string-400】 - Q7411 CTF blog">
+  <meta name="twitter:description" content=" JS VM &#43; HOOK
+题目给了一个html 一个js源码 粗略查看是VM 说到VM 我们可以手动逆过去 但是那样很耗时间也费神 所以我们要使用一些技巧 题目源码如下
+function createRegisters(obj){ obj.registers = []; for(i=0; i …">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
+  
+  
+  
+  <meta property="article:published_time" content="2026-07-12T10:17:01&#43;08:00">
+  <meta property="article:author" content="Q7411">
+  
+
+  
+  
+
+  
+  
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https:\/\/www.q7411.xyz\/"
+      }
+      
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Posts",
+        "item": "https:\/\/www.q7411.xyz\/post/"
+      }
+      
+      
+      ,{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "GFSJ0122-【secret-string-400】",
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0122-secret-string-400\/"
+      }
+      
+    ]
+  }
+  </script>
+  
+  <script>
+    window.SiteConfig = {
+      githubRepo: "Q7411\/Q7411.github.io",
+      avatarUrl: "\/assets\/images\/touxiang.jpg",
+      giscus: {
+        repo: "Q7411\/Q7411.github.io",
+        repoId: "R_kgDOR8Bf7A",
+        category: "General",
+        categoryId: "DIC_kwDOR8Bf7M4C6WUW",
+        enabled: true
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="site-loader" id="site-loader" role="status" aria-live="polite" aria-label="页面加载中">
+    <div class="site-loader-panel">
+      <img src="../../../../assets/images/touxiang.jpg" alt="" class="site-loader-avatar" width="96" height="96" decoding="async">
+      <div class="site-loader-brand">Q7411 CTF blog</div>
+      <div class="site-loader-copy">正在加载页面</div>
+      <div class="site-loader-track" aria-hidden="true">
+        <div class="site-loader-bar"></div>
+      </div>
+    </div>
+  </div>
+  <noscript><style>#site-loader{display:none}</style></noscript>
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="logo">
+        <a href="../../../../">Q7411 CTF blog</a>
+      </div>
+      <div class="search-container">
+        <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-color-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="search" id="search-input" placeholder="Search write-ups..." aria-label="搜索框" style="padding-left: 36px;">
+        <div id="search-results"></div>
+      </div>
+      <nav class="site-nav">
+        <a href="../../../../">首页</a>
+        
+        <div class="nav-dropdown">
+          <button class="nav-dropbtn" id="nav-dropbtn" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            博文 
+            <svg class="arrow" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="nav-dropdown-content" id="nav-dropdown-content">
+            <a href="../../../../categories/">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              分类
+            </a>
+            <a href="../../../../archives/">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              归档
+            </a>
+          </div>
+        </div>
+
+        <a href="../../../../about/">关于</a>
+        <a href="../../../../guestbook/">留言板</a>
+        <button id="theme-toggle" aria-label="Toggle Dark Mode">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+  <main class="site-main container" id="main-content">
+    
+
+
+
+
+
+
+
+
+<div class="post-layout three-column ">
+  
+  
+  
+    <aside class="post-sidebar-left">
+      <div class="toc-container">
+        
+          
+          
+          
+          
+          <div class="toc-category-name">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: text-bottom;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            攻防世界WP
+          </div>
+          
+          <div class="toc-category-posts">
+            
+            
+            
+            
+            
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+                
+                
+              
+            
+              
+            
+              
+            
+              
+            
+
+            
+            
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+                
+                
+                  
+                
+              
+            
+              
+            
+              
+            
+              
+            
+
+             
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      
+      
+      
+        
+        
+          
+        
+        
+      
+    
+  
+
+  
+  
+    
+    
+      
+      
+        
+      
+    
+    
+    
+      
+      
+      
+        
+        
+          
+        
+        
+      
+    
+  
+
+
+
+
+  
+  
+    
+  
+
+  <div class="toc-subcategory-group ">
+    <div class="toc-subcategory-title">
+      <svg class="folder-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span class="subcat-name">中等</span>
+      <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="toc-subcategory-content">
+       
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+
+
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/babyruby/" class="toc-post-link">babyruby</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/crackeme/" class="toc-post-link">crackeme</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0213-leaked-license-64/" class="toc-post-link">GFSJ0213-【leaked-license-64】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0231-pingpong/" class="toc-post-link">GFSJ0231-【pingpong】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0382-first/" class="toc-post-link">GFSJ0382-【first】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0932-babydsp/" class="toc-post-link">GFSJ0932-【babydsp】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/strange-language/" class="toc-post-link">strange language</a>
+  </div>
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+    </div>
+  </div>
+
+  
+  
+    
+      
+    
+  
+
+  <div class="toc-subcategory-group open">
+    <div class="toc-subcategory-title">
+      <svg class="folder-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      <span class="subcat-name">简单</span>
+      <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+    <div class="toc-subcategory-content">
+       
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+
+
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0004-igniteme/" class="toc-post-link">GFSJ0004-【IgniteMe】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0076-babyre-2/" class="toc-post-link">GFSJ0076-【BABYRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0076-babyre/" class="toc-post-link">GFSJ0076-【BABYRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0078-easyhook/" class="toc-post-link">GFSJ0078-【EASYHOOK】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0104-babymips/" class="toc-post-link">GFSJ0104-【babymips】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0120-parallel-comparator-200/" class="toc-post-link">GFSJ0120-【parallel-comparator-200】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0121-secret-galaxy-300/" class="toc-post-link">GFSJ0121-【secret-galaxy-300】</a>
+  </div>
+
+  <div class="toc-post-item active">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0122-secret-string-400/" class="toc-post-link">GFSJ0122-【secret-string-400】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0123-simple-check-100/" class="toc-post-link">GFSJ0123-【simple-check-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0134-re1-100/" class="toc-post-link">GFSJ0134-【re1-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0164-elrond32/" class="toc-post-link">GFSJ0164-【elrond32】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0165-tt3441810/" class="toc-post-link">GFSJ0165-【tt3441810】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0186-notsequence/" class="toc-post-link">GFSJ0186-【notsequence】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0202-zorropub/" class="toc-post-link">GFSJ0202-【zorropub】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/" class="toc-post-link">GFSJ0212-【catch-me】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0239-reverseme-120/" class="toc-post-link">GFSJ0239-【ReverseMe-120】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0240-reversing-x64elf-100/" class="toc-post-link">GFSJ0240-【Reversing-x64Elf-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/" class="toc-post-link">GFSJ0270-【2ex1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/" class="toc-post-link">GFSJ0293-【debug】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/" class="toc-post-link">GFSJ0294-【hackme】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0321-guess-the-number/" class="toc-post-link">GFSJ0321-【Guess-the-Number】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0355-shuffle/" class="toc-post-link">GFSJ0355-【Shuffle】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0365-re-for-50-plz-50/" class="toc-post-link">GFSJ0365-【re-for-50-plz-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0366-reverse-for-the-holy-grail-350/" class="toc-post-link">GFSJ0366-【reverse-for-the-holy-grail-350】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0371-android-app-100/" class="toc-post-link">GFSJ0371-【android-app-100】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0372-dmd-50/" class="toc-post-link">GFSJ0372-【dmd-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0375-serial-150/" class="toc-post-link">GFSJ0375-【serial-150】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0376-srm-50/" class="toc-post-link">GFSJ0376-【srm-50】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0379-crackme/" class="toc-post-link">GFSJ0379-【crackme】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0381-echo-server/" class="toc-post-link">GFSJ0381-【echo-server】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0385-apk-%E9%80%86%E5%90%912/" class="toc-post-link">GFSJ0385-【APK-逆向2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0386-newbie_calculations/" class="toc-post-link">GFSJ0386-【Newbie_calculations】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0410-easyre-153/" class="toc-post-link">GFSJ0410-【easyre-153】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/" class="toc-post-link">GFSJ0417-【deedeedee】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0418-gametime/" class="toc-post-link">GFSJ0418-【gametime】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0419-key/" class="toc-post-link">GFSJ0419-【key】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0444-re2-cpp-is-awesome/" class="toc-post-link">GFSJ0444-【re2-cpp-is-awesome】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0446-re4-unvm-me/" class="toc-post-link">GFSJ0446-【re4-unvm-me】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0447-re5-packed-movement/" class="toc-post-link">GFSJ0447-【re5-packed-movement】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0487-game/" class="toc-post-link">GFSJ0487-【game】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0489-open-source/" class="toc-post-link">GFSJ0489-【open-source】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0490-simple-unpack/" class="toc-post-link">GFSJ0490-【simple-unpack】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0492-insanity/" class="toc-post-link">GFSJ0492-【insanity】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0747-easyre/" class="toc-post-link">GFSJ0747-【EasyRE】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0777-testre/" class="toc-post-link">GFSJ0777-【testre】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0779-%E6%A2%85%E6%B4%A5%E7%BE%8E%E6%B2%BB%E9%83%8E/" class="toc-post-link">GFSJ0779-【梅津美治郎】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0780-76%E5%8F%B7/" class="toc-post-link">GFSJ0780-【76号】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0781-mysterious/" class="toc-post-link">GFSJ0781-【Mysterious】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/" class="toc-post-link">GFSJ0808-【Windows_Reverse2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0810-crazy/" class="toc-post-link">GFSJ0810-【crazy】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0812-answer_to_everything/" class="toc-post-link">GFSJ0812-【answer_to_everything】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0815-windows_reverse1/" class="toc-post-link">GFSJ0815-【Windows_Reverse1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0866-replace/" class="toc-post-link">GFSJ0866-【Replace】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0871-%E6%B5%81%E6%B5%AA%E8%80%85/" class="toc-post-link">GFSJ0871-【流浪者】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0874-666/" class="toc-post-link">GFSJ0874-【666】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0876-babyxor/" class="toc-post-link">GFSJ0876-【BabyXor】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0884-signin/" class="toc-post-link">GFSJ0884-【SignIn】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0893-easyre1/" class="toc-post-link">GFSJ0893-【easyRE1】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1028-lucknum/" class="toc-post-link">GFSJ1028-【lucknum】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1031-reverse_re3/" class="toc-post-link">GFSJ1031-【reverse_re3】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1035-1000click/" class="toc-post-link">GFSJ1035-【1000Click】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1036-crypt/" class="toc-post-link">GFSJ1036-【crypt】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1037-happyctf/" class="toc-post-link">GFSJ1037-【happyctf】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1038-xxxorrr/" class="toc-post-link">GFSJ1038-【xxxorrr】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1064-bad_python/" class="toc-post-link">GFSJ1064-【bad_python】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1065-ereere/" class="toc-post-link">GFSJ1065-【ereere】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1092-easyezbaby_app/" class="toc-post-link">GFSJ1092-【easyEZbaby_app】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1094-easyxor/" class="toc-post-link">GFSJ1094-【easyxor】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1095-toddler_regs/" class="toc-post-link">GFSJ1095-【toddler_regs】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1100-easyre-xctf/" class="toc-post-link">GFSJ1100-【easyre-xctf】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1101-mine-/" class="toc-post-link">GFSJ1101-【Mine-】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1130-ezmaze/" class="toc-post-link">GFSJ1130-【ezmaze】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1185-%E5%96%B5%E5%96%B5%E6%83%B3%E4%BD%A0%E5%95%A6/" class="toc-post-link">GFSJ1185-【喵喵想你啦】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1194-stupidorangecat2/" class="toc-post-link">GFSJ1194-【StupidOrangeCat2】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1199-readingsection/" class="toc-post-link">GFSJ1199-【ReadingSection】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1200-bugcat/" class="toc-post-link">GFSJ1200-【BugCat】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1201-the-cat-did-it/" class="toc-post-link">GFSJ1201-【The cat did it】</a>
+  </div>
+
+  <div class="toc-post-item ">
+    <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1207-catfly/" class="toc-post-link">GFSJ1207-【CatFly】</a>
+  </div>
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+    </div>
+  </div>
+
+          </div>
+        
+      </div>
+      <button class="toc-toggle left" id="toc-toggle-left" aria-label="Toggle Categories">分类</button>
+    </aside>
+  
+
+  
+  <div class="post-content-container">
+    
+      <div class="post-header">
+        <h1 class="post-title">GFSJ0122-【secret-string-400】</h1>
+        <div class="post-meta" style="color: var(--text-color-muted); font-size: 0.9em; margin-bottom: 20px;">
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2026-07-12</span>
+          <span style="margin: 0 8px;">|</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M2 12h4l2-9 5 18 3-9h6"></path></svg>约 1854 字</span>
+          <span style="margin: 0 8px;">|</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>阅读约 9 分钟</span>
+        </div>
+      </div>
+    
+    
+    <article class="post-content" itemscope itemtype="http://schema.org/BlogPosting">
+      <div itemprop="articleBody">
+        <blockquote>
+<p>JS VM + HOOK</p>
+</blockquote>
+<p>题目给了一个html 一个js源码 粗略查看是VM 说到VM 我们可以手动逆过去 但是那样很耗时间也费神 所以我们要使用一些技巧 题目源码如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">function</span> <span class="n">createRegisters</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">registers</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">Machine</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">createRegisters</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">PC</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">callstack</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">pow</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Machine</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">opcodesCount</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">run</span><span class="p">:</span> <span class="n">run</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">loadcode</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">code</span><span class="p">){</span><span class="n">this</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="n">end</span><span class="p">:</span> <span class="n">function</span><span class="p">(){</span><span class="n">this</span><span class="o">.</span><span class="n">code</span><span class="o">=</span><span class="p">[]}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">run</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">PC</span> <span class="o">&lt;</span> <span class="n">this</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">var</span> <span class="n">command</span> <span class="o">=</span> <span class="n">parseCommand</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="n">command</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">//</span><span class="n">this</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getOpcodeObject</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">var</span> <span class="n">opNum</span> <span class="o">=</span> <span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">PC</span><span class="p">]</span> <span class="o">%</span> <span class="n">this</span><span class="o">.</span><span class="n">opcodesCount</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;new Opcode&#39;</span><span class="o">+</span><span class="n">opNum</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">parseCommand</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">var</span> <span class="n">opcode</span> <span class="o">=</span> <span class="n">getOpcodeObject</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">opcode</span><span class="o">.</span><span class="n">consumeArgs</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">opcode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">var</span> <span class="n">opcCreate</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">opcCreate</span> <span class="o">+=</span> <span class="s2">&#34;function Opcode&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&#34;(){this.args=[]}</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">eval</span><span class="p">(</span><span class="n">opcCreate</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">makeFromImm</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">var</span> <span class="n">res</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">&lt;&lt;=</span><span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">+=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">&lt;&lt;=</span><span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">+=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">&lt;&lt;=</span><span class="mi">8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">+=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="o">+</span><span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getRegImm</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">makeFromImm</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getImm</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">makeFromImm</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">4</span><span class="p">;</span>	
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getTwoRegs</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getThreeRegs</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getRegString</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">getString</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getRegRegString</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">getString</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getRegTwoString</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">getString</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">getString</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">getString</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="n">var</span> <span class="n">res</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">res</span> <span class="o">+=</span> <span class="n">String</span><span class="o">.</span><span class="n">fromCharCode</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode0</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span> <span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){},</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(){}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode1</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegImm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span>  <span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">%</span> <span class="mh">0x100000000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode2</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getTwoRegs</span><span class="p">,</span>	
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">%</span> <span class="mh">0x100000000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode3</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegImm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span>  <span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">%</span> <span class="mh">0x100000000</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode4</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getTwoRegs</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">regsiters</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">this</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span><span class="o">%</span><span class="mi">100000000</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode5</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getThreeRegs</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">var</span> <span class="n">mult</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]];</span>
+</span></span><span class="line"><span class="cl">		<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mult</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">mult</span> <span class="o">/</span> <span class="n">obj</span><span class="o">.</span><span class="n">pow</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">mult</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode6</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getThreeRegs</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">var</span> <span class="n">divs</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="n">obj</span><span class="o">.</span><span class="n">pow</span> <span class="o">+</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>  <span class="o">=</span> <span class="p">(</span><span class="n">divs</span> <span class="o">/</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span> <span class="p">(</span><span class="n">divs</span> <span class="o">%</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode7</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegImm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>	
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode8</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getImm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">callstack</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode9</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getImm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">+</span>  <span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">%</span> <span class="n">obj</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode10</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">function</span><span class="p">(){},</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">PC</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">callstack</span><span class="o">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode11</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;new &#39;</span><span class="o">+</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode12</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegTwoString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode13</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegRegString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]];</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode14</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegRegString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Opcode15</span><span class="o">.</span><span class="n">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">consumeArgs</span><span class="p">:</span> <span class="n">getRegRegString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">execute</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">registers</span><span class="p">[</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">this</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]]();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">function</span> <span class="n">check</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="n">machine</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Machine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">machine</span><span class="o">.</span><span class="n">loadcode</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">117</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">113</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">machine</span><span class="o">.</span><span class="n">run</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>能看到源码是这样的 我们要知道这是在一个html中 我们可以通过js来调试这个程序 我也做了一个opcode的列表 以防有些不理解的</p>
+<table>
+  <thead>
+      <tr>
+          <th>Opcode</th>
+          <th>作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Opcode1</code>–<code>Opcode7</code></td>
+          <td>加减乘除、赋值</td>
+      </tr>
+      <tr>
+          <td><code>Opcode8</code>–<code>Opcode10</code></td>
+          <td>跳转、调用、返回</td>
+      </tr>
+      <tr>
+          <td><code>Opcode11</code></td>
+          <td><code>new Object</code></td>
+      </tr>
+      <tr>
+          <td><code>Opcode12</code></td>
+          <td><code>Function(字符串)</code>动态编译代码</td>
+      </tr>
+      <tr>
+          <td><code>Opcode13</code>、<code>Opcode14</code></td>
+          <td>对象属性读写</td>
+      </tr>
+      <tr>
+          <td><code>Opcode15</code></td>
+          <td>调用对象中的函数</td>
+      </tr>
+  </tbody>
+</table>
+<p>由于 <code>Opcode12</code> 会调用 <code>Function(this.args[2])</code>，将字符串动态编译成 JavaScript 函数，因此我们没有必要把整个 VM 一条条手动还原。只要在动态编译发生之前，把传入 <code>Function()</code> 的字符串打印出来，就能直接拿到 VM 即将执行的真实代码。</p>
+<p>原始的 <code>Opcode12</code> 如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Opcode12</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">consumeArgs</span><span class="o">:</span> <span class="nx">getRegTwoString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">execute</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">obj</span><span class="p">.</span><span class="nx">registers</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">Function</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>其中：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span></code></pre></div><p>表示寄存器编号：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span></code></pre></div><p>表示对象属性名：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span></span></code></pre></div><p>则是即将被动态编译的 JavaScript 源码字符串。</p>
+<p>因此，我们可以直接对 <code>Opcode12</code> 进行 hook，在执行 <code>Function()</code> 之前输出源码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Opcode12</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">consumeArgs</span><span class="o">:</span> <span class="nx">getRegTwoString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">execute</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[Opcode12] register =&#34;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[Opcode12] property =&#34;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[Opcode12] source =\n&#34;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kr">debugger</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nx">obj</span><span class="p">.</span><span class="nx">registers</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">Function</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>修改完成后，重新加载 HTML 文件，在输入框中随便输入一些字符并点击提交。程序运行到 <code>Opcode12</code> 时会暂停，同时控制台会输出动态生成的源码。</p>
+<p>这里会打印出多个函数，其中部分只是干扰代码。例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">value</span><span class="c1">//
+</span></span></span></code></pre></div><p>它的作用是获取输入框内容。</p>
+<p>还会看到：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">machine</span><span class="p">.</span><span class="nx">end</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span><span class="k">this</span><span class="p">.</span><span class="nx">code</span><span class="o">=</span><span class="p">[];</span><span class="k">this</span><span class="p">.</span><span class="nx">PC</span><span class="o">=</span><span class="mi">173</span><span class="p">}</span><span class="c1">//
+</span></span></span></code></pre></div><p>以及：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="nx">i</span><span class="o">&lt;</span><span class="nb">window</span><span class="p">.</span><span class="nx">machine</span><span class="p">.</span><span class="nx">code</span><span class="p">.</span><span class="nx">length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">machine</span><span class="p">.</span><span class="nx">code</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">255</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">window</span><span class="p">.</span><span class="nx">machine</span><span class="p">.</span><span class="nx">code</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">i</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="c1">//
+</span></span></span></code></pre></div><p>最后一个函数非常关键。它会将字节码中的 <code>255</code> 修改为 <code>0</code>。</p>
+<p>题目中的字符串读取函数是：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">getString</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">code</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">PC</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">res</span> <span class="o">+=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">code</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">PC</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">obj</span><span class="p">.</span><span class="nx">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">obj</span><span class="p">.</span><span class="nx">PC</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>可以看到，字符串以 <code>0</code> 作为结束标志。题目作者提前在字节码中放入了一些 <code>255</code>，程序运行后再将其替换为 <code>0</code>。这样一来，字节码会在运行过程中改变解析方式。</p>
+<p>随后程序还会执行：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">machine</span><span class="p">.</span><span class="nx">PC</span><span class="o">=</span><span class="mi">172</span><span class="c1">//
+</span></span></span></code></pre></div><p>将 PC 指针重新设置到隐藏代码所在的位置，使 VM 再次解析修改后的字节码。</p>
+<p>这是一种简单的自修改字节码技巧。</p>
+<p>为了减少无关输出，我们可以进一步优化 hook，只打印包含关键字 <code>nonce</code> 的函数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">Opcode12</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">consumeArgs</span><span class="o">:</span> <span class="nx">getRegTwoString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">execute</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">===</span> <span class="s2">&#34;string&#34;</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="s2">&#34;nonce&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;[+] Found check function:&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">debugger</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nx">obj</span><span class="p">.</span><span class="nx">registers</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">Function</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>再次运行程序后，可以得到真正的校验逻辑：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">f</span><span class="o">=</span><span class="nb">window</span><span class="p">.</span><span class="nx">machine</span><span class="p">.</span><span class="nx">registers</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">userinput</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">length</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">nonce</span> <span class="o">=</span> <span class="s1">&#39;groke&#39;</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="p">[];</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">eq</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">i</span><span class="p">){</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="nx">out</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span> <span class="o">^</span> <span class="nx">nonce</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">j</span><span class="o">%</span><span class="mi">5</span><span class="p">))</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="nx">j</span><span class="o">++</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ex</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">60</span><span class="p">];</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">ex</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="nx">out</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">ex</span><span class="p">.</span><span class="nx">length</span><span class="p">){</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">ex</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">out</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="nx">eq</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="nx">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="nx">eq</span><span class="p">){</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;YOU WIN!&#39;</span><span class="p">);</span><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;NOPE!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}}</span><span class="k">else</span><span class="p">{</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;NOPE!&#39;</span><span class="p">);}</span><span class="c1">//
+</span></span></span></code></pre></div><p>虽然每一行末尾都有 <code>//</code>，但下一行前面存在换行符，因此每一行仍然可以正常执行。这里的 <code>//</code> 主要用于吞掉字符串拼接过程中可能混入的干扰数据。</p>
+<p>接下来分析校验逻辑：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">out</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">f</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span> <span class="o">^</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">nonce</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></div><p>用户输入字符串中的每一个字符，都会与字符串：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">groke
+</span></span></code></pre></div><p>循环异或。</p>
+<p>异或结果必须等于数组：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">40</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">56</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">60</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></div><p>由于异或运算具有自反性：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">A ^ B ^ B = A
+</span></span></code></pre></div><p>因此使用相同的密钥再次异或即可恢复原始输入。</p>
+<p>exp</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">ex</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">40</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="mi">56</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">60</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">nonce</span> <span class="o">=</span> <span class="s2">&#34;groke&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">flag</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">chr</span><span class="p">(</span><span class="n">value</span> <span class="o">^</span> <span class="nb">ord</span><span class="p">(</span><span class="n">nonce</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonce</span><span class="p">)]))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+</span></span></code></pre></div><p>这道题虽然套了一层 js VM，并且还加入了自修改字节码，但是并不需要完整分析全部 opcode。只要抓住 <code>Opcode12</code> 这个动态编译点，在 <code>Function()</code> 执行前 dump 参数，就可以直接得到真实校验逻辑。</p>
+<p>当然 还有一个方法就是 在这里添加一个 <code>console.log('new 0pcode'+command.args)</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">function</span> <span class="n">run</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span><span class="p">(</span><span class="n">this</span><span class="o">.</span><span class="n">PC</span> <span class="o">&lt;</span> <span class="n">this</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="n">var</span> <span class="n">command</span> <span class="o">=</span> <span class="n">parseCommand</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">this</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;new 0pcode&#39;</span><span class="o">+</span><span class="n">command</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="n">command</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">//</span><span class="n">this</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>效果是一样的</p>
+<p>当然还有更简单的</p>
+<p>一把梭</p>
+<p><figure class="post-figure">
+  <img src="assets/image-20260607215017-cn3p619.png" alt="image"  loading="lazy" decoding="async" class="post-img">
+</figure></p>
+<p>flag</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">WOW_so_EASY</span>
+</span></span></code></pre></div>
+      </div>
+    </article>
+
+    
+      <div class="post-navigation">
+        <div class="nav-prev">
+          
+            <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0123-simple-check-100/">← GFSJ0123-【simple-check-100】</a>
+          
+        </div>
+        <div class="nav-next">
+          
+            <a href="../../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0121-secret-galaxy-300/">GFSJ0121-【secret-galaxy-300】 →</a>
+          
+        </div>
+      </div>
+    
+
+    
+      <div class="comments" id="comments"
+           data-mapping="specific"
+           data-term="post-GFSJ0122-【secret-string-400】">
+        <h2>评论</h2>
+        <div id="giscus-container"></div>
+        <noscript>
+          <p class="giscus-status is-error">评论区需要启用 JavaScript 后才能加载。</p>
+        </noscript>
+      </div>
+    
+  </div>
+
+  
+  
+    <aside class="post-sidebar-right">
+      <div class="sidebar-author-info">
+        <a href="../../../../about/">
+          <img src="../../../../assets/images/touxiang.jpg" alt="Q7411" class="sidebar-avatar" width="80" height="80">
+        </a>
+        <div class="sidebar-author-name">Q7411</div>
+        
+          <a href="https://github.com/Q7411" class="github-btn" target="_blank" rel="noopener">GitHub 主页</a>
+        
+      </div>
+
+      <div class="toc-container toc-right">
+        <div class="toc-post-title">本页目录</div>
+        <div class="toc-content-wrapper">
+          <nav id="TableOfContents"></nav>
+        </div>
+      </div>
+      <button class="toc-toggle right" id="toc-toggle-right" aria-label="Toggle Outline">大纲</button>
+    </aside>
+  
+</div>
+
+  </main>
+
+  
+  <div class="fab-container" id="fab-container">
+    <button id="font-size-toggle" class="fab-btn" aria-label="Toggle Font Size" title="切换字体大小">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13"></path><path d="M12 22V8"></path><path d="M8 12h8"></path></svg>
+    </button>
+    <button id="back-to-top" class="fab-btn" aria-label="Back to Top" title="返回顶部">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 2026 Q7411. Powered by Hugo.
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-powershell.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-docker.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" defer></script>
+  
+  
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+  
+  
+  <script>
+    
+    window.siteConfig = {
+      searchIndexUrl: "\/index.json"
+    };
+  </script>
+  
+  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+</body>
+</html>

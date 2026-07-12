@@ -3889,11 +3889,11 @@ details[open] summary {
 }
 
 .post-layout.three-column:not(.page-layout) {
-  grid-template-columns: minmax(220px, 260px) minmax(0, 880px) minmax(220px, 260px);
+  grid-template-columns: minmax(210px, 240px) minmax(0, clamp(920px, 62vw, 1040px)) minmax(210px, 240px);
   justify-content: center;
   align-items: start;
-  max-width: 1480px;
-  gap: 24px;
+  max-width: min(100%, 1568px);
+  gap: clamp(16px, 1.5vw, 24px);
 }
 
 .post-layout.three-column:not(.page-layout) .post-sidebar-left,
@@ -3988,8 +3988,8 @@ details[open] summary {
 
 .post-layout.three-column:not(.page-layout) .post-content {
   color: var(--text-color);
-  font-size: 1rem;
-  line-height: 1.68;
+  font-size: 1.06rem;
+  line-height: 1.76;
 }
 
 .post-layout.three-column:not(.page-layout) .post-content p {
@@ -4008,15 +4008,15 @@ details[open] summary {
 }
 
 .post-layout.three-column:not(.page-layout) .post-content h2 {
-  font-size: 1.12rem;
+  font-size: 1.2rem;
 }
 
 .post-layout.three-column:not(.page-layout) .post-content h3 {
-  font-size: 1rem;
+  font-size: 1.08rem;
 }
 
 .post-layout.three-column:not(.page-layout) .post-content h4 {
-  font-size: 0.94rem;
+  font-size: 1rem;
 }
 
 .post-layout.three-column:not(.page-layout) .post-content blockquote {
@@ -4073,7 +4073,7 @@ details[open] summary {
 
 .post-layout.three-column:not(.page-layout) .post-content pre code {
   color: var(--code-text);
-  font-size: 0.86rem;
+  font-size: 0.92rem;
   line-height: 1.5;
   background: transparent;
 }
@@ -4199,8 +4199,8 @@ details[open] summary {
   }
 
   .post-layout.three-column:not(.page-layout) {
-    grid-template-columns: minmax(170px, 190px) minmax(0, 790px) minmax(170px, 190px);
-    max-width: 1202px;
+    grid-template-columns: minmax(150px, 170px) minmax(0, clamp(760px, 64vw, 900px)) minmax(150px, 170px);
+    max-width: min(100%, 1272px);
     gap: 16px;
   }
 
@@ -4228,8 +4228,8 @@ details[open] summary {
 
 @media (max-width: 1180px) {
   .post-layout.three-column:not(.page-layout) {
-    grid-template-columns: minmax(0, 900px);
-    max-width: 940px;
+    grid-template-columns: minmax(0, 980px);
+    max-width: 1020px;
   }
 
   .post-layout.three-column:not(.page-layout) .post-sidebar-left,
@@ -4292,7 +4292,7 @@ details[open] summary {
   }
 
   .post-layout.three-column:not(.page-layout) .post-content {
-    font-size: 0.96rem;
+    font-size: 1rem;
   }
 
   .post-layout.three-column:not(.page-layout) .code-block-wrapper pre,
@@ -4301,7 +4301,7 @@ details[open] summary {
   }
 
   .post-layout.three-column:not(.page-layout) .post-content pre code {
-    font-size: 0.82rem;
+    font-size: 0.88rem;
   }
 
   .post-layout.three-column:not(.page-layout) .post-figure .post-img {

@@ -14,7 +14,7 @@
   <link rel="icon" type="image/jpeg" href="../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../assets/images/touxiang.jpg">
   
-  <link rel="stylesheet" href="../../../css/main.57c18cc46597fd4eff33552660dae6cadc9325160869055b5a50900a14bdb119.css">
+  <link rel="stylesheet" href="../../../css/main.8ba7a8de976ec0e10e8f2a2e57b9b09b0e23397e9c3b3ab64d64d4186fd2cb4c.css">
   
   
   <meta property="og:title" content="Posts - Q7411 CTF blog">
@@ -135,30 +135,11 @@
       
       
         <article class="card fade-in" style="animation-delay: 0ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0076-babyre-2/">GFSJ0076-【BABYRE】</a></h3>
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/">GFSJ0212-【catch-me】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-07T21:49:51&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-07
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              1 分钟
-            </span>
-          </div>
-          <p class="summary"> SMC + XOR
-main函数 能看到她进行了一个xor 但是根据下方的判断flag长度应该是14位 跟181差太多 所以是进行了代码自加密 那都是自加密了 那肯定能自解密呀 所以有两个方法来解这个SMC 恢复她真实的加密代码
-int …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0076-babyre-2/" class="read-more" aria-label="阅读全文：GFSJ0076-【BABYRE】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 100ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0815-windows_reverse1/">GFSJ0815-【Windows_Reverse1】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-04T20:48:10&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-04
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
@@ -166,18 +147,76 @@ int …</p>
               2 分钟
             </span>
           </div>
-          <p class="summary"> UPX+地址偏移间接操作
-脱壳直接给一个假的flag
-int __cdecl main(int argc, const char **argv, const char **envp) { char v4[1024]; // …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0815-windows_reverse1/" class="read-more" aria-label="阅读全文：GFSJ0815-【Windows_Reverse1】">阅读全文</a>
+          <p class="summary"> 基础类型 xor
+main函数 能看到getenv 获取了环境变量 ASIS &amp;&amp; CTF ^ v3 的值最后等于 0xFEEBFEEB
+__int64 __fastcall main(int a1, char **a2, …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0212-catch-me/" class="read-more" aria-label="阅读全文：GFSJ0212-【catch-me】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 100ms;">
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0213-leaked-license-64/">GFSJ0213-【leaked-license-64】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              11 分钟
+            </span>
+          </div>
+          <p class="summary"> 猜 ID 应该是比赛的时候有提示ID吧 其他还好
+题目简介
+I have borrowed this software license(Leaked_License) and library from Big Brother of a …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0213-leaked-license-64/" class="read-more" aria-label="阅读全文：GFSJ0213-【leaked-license-64】">阅读全文</a>
         </article>
       
         <article class="card fade-in" style="animation-delay: 200ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0381-echo-server/">GFSJ0381-【echo-server】</a></h3>
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0231-pingpong/">GFSJ0231-【pingpong】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-05T15:22:44&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-05
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              11 分钟
+            </span>
+          </div>
+          <p class="summary"> 读代码/Hook/模拟执行
+main函数 能看到这个是一个判断 为什么是判断呢 真正的运算在so层
+package com.geekerchina.pingpongmachine; import android.os.Bundle; …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/gfsj0231-pingpong/" class="read-more" aria-label="阅读全文：GFSJ0231-【pingpong】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 300ms;">
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0239-reverseme-120/">GFSJ0239-【ReverseMe-120】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              7 分钟
+            </span>
+          </div>
+          <p class="summary"> base64解码 + 异或
+这个记住是解码 就是你输入base64编码然后解码出来进行操作
+我们能看到这个进行了一个异或 还有一个操作函数
+int __cdecl main(int argc, const char **argv, …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0239-reverseme-120/" class="read-more" aria-label="阅读全文：GFSJ0239-【ReverseMe-120】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 400ms;">
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0240-reversing-x64elf-100/">GFSJ0240-【Reversing-x64Elf-100】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
@@ -185,21 +224,37 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char v4[1024]
               1 分钟
             </span>
           </div>
-          <p class="summary"> 花指令
-打开到这里 第一个nop点位 然后对下面的一坨按u+p
-然后变这样 发现是一个jmp永跳 跳的还是它下一位 所以按u 然后nop第一个字节就可以
-然后再按u+p 这样
-能看到这个永跳了一个错误地址按u看看
-发现是一个字符串 …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0381-echo-server/" class="read-more" aria-label="阅读全文：GFSJ0381-【echo-server】">阅读全文</a>
+          <p class="summary"> 签到
+__int64 __fastcall main(int a1, char **a2, char **a3){char s[264]; // [rsp+0h] [rbp-110h] BYREFunsigned __int64 …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0240-reversing-x64elf-100/" class="read-more" aria-label="阅读全文：GFSJ0240-【Reversing-x64Elf-100】">阅读全文</a>
         </article>
       
-        <article class="card fade-in" style="animation-delay: 300ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0366-reverse-for-the-holy-grail-350/">GFSJ0366-【reverse-for-the-holy-grail-350】</a></h3>
+        <article class="card fade-in" style="animation-delay: 500ms;">
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/">GFSJ0270-【2ex1】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-07T21:49:28&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-07
+              2026-07-12
+            </time>
+            <span style="margin: 0 6px;">·</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              2 分钟
+            </span>
+          </div>
+          <p class="summary"> base64换表
+Mips架构
+main函数
+int sub_400788() { _BYTE v1[20]; // [sp+18h] [+18h] BYREF _BYTE v2[28]; // [sp+2Ch] [+2Ch] BYREF …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/" class="read-more" aria-label="阅读全文：GFSJ0270-【2ex1】">阅读全文</a>
+        </article>
+      
+        <article class="card fade-in" style="animation-delay: 600ms;">
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/">GFSJ0293-【debug】</a></h3>
+          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
@@ -207,75 +262,19 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char v4[1024]
               3 分钟
             </span>
           </div>
-          <p class="summary"> 爆破
-main
-int __fastcall main(int argc, const char **argv, const char **envp) { int valid; // ebx int v4; // ebx __int64 …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0366-reverse-for-the-holy-grail-350/" class="read-more" aria-label="阅读全文：GFSJ0366-【reverse-for-the-holy-grail-350】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 400ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0777-testre/">GFSJ0777-【testre】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-07T21:48:39&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-07
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              9 分钟
-            </span>
-          </div>
-          <p class="summary"> base58 签到无换表
-main函数很简单
-__int64 __fastcall main(int a1, char **a2, char **a3) { void *ptr; // [rsp+10h] [rbp-30h] …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0777-testre/" class="read-more" aria-label="阅读全文：GFSJ0777-【testre】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 500ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0492-insanity/">GFSJ0492-【insanity】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-05T16:17:06&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-05
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              1 分钟
-            </span>
-          </div>
-          <p class="summary"> 签到 flag直出
-main喊出
-int __cdecl main(int argc, const char **argv, const char **envp) { time_t v3; // eax unsigned int v4; …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0492-insanity/" class="read-more" aria-label="阅读全文：GFSJ0492-【insanity】">阅读全文</a>
-        </article>
-      
-        <article class="card fade-in" style="animation-delay: 600ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/">GFSJ0487-【game】</a></h3>
-          <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-07T21:22:47&#43;08:00">
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-07
-            </time>
-            <span style="margin: 0 6px;">·</span>
-            <span>
-              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              4 分钟
-            </span>
-          </div>
-          <p class="summary"> 签到 xor
-main函数
-int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; // [esp+0h] [ebp-FCh] char …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj0487-game/" class="read-more" aria-label="阅读全文：GFSJ0487-【game】">阅读全文</a>
+          <p class="summary"> Dotfuscator 混淆 + 异或
+涉及工具 de4dot.exe
+这个查壳发现有混淆但是是简单题 所以直接dnspy打开 发现是一个 简单异或 还有md5加密
+using System; using …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0293-debug/" class="read-more" aria-label="阅读全文：GFSJ0293-【debug】">阅读全文</a>
         </article>
       
         <article class="card fade-in" style="animation-delay: 700ms;">
-          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1064-bad_python/">GFSJ1064-【bad_python】</a></h3>
+          <h3><a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/">GFSJ0294-【hackme】</a></h3>
           <div class="meta" style="color: var(--text-color-muted); font-size: 0.85em; margin-bottom: 10px;">
-            <time datetime="2026-06-09T12:14:18&#43;08:00">
+            <time datetime="2026-07-12T10:17:01&#43;08:00">
               <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              2026-06-09
+              2026-07-12
             </time>
             <span style="margin: 0 6px;">·</span>
             <span>
@@ -283,11 +282,10 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; //
               2 分钟
             </span>
           </div>
-          <p class="summary"> pyc文件头修复 + XTEA
-拿到pyc之后反编译发现不对 是一个破损的pyc文件 我们要去修复一下
-然后反编译一下
-# Source Generated with Decompyle++ # File: …</p>
-          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/gfsj1064-bad_python/" class="read-more" aria-label="阅读全文：GFSJ1064-【bad_python】">阅读全文</a>
+          <p class="summary"> xor
+mian函数 能看到只有一个简单的xor 然后v11是我们输入的 byte_6B4270应该是密文 那密文中的v17就是一个一个的下标
+__int64 __fastcall sub_400F8E(__int64 a1, …</p>
+          <a href="../../../post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0294-hackme/" class="read-more" aria-label="阅读全文：GFSJ0294-【hackme】">阅读全文</a>
         </article>
       
     </div>
@@ -318,7 +316,7 @@ int __cdecl main_0(int argc, const char **argv, const char **envp) { char v4; //
         <a href="../../../post/page/4/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="../../../post/page/7/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="../../../post/page/11/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
   </div>
