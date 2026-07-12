@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,7 +13,7 @@ main函数
 int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // edx char *v4; // esi char v5; // al unsigned int i; // edx int v7; // eax char Arglist[16]; // [esp&#43;2h] [ebp-24h] BYREF __int64 v10; // [esp&#43;12h] [ebp-14h] BYREF int v11; // [esp&#43;1Ah] [ebp-Ch] __int16 v12; // [esp&#43;1Eh] [ebp-8h] printf(Format); v11 = 0; v12 = 0; *(_OWORD *)Arglist = 0; v10 = 0; scanf(&#34;%s&#34;, Arglist); if ( strlen(Arglist) == 24 ) { v3 = 0; v4 = (char *)&amp;v10 &#43; 7; do { v5 = *v4--; byte_40336C[v3&#43;&#43;] = v5; } while ( v3 &lt; 24 ); for ( i = 0; i &lt; 0x18; &#43;&#43;i ) byte_40336C[i] = (byte_40336C[i] &#43; 1) ^ 6; v7 = strcmp(byte_40336C, aXircjR2twsv3pt); if ( v7 ) v7 = v7 &lt; 0 ? -1 : 1; if ( !v7 ) { printf(&#34;right\n&#34;); system(&#34;pause&#34;); } } return 0; } 可以看到就只有一个xor
 ">
   <title>GFSJ0747-【EasyRE】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0747-easyre/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0747-easyre/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // ed
 main函数
 int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // edx char *v4; // esi char v5; // al unsigned int i; // edx …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0747-easyre/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0747-easyre/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0747-【EasyRE】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" xor
 main函数
 int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // edx char *v4; // esi char v5; // al unsigned int i; // edx …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // ed
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // ed
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0747-【EasyRE】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0747-easyre\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0747-easyre\/"
       }
       
     ]
@@ -87,7 +87,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // ed
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2810,6 +2810,6 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v3; // ed
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

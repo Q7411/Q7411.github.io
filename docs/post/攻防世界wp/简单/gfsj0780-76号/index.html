@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,7 +13,7 @@
 int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int v3; // [esp&#43;18h] [ebp-Ch] BYREF void *v4; // [esp&#43;1Ch] [ebp-8h] BYREF v3 = 0; v4 = nullptr; *(_BYTE *)(a1 - 57) = __ROR1__(*(_BYTE *)(a1 - 57), 68); __printf_chk(1); v1 = getline((int)&amp;v4, (int)&amp;v3, stdin); if ( v1 &gt;= 0 ) v1 = sub_8048580((int)v4, 0); __printf_chk(1); free(v4); return v1; } _BOOL4 __cdecl sub_8048580(int a1, int a2) { char v3; // bp _BOOL4 result; // eax _BYTE v5[128]; // [esp&#43;Ch] [ebp-A0h] BYREF unsigned int v6; // [esp&#43;8Ch] [ebp-20h] v6 = __readgsdword(0x14u); while ( 1 ) { memset(v5, 0, sizeof(v5)); v3 = *(_BYTE *)(a1 &#43; a2); v5[(v3 &#43; 64) % 128] = 1; switch ( v3 ) { case &#39;\n&#39;: return a2 == 13 &amp;&amp; v5[74] != 0; case &#39;0&#39;: if ( a2 || !v5[&#39;p&#39;] ) return 0; a2 = 1; continue; case &#39;1&#39;: if ( a2 == 14 &amp;&amp; v5[&#39;q&#39;] ) goto LABEL_12; return 0; case &#39;2&#39;: if ( a2 == 20 &amp;&amp; v5[&#39;r&#39;] ) goto LABEL_15; return 0; case &#39;3&#39;: if ( a2 != 89 || !v5[&#39;s&#39;] ) return 0; a2 = 90; continue; case &#39;4&#39;: if ( a2 != 15 || !v5[&#39;t&#39;] ) return 0; a2 = 16; continue; case &#39;5&#39;: if ( a2 != 14 || !v5[&#39;u&#39;] ) return 0; LABEL_12: a2 = 15; continue; case &#39;6&#39;: if ( a2 != 12 || !v5[118] ) return 0; a2 = 13; continue; case &#39;7&#39;: if ( a2 != 5 || !v5[119] ) return 0; a2 = 6; continue; case &#39;8&#39;: result = 0; if ( v5[121] ) return a2 == 33 || a2 == 2; return result; case &#39;9&#39;: if ( a2 != 1 || !v5[121] ) return 0; a2 = 2; continue; case &#39;a&#39;: if ( a2 != 35 || !v5[33] ) return 0; a2 = 36; continue; case &#39;b&#39;: if ( a2 != 11 || !v5[34] ) return 0; a2 = 12; continue; case &#39;c&#39;: if ( a2 != 32 || !v5[33] ) return 0; a2 = 33; continue; case &#39;d&#39;: if ( a2 != 3 || !v5[36] ) return 0; a2 = 4; continue; case &#39;e&#39;: if ( a2 != 7 || !v5[37] ) return 0; a2 = 8; continue; case &#39;f&#39;: if ( !v5[38] || a2 != 8 &amp;&amp; a2 != 4 ) return 0; goto LABEL_53; case &#39;g&#39;: return a2 == 12 &amp;&amp; v5[52] != 0; case &#39;h&#39;: if ( a2 != 13 || !v5[39] ) return 0; a2 = 14; continue; case &#39;i&#39;: if ( a2 != 9 || !v5[41] ) return 0; a2 = 10; continue; case &#39;j&#39;: if ( a2 != 10 || !v5[42] ) return 0; a2 = 11; continue; case &#39;k&#39;: return a2 == 12 &amp;&amp; v5[43] != 0; case &#39;l&#39;: if ( a2 != 19 || !v5[44] ) return 0; a2 = 20; continue; case &#39;m&#39;: if ( a2 != 17 || !v5[45] ) return 0; a2 = 18; continue; case &#39;n&#39;: return a2 == 18 &amp;&amp; v5[45] != 0; case &#39;o&#39;: if ( !v5[46] || a2 != 6 &amp;&amp; a2 != 28 ) return 0; LABEL_53: &#43;&#43;a2; continue; case &#39;p&#39;: if ( a2 != 30 || !v5[48] ) return 0; a2 = 31; break; case &#39;q&#39;: if ( a2 != 29 || !v5[49] ) return 0; a2 = 30; break; case &#39;r&#39;: if ( a2 != 20 || !v5[50] ) return 0; LABEL_15: a2 = 21; break; case &#39;s&#39;: if ( a2 != 25 || !v5[51] ) return 0; a2 = 26; break; case &#39;t&#39;: return a2 == 24 &amp;&amp; v5[50] != 0; case &#39;u&#39;: if ( a2 != 26 || !v5[53] ) return 0; a2 = 27; break; case &#39;v&#39;: if ( a2 != 2 || !v5[54] ) return 0; a2 = 3; break; case &#39;w&#39;: if ( a2 != 6 || !v5[55] ) return 0; a2 = 7; break; case &#39;x&#39;: if ( a2 != 22 || !v5[56] ) return 0; a2 = 23; break; case &#39;y&#39;: if ( a2 != 23 || !v5[57] ) return 0; a2 = &#39;\x18&#39;; break; case &#39;z&#39;: return a2 == 21 &amp;&amp; v5[33] != 0; default: return 0; } } } 其中 a1 是输入字符串地址，a2 初始值为 0，那么只需要从索引 0 开始跟踪能够继续执行的分支这个真是考眼力 能看到他的判断 a2 == 0 然后我们从开始找
 ">
   <title>GFSJ0780-【76号】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0780-76%E5%8F%B7/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0780-76%E5%8F%B7/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int 
 先nop jmp无限跳转 然后main函数打开
 int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int v3; // [esp&#43;18h] [ebp-Ch] …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0780-76%E5%8F%B7/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0780-76%E5%8F%B7/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0780-【76号】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 神题 考眼力 还有一个花指令
 先nop jmp无限跳转 然后main函数打开
 int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int v3; // [esp&#43;18h] [ebp-Ch] …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int 
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int 
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0780-【76号】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0780-76%E5%8F%B7\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0780-76%E5%8F%B7\/"
       }
       
     ]
@@ -87,7 +87,7 @@ int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int 
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2980,6 +2980,6 @@ int __usercall sub_8048420@&lt;eax&gt;(int a1@&lt;eax&gt;) { int v1; // ebx int 
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

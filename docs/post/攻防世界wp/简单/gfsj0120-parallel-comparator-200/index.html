@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,7 +13,7 @@ C源码
 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;pthread.h&gt; #define FLAG_LEN 20 void * checking(void *arg) { char *result = malloc(sizeof(char)); char *argument = (char *)arg; *result = (argument[0]&#43;argument[1]) ^ argument[2]; return result; } int highly_optimized_parallel_comparsion(char *user_string) { int initialization_number; int i; char generated_string[FLAG_LEN &#43; 1]; generated_string[FLAG_LEN] = &#39;\0&#39;; while ((initialization_number = random()) &gt;= 64); int first_letter; first_letter = (initialization_number % 26) &#43; 97; pthread_t thread[FLAG_LEN]; char differences[FLAG_LEN] = {0, 9, -9, -1, 13, -13, -4, -11, -9, -1, -7, 6, -13, 13, 3, 9, -13, -11, 6, -7}; char *arguments[20]; for (i = 0; i &lt; FLAG_LEN; i&#43;&#43;) { arguments[i] = (char *)malloc(3*sizeof(char)); arguments[i][0] = first_letter; arguments[i][1] = differences[i]; arguments[i][2] = user_string[i]; pthread_create((pthread_t*)(thread&#43;i), NULL, checking, arguments[i]); } void *result; int just_a_string[FLAG_LEN] = {115, 116, 114, 97, 110, 103, 101, 95, 115, 116, 114, 105, 110, 103, 95, 105, 116, 95, 105, 115}; for (i = 0; i &lt; FLAG_LEN; i&#43;&#43;) { pthread_join(*(thread&#43;i), &amp;result); generated_string[i] = *(char *)result &#43; just_a_string[i]; free(result); free(arguments[i]); } int is_ok = 1; for (i = 0; i &lt; FLAG_LEN; i&#43;&#43;) { if (generated_string[i] != just_a_string[i]) return 0; } return 1; } int main() { char *user_string = (char *)calloc(FLAG_LEN&#43;1, sizeof(char)); fgets(user_string, FLAG_LEN&#43;1, stdin); int is_ok = highly_optimized_parallel_comparsion(user_string); if (is_ok) printf(&#34;You win!\n&#34;); else printf(&#34;Wrong!\n&#34;); return 0; } 核心逻辑在这里
 ">
   <title>GFSJ0120-【parallel-comparator-200】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0120-parallel-comparator-200/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0120-parallel-comparator-200/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ C源码
 C源码
 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;pthread.h&gt; #define FLAG_LEN 20 void * checking(void *arg) { char *result …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0120-parallel-comparator-200/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0120-parallel-comparator-200/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0120-【parallel-comparator-200】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 源码求逆
 C源码
 #include &lt;stdlib.h&gt; #include &lt;stdio.h&gt; #include &lt;pthread.h&gt; #define FLAG_LEN 20 void * checking(void *arg) { char *result …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ C源码
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ C源码
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0120-【parallel-comparator-200】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0120-parallel-comparator-200\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0120-parallel-comparator-200\/"
       }
       
     ]
@@ -87,7 +87,7 @@ C源码
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2847,6 +2847,6 @@ generated_string[i] = *(char *)result + just_a_string[i];
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

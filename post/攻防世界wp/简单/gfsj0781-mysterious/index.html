@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,7 +13,7 @@
 int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax char Source[260]; // [esp&#43;50h] [ebp-310h] BYREF _BYTE Text[257]; // [esp&#43;154h] [ebp-20Ch] BYREF __int16 v8; // [esp&#43;255h] [ebp-10Bh] char v9; // [esp&#43;257h] [ebp-109h] int Value; // [esp&#43;258h] [ebp-108h] CHAR String[260]; // [esp&#43;25Ch] [ebp-104h] BYREF memset(String, 0, sizeof(String)); Value = 0; if ( a2 == 16 ) { DestroyWindow(hWnd); PostQuitMessage(0); } else if ( a2 == 273 ) { if ( a3 == 1000 ) { GetDlgItemTextA(hWnd, 1002, String, 260); strlen(String); if ( strlen(String) &gt; 6 ) ExitProcess(0); v4 = atoi(String); Value = v4 &#43; 1; if ( v4 == 122 &amp;&amp; String[3] == &#39;x&#39; &amp;&amp; String[5] == &#39;z&#39; &amp;&amp; String[4] == &#39;y&#39; ) { strcpy(Text, &#34;flag&#34;); memset(&amp;Text[5], 0, 0xFCu); v8 = 0; v9 = 0; _itoa(Value, Source, 10); strcat(Text, &#34;{&#34;); strcat(Text, Source); strcat(Text, &#34;_&#34;); strcat(Text, &#34;Buff3r_0v3rf|0w&#34;); strcat(Text, &#34;}&#34;); MessageBoxA(nullptr, Text, &#34;well done&#34;, 0); } SetTimer(hWnd, 1u, 0x3E8u, TimerFunc); } if ( a3 == 1001 ) KillTimer(hWnd, 1u); } return 0; } 由于 v4 = atoi(String); 能看到前面的数字是122 然后就是 x y z 所以password就是 122xyz 这就要扯到atoi只能解析一个字符串前面的数字 所以 v4 == 122 就是string[012] 的验证字符
 ">
   <title>GFSJ0781-【Mysterious】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0781-mysterious/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0781-mysterious/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax c
 一个普通c&#43;&#43;程序 点击运行发现是一个验证password题目 我们使用ida打开发现是一个一眼丁真的验证
 int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax char …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0781-mysterious/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0781-mysterious/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0781-【Mysterious】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" atoi
 一个普通c&#43;&#43;程序 点击运行发现是一个验证password题目 我们使用ida打开发现是一个一眼丁真的验证
 int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax char …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax c
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax c
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0781-【Mysterious】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0781-mysterious\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0781-mysterious\/"
       }
       
     ]
@@ -87,7 +87,7 @@ int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax c
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2809,6 +2809,6 @@ int __stdcall DialogFunc_0(HWND hWnd, int a2, int a3, int a4) { int v4; // eax c
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

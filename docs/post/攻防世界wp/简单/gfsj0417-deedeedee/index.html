@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -18,7 +18,7 @@ a = bytearray(b&#39;gl`gzt2mql`t2_leu4qr1gsalmhnf_hs^gs8^4^3wesy1n2}&#39;) for i
 flag{t3mplat3_met4pr0gramming_is_gr8_4_3very0n3} 那么有人会说了 这个.d文件是什么呀 当然是这个从程序的源码了 当然 flag也在里面 d语言
 D 语言是一门编译型语言，可以理解成“带很多高级特性的 C/C&#43;&#43; 风格语言”。 它长得像 C/C&#43;&#43;，但语法更现代，标准库也更方便。 import std.stdio; import std.range; import std.algorithm; import std.string; import std.traits; import std.conv; template enc(string key) { string enc(string s) pure @safe { pragma(msg, &#34;encrypting with key...&#34;, key); char enc_add = cast(char) (s.length.to!int); string output = &#34;&#34;; foreach(a,b; cycle(key).zip(s)) { output ~= a ^ b ^ enc_add; } return output; } } mixin template ForeachUnrolled(string F, int N, int MIN=1) { pragma(msg, &#34;ForEach...&#34;, N, &#34; to &#34;, MIN); static if (N &gt; 1) { mixin ForeachUnrolled!(F, N-1, MIN); } mixin MakeFunction!(F, N); } mixin template MakeFunction(string F, alias T) { // Convert $ and % mixin(translate(F, [&#39;$&#39; : T.to!(string), &#39;%&#39; : (T-1).to!string])); } string encrypt(string s) pure @safe { const int n = 499; // 500 is DMD&#39;s template recursion limit //const int n = 30; string output_0 = s; // base case with our string mixin ForeachUnrolled!(&#34;string output_$ = enc!($$$.to!string)(output_%);&#34;, n); mixin(&#34;return output_&#34; ~ n.to!string ~ &#34;;&#34;); } string hexencode(string s) { string encoded = &#34;&#34;; foreach (c; s) { encoded ~= format(&#34;%02x&#34;, c); } return encoded; } string enc_flag = encrypt(&#34;flag{t3mplat3_met4pr0gramming_is_gr8_4_3very0n3}&#34;); void main() { writeln(&#34;Your hexencoded, encrypted flag is: &#34;, enc_flag.hexencode); writeln(&#34;I generated it at compile time. :)&#34;); writeln(&#34;Can you decrypt it for me?&#34;); } ">
   <title>GFSJ0417-【deedeedee】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -30,15 +30,15 @@ D 语言是一门编译型语言，可以理解成“带很多高级特性的 C/
 动调题目給了一个hex 我们去解密
 676c60677a74326d716c6074325f6c6575347172316773616c6d686e665f68735e6773385e345e3377657379316e327d …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0417-deedeedee/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0417-【deedeedee】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 签到
 动调题目給了一个hex 我们去解密
 676c60677a74326d716c6074325f6c6575347172316773616c6d686e665f68735e6773385e345e3377657379316e327d …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -61,14 +61,14 @@ D 语言是一门编译型语言，可以理解成“带很多高级特性的 C/
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -76,7 +76,7 @@ D 语言是一门编译型语言，可以理解成“带很多高级特性的 C/
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0417-【deedeedee】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0417-deedeedee\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0417-deedeedee\/"
       }
       
     ]
@@ -92,7 +92,7 @@ D 语言是一门编译型语言，可以理解成“带很多高级特性的 C/
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2847,6 +2847,6 @@ D 语言是一门编译型语言，可以理解成“带很多高级特性的 C/
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -14,7 +14,7 @@
 int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1024]; // [esp&#43;8h] [ebp-C04h] BYREF char v5[1024]; // [esp&#43;408h] [ebp-804h] BYREF char v6[1024]; // [esp&#43;808h] [ebp-404h] BYREF memset(v5, 0, sizeof(v5)); memset(v6, 0, sizeof(v6)); printf(&#34;input code:&#34;); scanf(&#34;%s&#34;, v5); if ( !sub_7511F0(v5) ) { printf(&#34;invalid input\n&#34;); exit(0); } sub_751240(v6); memset(Buffer, 0, sizeof(Buffer)); sprintf(Buffer, &#34;DDCTF{%s}&#34;, v6); if ( !strcmp(Buffer, aDdctfReverse) ) printf(&#34;You&#39;ve got it !!! %s\n&#34;, Buffer); else printf(&#34;Something wrong. Try again...\n&#34;); return 0; } 很简单的操作 一个数字和大写字符判断
 ">
   <title>GFSJ0808-【Windows_Reverse2】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -27,8 +27,8 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
 脱壳完成后
 int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1024]; …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0808-windows_reverse2/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0808-【Windows_Reverse2】 - Q7411 CTF blog">
@@ -36,7 +36,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
 能看到是ASProtect壳 然后程序入口还有pushad 我们直接使用esp定律来脱壳
 脱壳完成后
 int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1024]; …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -59,14 +59,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -74,7 +74,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0808-【Windows_Reverse2】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0808-windows_reverse2\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0808-windows_reverse2\/"
       }
       
     ]
@@ -90,7 +90,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2975,6 +2975,6 @@ int __cdecl main(int argc, const char **argv, const char **envp) { char Buffer[1
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>分类 on Q7411 CTF blog</title>
-    <link>http://localhost:1313/categories/</link>
+    <link>https://www.q7411.xyz/categories/</link>
     <description>Recent content in 分类 on Q7411 CTF blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 12 Jul 2026 10:17:01 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.q7411.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>攻防世界WP/中等</title>
-      <link>http://localhost:1313/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/</link>
+      <link>https://www.q7411.xyz/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/</link>
       <pubDate>Sun, 12 Jul 2026 10:17:01 +0800</pubDate>
-      <guid>http://localhost:1313/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/</guid>
+      <guid>https://www.q7411.xyz/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/</guid>
       <description></description>
     </item>
     <item>
       <title>攻防世界WP/简单</title>
-      <link>http://localhost:1313/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/</link>
+      <link>https://www.q7411.xyz/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/</link>
       <pubDate>Sun, 12 Jul 2026 10:17:01 +0800</pubDate>
-      <guid>http://localhost:1313/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/</guid>
+      <guid>https://www.q7411.xyz/categories/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/</guid>
       <description></description>
     </item>
   </channel>

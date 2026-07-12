@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -12,7 +12,7 @@
 INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE ModuleHandleW; // eax HICON IconW; // eax HMODULE v7; // eax HWND DlgItem; // eax HCURSOR CursorW; // [esp-4h] [ebp-34Ch] CHAR String[256]; // [esp&#43;8h] [ebp-340h] BYREF CHAR v11[256]; // [esp&#43;108h] [ebp-240h] BYREF CHAR Text[256]; // [esp&#43;208h] [ebp-140h] BYREF char Source[36]; // [esp&#43;308h] [ebp-40h] BYREF char v14[24]; // [esp&#43;32Ch] [ebp-1Ch] BYREF if ( a2 == 16 ) { EndDialog(hDlg, 0); return 0; } if ( a2 == 272 ) { ModuleHandleW = GetModuleHandleW(nullptr); IconW = LoadIconW(ModuleHandleW, (LPCWSTR)0x67); SetClassLongA(hDlg, -14, (LONG)IconW); v7 = GetModuleHandleW(nullptr); CursorW = LoadCursorW(v7, (LPCWSTR)0x66); DlgItem = GetDlgItem(hDlg, 1); SetClassLongA(DlgItem, -12, (LONG)CursorW); return 1; } if ( a2 != 273 || (unsigned __int16)a3 != 1 ) return 0; memset(String, (unsigned __int16)a3 - 1, sizeof(String)); memset(v11, 0, sizeof(v11)); memset(Text, 0, sizeof(Text)); GetDlgItemTextA(hDlg, 1001, String, 256); GetDlgItemTextA(hDlg, 1002, v11, 256); if ( strstr(String, &#34;@&#34;) &amp;&amp; strstr(String, &#34;.&#34;) &amp;&amp; strstr(String, &#34;.&#34;)[1] &amp;&amp; strstr(String, &#34;@&#34;)[1] != 46 ) { strcpy(v14, &#34;Registration failure.&#34;); strcpy(Source, &#34;Registration Success!\nYour flag is:&#34;); if ( strlen(v11) == 16 &amp;&amp; v11[0] == &#39;C&#39; &amp;&amp; v11[15] == &#39;X&#39; &amp;&amp; v11[1] == &#39;Z&#39; &amp;&amp; v11[14] == &#39;A&#39; &amp;&amp; v11[2] == &#39;9&#39; &amp;&amp; v11[13] == &#39;b&#39; &amp;&amp; v11[3] == &#39;d&#39; &amp;&amp; v11[12] == &#39;7&#39; &amp;&amp; v11[4] == &#39;m&#39; &amp;&amp; v11[11] == &#39;G&#39; &amp;&amp; v11[5] == &#39;q&#39; &amp;&amp; v11[10] == &#39;9&#39; &amp;&amp; v11[6] == &#39;4&#39; &amp;&amp; v11[9] == &#39;g&#39; &amp;&amp; v11[7] == &#39;c&#39; &amp;&amp; v11[8] == &#39;8&#39; ) { strcpy_s(Text, 0x100u, Source); strcat_s(Text, 0x100u, v11); } else { strcpy_s(Text, 0x100u, v14); } } else { strcpy_s(Text, 0x100u, &#34;Your E-mail address in not valid.&#34;); } MessageBoxA(hDlg, Text, &#34;Registeration&#34;, 0x40u); return 1; } flag直接给
 ">
   <title>GFSJ0376-【srm-50】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0376-srm-50/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0376-srm-50/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -23,14 +23,14 @@ INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE
   <meta property="og:description" content=" 签到
 INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE ModuleHandleW; // eax HICON IconW; // eax HMODULE v7; // eax HWND …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0376-srm-50/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0376-srm-50/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0376-【srm-50】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 签到
 INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE ModuleHandleW; // eax HICON IconW; // eax HMODULE v7; // eax HWND …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -53,14 +53,14 @@ INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -68,7 +68,7 @@ INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0376-【srm-50】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0376-srm-50\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0376-srm-50\/"
       }
       
     ]
@@ -84,7 +84,7 @@ INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2835,6 +2835,6 @@ INT_PTR __stdcall DialogFunc(HWND hDlg, UINT a2, WPARAM a3, LPARAM a4) { HMODULE
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

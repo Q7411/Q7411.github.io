@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -15,7 +15,7 @@ int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; 
 int __fastcall sub_400430(int a1, unsigned int a2, int a3) { unsigned int v3; // $v0 int v4; // $v0 int v5; // $v0 int v6; // $v0 unsigned int i; // [sp&#43;8h] [&#43;8h] unsigned int v9; // [sp&#43;8h] [&#43;8h] int v10; // [sp&#43;Ch] [&#43;Ch] v10 = 0; for ( i = 0; i &lt; a2; &#43;&#43;i ) { v3 = i % 3; if ( i % 3 == 1 ) { v5 = v10&#43;&#43;; *(_BYTE *)(a3 &#43; v5) = a1fgvw2ehux3dit[16 * (*(_BYTE *)(a1 &#43; i - 1) &amp; 3) &#43; ((*(unsigned __int8 *)(a1 &#43; i) &gt;&gt; 4) &amp; 0xF)]; } else if ( v3 == 2 ) { *(_BYTE *)(a3 &#43; v10) = a1fgvw2ehux3dit[4 * (*(_BYTE *)(a1 &#43; i - 1) &amp; 0xF) &#43; ((*(unsigned __int8 *)(a1 &#43; i) &gt;&gt; 6) &amp; 3)]; v6 = v10 &#43; 1; v10 &#43;= 2; *(_BYTE *)(a3 &#43; v6) = a1fgvw2ehux3dit[*(_BYTE *)(a1 &#43; i) &amp; 0x3F]; } else if ( !v3 ) { v4 = v10&#43;&#43;; *(_BYTE *)(a3 &#43; v4) = a1fgvw2ehux3dit[(*(unsigned __int8 *)(a1 &#43; i) &gt;&gt; 2) &amp; 0x3F]; } } v9 = i - 1; if ( v9 % 3 ) { if ( v9 % 3 == 1 ) { *(_BYTE *)(a3 &#43; v10) = a1fgvw2ehux3dit[4 * (*(_BYTE *)(a1 &#43; v9) &amp; 0xF)]; *(_BYTE *)(a3 &#43; v10 &#43; 1) = 61; } } else { *(_BYTE *)(a3 &#43; v10) = a1fgvw2ehux3dit[16 * (*(_BYTE *)(a1 &#43; v9) &amp; 3)]; *(_BYTE *)(a3 &#43; v10 &#43; 1) = 61; *(_BYTE *)(a3 &#43; v10 &#43; 2) = 61; } return 0; } 提取出来
 ">
   <title>GFSJ0270-【2ex1】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -28,8 +28,8 @@ Mips架构
 main函数
 int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; // [sp&#43;2Ch] [&#43;2Ch] BYREF sub_400840(v1); …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0270-2ex1/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0270-【2ex1】 - Q7411 CTF blog">
@@ -37,7 +37,7 @@ int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; 
 Mips架构
 main函数
 int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; // [sp&#43;2Ch] [&#43;2Ch] BYREF sub_400840(v1); …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -60,14 +60,14 @@ int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; 
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -75,7 +75,7 @@ int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; 
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0270-【2ex1】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0270-2ex1\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0270-2ex1\/"
       }
       
     ]
@@ -91,7 +91,7 @@ int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; 
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2844,6 +2844,6 @@ int sub_400788() { _BYTE v1[20]; // [sp&#43;18h] [&#43;18h] BYREF _BYTE v2[28]; 
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

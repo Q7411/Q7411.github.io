@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,7 +13,7 @@
 int __fastcall main(int argc, const char **argv, const char **envp) { unsigned int v3; // eax __int64 v4; // rax __int64 v5; // rax _BYTE *v6; // rax __int64 v7; // rax __int64 v8; // rax __int64 v9; // rax __int64 v10; // rax __int64 v11; // rax __int64 v12; // rax int v14; // [rsp&#43;28h] [rbp-58h] BYREF int v15; // [rsp&#43;2Ch] [rbp-54h] BYREF int v16; // [rsp&#43;30h] [rbp-50h] unsigned int v17; // [rsp&#43;34h] [rbp-4Ch] unsigned int v18; // [rsp&#43;38h] [rbp-48h] int v19; // [rsp&#43;3Ch] [rbp-44h] int v20; // [rsp&#43;40h] [rbp-40h] int i1; // [rsp&#43;44h] [rbp-3Ch] int nn; // [rsp&#43;48h] [rbp-38h] int i3; // [rsp&#43;4Ch] [rbp-34h] int i2; // [rsp&#43;50h] [rbp-30h] int i4; // [rsp&#43;54h] [rbp-2Ch] int mm; // [rsp&#43;58h] [rbp-28h] int kk; // [rsp&#43;5Ch] [rbp-24h] int jj; // [rsp&#43;60h] [rbp-20h] int ii; // [rsp&#43;64h] [rbp-1Ch] int n; // [rsp&#43;68h] [rbp-18h] int m; // [rsp&#43;6Ch] [rbp-14h] int k; // [rsp&#43;70h] [rbp-10h] int v33; // [rsp&#43;74h] [rbp-Ch] int j; // [rsp&#43;78h] [rbp-8h] int i; // [rsp&#43;7Ch] [rbp-4h] _main(); memset_0(grid, 0, 0x190u); memset_0(randMark, 0, sizeof(randMark)); memset_0(vis, 0, sizeof(vis)); for ( i = 0; i &lt;= 9; &#43;&#43;i ) { for ( j = 0; j &lt;= 9; &#43;&#43;j ) showUs[100 * i &#43; j] = 42; } v3 = time(nullptr); srand_0(v3); v33 = 0; do { v20 = rand_0() % 10; v19 = rand_0() % 10; if ( randMark[100 * v20 &#43; v19] != 1 ) { randMark[100 * v20 &#43; v19] = 1; &#43;&#43;v33; } } while ( v33 != mine_sum ); res = 0; for ( k = 0; k &lt;= 9; &#43;&#43;k ) { for ( m = 0; m &lt;= 9; &#43;&#43;m ) { if ( randMark[100 * k &#43; m] ) grid[10 * k &#43; m] = -1; } } for ( n = 0; n &lt;= 9; &#43;&#43;n ) { for ( ii = 0; ii &lt;= 9; &#43;&#43;ii ) { if ( grid[10 * n &#43; ii] != -1 ) { for ( jj = 0; jj &lt;= 7; &#43;&#43;jj ) { v18 = *((_DWORD *)&amp;dir &#43; 2 * jj) &#43; n; v17 = dword_475044[2 * jj] &#43; ii; if ( v18 &lt;= 9 &amp;&amp; v17 &lt;= 9 &amp;&amp; grid[10 * v18 &#43; v17] == -1 ) &#43;&#43;grid[10 * n &#43; ii]; } } } } for ( kk = 0; kk &lt;= 9; &#43;&#43;kk ) { for ( mm = 0; mm &lt;= 9; &#43;&#43;mm ) { v4 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, (unsigned int)showUs[100 * kk &#43; mm]); std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(v4, &amp;unk_48B000); } ((void (__fastcall *)(std::ostream *const))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(refptr__ZSt4cout); } v5 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, &amp;unk_48B002); ((void (__fastcall *)(__int64))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(v5); while ( 100 - mine_sum != res ) { v7 = std::istream::operator&gt;&gt;(refptr__ZSt3cin, &amp;v15); std::istream::operator&gt;&gt;(v7, &amp;v14); if ( grid[10 * v15 &#43; v14] == -1 ) { v8 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, &amp;unk_48B01D); ((void (__fastcall *)(__int64))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(v8); goto LABEL_67; } if ( vis[100 * v15 &#43; v14] || grid[10 * v15 &#43; v14] &lt;= 0 ) { if ( !vis[100 * v15 &#43; v14] &amp;&amp; !grid[10 * v15 &#43; v14] ) { bfs(v15, v14); system_0(&#34;cls&#34;); for ( nn = 0; nn &lt;= 9; &#43;&#43;nn ) { for ( i1 = 0; i1 &lt;= 9; &#43;&#43;i1 ) { v11 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, (unsigned int)showUs[100 * nn &#43; i1]); std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(v11, &amp;unk_48B000); } ((void (__fastcall *)(std::ostream *const))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(refptr__ZSt4cout); } v12 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, &amp;unk_48B002); ((void (__fastcall *)(__int64))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(v12); } } else { &#43;&#43;res; vis[100 * v15 &#43; v14] = 1; showUs[100 * v15 &#43; v14] = LOBYTE(grid[10 * v15 &#43; v14]) &#43; 48; system_0(&#34;cls&#34;); for ( i2 = 0; i2 &lt;= 9; &#43;&#43;i2 ) { for ( i3 = 0; i3 &lt;= 9; &#43;&#43;i3 ) { v9 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, (unsigned int)showUs[100 * i2 &#43; i3]); std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(v9, &amp;unk_48B000); } ((void (__fastcall *)(std::ostream *const))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(refptr__ZSt4cout); } v10 = std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, &amp;unk_48B002); ((void (__fastcall *)(__int64))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(v10); } } v16 = std::string::length((std::string *)&amp;ans); for ( i4 = 0; i4 &lt; v16; &#43;&#43;i4 ) { v6 = (_BYTE *)std::string::operator[](&amp;ans, i4); std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(refptr__ZSt4cout, (unsigned int)(char)((v16 - i4) ^ *v6)); } ((void (__fastcall *)(std::ostream *const))refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_)(refptr__ZSt4cout); LABEL_67: system_0(&#34;pause&#34;); return 0; } 然后这里面也能看到flag是如何生成的 因为有一个
 ">
   <title>GFSJ1101-【Mine-】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1101-mine-/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1101-mine-/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ int __fastcall main(int argc, const char **argv, const char **envp) { unsigned i
 依旧游戏题目 依旧patch 简单游玩一下发现是一个扫雷吧 然后查看main函数 能发现是一个100格子 然后75个空格 25个雷 全部点开完成后给flag
 int __fastcall main(int argc, const char **argv, const char …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1101-mine-/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj1101-mine-/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ1101-【Mine-】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 游戏题
 依旧游戏题目 依旧patch 简单游玩一下发现是一个扫雷吧 然后查看main函数 能发现是一个100格子 然后75个空格 25个雷 全部点开完成后给flag
 int __fastcall main(int argc, const char **argv, const char …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ int __fastcall main(int argc, const char **argv, const char …">
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ int __fastcall main(int argc, const char **argv, const char …">
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ1101-【Mine-】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1101-mine-\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj1101-mine-\/"
       }
       
     ]
@@ -87,7 +87,7 @@ int __fastcall main(int argc, const char **argv, const char …">
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2973,6 +2973,6 @@ int __fastcall main(int argc, const char **argv, const char …">
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

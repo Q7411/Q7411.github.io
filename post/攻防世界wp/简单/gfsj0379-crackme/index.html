@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -15,7 +15,7 @@
 int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // eax char Buffer[52]; // [esp&#43;4h] [ebp-38h] BYREF memset(Buffer, 0, 50); printf(&#34;Please Input Flag:&#34;); gets_s(Buffer, 0x2Cu); if ( strlen(Buffer) == 42 ) { v4 = 0; while ( (Buffer[v4] ^ aThisIsNotFlag[v4 % 16]) == dword_402150[v4] ) { if ( &#43;&#43;v4 &gt;= 42 ) { printf(&#34;right!\n&#34;); return 0; } } printf(&#34;error!\n&#34;); return 0; } else { printf(&#34;error!\n&#34;); return -1; } } 数据
 ">
   <title>GFSJ0379-【crackme】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0379-crackme/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0379-crackme/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -28,8 +28,8 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // ea
 在pushad之后下 右击esp转内存 在内存下硬件访问断点 运行到popfd后面 F8进看看 发现就是原始OPE dump 修复IAT 保存了之后 选择刚刚dump出来的文件
 然后 …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0379-crackme/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0379-crackme/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0379-【crackme】 - Q7411 CTF blog">
@@ -37,7 +37,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // ea
 跟UPX差不多吧 进去下硬断 然后运行到原始OEP 然后dump出来 修一下IAT
 在pushad之后下 右击esp转内存 在内存下硬件访问断点 运行到popfd后面 F8进看看 发现就是原始OPE dump 修复IAT 保存了之后 选择刚刚dump出来的文件
 然后 …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -60,14 +60,14 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // ea
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -75,7 +75,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // ea
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0379-【crackme】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0379-crackme\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0379-crackme\/"
       }
       
     ]
@@ -91,7 +91,7 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // ea
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2823,6 +2823,6 @@ int __cdecl main(int argc, const char **argv, const char **envp) { int v4; // ea
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

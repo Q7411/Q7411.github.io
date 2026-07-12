@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -21,7 +21,7 @@ sudo apt updatesudo apt install -y git build-essentialgit clone https://github
 p[33] = 5;p[34] = 36;p[-3] = 1;p[1] = 83;p[2] = 15;p[3] = 90;p[4] = 84;p[5] = 80;p[6] = 85;p[7] = 3;p[8] = 2;p[9] = 0;p[10] = 7;p[11] = 86;p[12] = 7;p[13] = 7;p[14] = 91;p[15] = 9;p[16] = 0;p[17] = 80;p[18] = 5;p[19] = 2;p[20] = 3;p[21] = 93;p[22] = 92;p[23] = 80;p[24] = 81;p[25] = 82;p[26] = 84;p[27] = 90;p[28] = 95;p[29] = 2;p[30] = 87;p[31] = 7;p[32] = 52;p[-4] = 5;p[35] = 0;p[36] = 0; 这段非常像“按 bit 处理 8 次”的逻辑
 ">
   <title>strange language - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/strange-language/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/strange-language/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -35,8 +35,8 @@ p[33] = 5;p[34] = 36;p[-3] = 1;p[1] = 83;p[2] = 15;p[3] = 90;p[4] = 84;p[
 发现调用了一个brainfuck 我们找到这个文件 发现是一个pyd文件	我们ida打开看看有什么东西能分析的 看看字符串 发现一个有bf语言的特征
 我们提取 …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/strange-language/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E4%B8%AD%E7%AD%89/strange-language/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="strange language - Q7411 CTF blog">
@@ -45,7 +45,7 @@ p[33] = 5;p[34] = 36;p[-3] = 1;p[1] = 83;p[2] = 15;p[3] = 90;p[4] = 84;p[
 我们解包然后反编译一下
 发现调用了一个brainfuck 我们找到这个文件 发现是一个pyd文件	我们ida打开看看有什么东西能分析的 看看字符串 发现一个有bf语言的特征
 我们提取 …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -68,14 +68,14 @@ p[33] = 5;p[34] = 36;p[-3] = 1;p[1] = 83;p[2] = 15;p[3] = 90;p[4] = 84;p[
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -83,7 +83,7 @@ p[33] = 5;p[34] = 36;p[-3] = 1;p[1] = 83;p[2] = 15;p[3] = 90;p[4] = 84;p[
         "@type": "ListItem",
         "position": 3,
         "name": "strange language",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E4%B8%AD%E7%AD%89\/strange-language\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E4%B8%AD%E7%AD%89\/strange-language\/"
       }
       
     ]
@@ -99,7 +99,7 @@ p[33] = 5;p[34] = 36;p[-3] = 1;p[1] = 83;p[2] = 15;p[3] = 90;p[4] = 84;p[
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2939,6 +2939,6 @@ print(&#39;flag{&#39; + &#39;&#39;.join(s) + &#39;}&#39;)
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

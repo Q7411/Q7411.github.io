@@ -462,7 +462,12 @@ function loadGiscus() {
       showGiscusError('评论配置缺失，请检查站点配置。');
       return;
     }
-    if (gConfig.enabled === false) {
+    const hostname = window.location.hostname;
+    const isLocalPreview = hostname === 'localhost'
+      || hostname === '127.0.0.1'
+      || hostname === '::1'
+      || hostname === '[::1]';
+    if (gConfig.enabled === false || isLocalPreview) {
       status.className = 'giscus-status giscus-local-notice';
       status.textContent = '本地预览不加载评论，发布后自动启用。';
       return;

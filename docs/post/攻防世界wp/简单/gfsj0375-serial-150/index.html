@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -23,7 +23,7 @@ flag flag直出
 int __fastcall main(int argc, const char **argv, const char **envp) { __int64 v3; // rdx char s[512]; // [rsp&#43;0h] [rbp-200h] BYREF memset(s, 0, sizeof(s)); std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;Please Enter the valid key!\n&#34;, 32); std::operator&gt;&gt;&lt;char,std::char_traits&lt;char&gt;&gt;(&amp;std::cin, s); if ( strlen(s) != 16 ) goto LABEL_19; if ( s[0] != 69 ) goto LABEL_19; v3 = 69; if ( s[15] != 86 ) goto LABEL_19; if ( s[1] == 90 &amp;&amp; (v3 = 90, s[14] == 65) &amp;&amp; s[2] == 57 &amp;&amp; (v3 = 57, s[13] == 98) &amp;&amp; s[3] == 100 &amp;&amp; (v3 = 100, s[12] == 55) &amp;&amp; s[4] == 109 &amp;&amp; (v3 = 109, s[11] == 71) &amp;&amp; s[5] == 113 &amp;&amp; (v3 = 113, s[10] == 57) &amp;&amp; s[6] == 52 &amp;&amp; (v3 = 52, s[9] == 103) &amp;&amp; s[7] == 99 &amp;&amp; (v3 = 99, s[8] == 56) ) { std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;Serial number is valid :)\n&#34;, 99); return 0; } else { LABEL_19: std::operator&lt;&lt;&lt;std::char_traits&lt;char&gt;&gt;(&amp;std::cout, &#34;Serial number is not valid!\n&#34;, v3); return 0; } } flag
 ">
   <title>GFSJ0375-【serial-150】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0375-serial-150/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0375-serial-150/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -38,8 +38,8 @@ Run and capture the flag!
 进去能看到有花指令 我们去除花指令 我自己写了一个一键去除花指令的IDA插件 要的可以联系我领取
 去除花指令方法 动调 随便下一个断点 F8一步一步走 到这里会出 …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0375-serial-150/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0375-serial-150/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0375-【serial-150】 - Q7411 CTF blog">
@@ -49,7 +49,7 @@ Run and capture the flag!
 从简介可以看出来 可以动调获取flag 因为是跑起来获取flag
 进去能看到有花指令 我们去除花指令 我自己写了一个一键去除花指令的IDA插件 要的可以联系我领取
 去除花指令方法 动调 随便下一个断点 F8一步一步走 到这里会出 …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -72,14 +72,14 @@ Run and capture the flag!
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -87,7 +87,7 @@ Run and capture the flag!
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0375-【serial-150】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0375-serial-150\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0375-serial-150\/"
       }
       
     ]
@@ -103,7 +103,7 @@ Run and capture the flag!
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2865,6 +2865,6 @@ Run and capture the flag!
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

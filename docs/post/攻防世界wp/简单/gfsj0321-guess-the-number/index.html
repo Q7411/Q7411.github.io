@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -13,7 +13,7 @@
 package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: guess.class */ public class guess { static String XOR(String _str_one, String _str_two) { BigInteger i1 = new BigInteger(_str_one, 16); BigInteger i2 = new BigInteger(_str_two, 16); BigInteger res = i1.xor(i2); String result = res.toString(16); return result; } public static void main(String[] args) { if (args.length &gt; 0) { try { int guess_number = Integer.parseInt(args[0]); if (1545686892 / 5 == guess_number) { int i = 349763335 &#43; 345736730; String answer = XOR(&#34;4b64ca12ace755516c178f72d05d7061&#34;, &#34;ecd44646cfe5994ebeb35bf922e25dba&#34;); System.out.println(&#34;your flag is: &#34; &#43; answer); } else { System.err.println(&#34;wrong guess!&#34;); System.exit(1); } return; } catch (NumberFormatException e) { System.err.println(&#34;please enter an integer \nexample: java -jar guess 12&#34;); System.exit(1); return; } } System.err.println(&#34;wrong guess!&#34;); int i2 = 1000000 &#43; 1; System.exit(1); } } 猜数字的话也可以直接出flag 算一下就好了
 ">
   <title>GFSJ0321-【Guess-the-Number】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0321-guess-the-number/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0321-guess-the-number/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -25,15 +25,15 @@ package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: gues
 直接告诉 转一个十六进制 然后xor
 package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: guess.class */ public class guess { static …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0321-guess-the-number/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0321-guess-the-number/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0321-【Guess-the-Number】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 签到 xor
 直接告诉 转一个十六进制 然后xor
 package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: guess.class */ public class guess { static …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -56,14 +56,14 @@ package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: gues
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -71,7 +71,7 @@ package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: gues
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0321-【Guess-the-Number】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0321-guess-the-number\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0321-guess-the-number\/"
       }
       
     ]
@@ -87,7 +87,7 @@ package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: gues
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2805,6 +2805,6 @@ package defpackage; import java.math.BigInteger; /* JADX INFO: loaded from: gues
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>

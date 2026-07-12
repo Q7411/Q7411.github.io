@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" data-theme="light" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -12,7 +12,7 @@
 int __fastcall __noreturn main(int argc, const char **argv, const char **envp) { __pid_t v3; // eax size_t v4; // rax ssize_t v5; // rbx bool v6; // al bool bCheckPtrace; // [rsp&#43;13h] [rbp-1BDh] ssize_t numRead; // [rsp&#43;18h] [rbp-1B8h] ssize_t numReada; // [rsp&#43;18h] [rbp-1B8h] char bufWrite[208]; // [rsp&#43;20h] [rbp-1B0h] BYREF char bufParentRead[200]; // [rsp&#43;F0h] [rbp-E0h] BYREF unsigned __int64 v12; // [rsp&#43;1B8h] [rbp-18h] v12 = __readfsqword(0x28u); bCheckPtrace = detectDebugging(); if ( pipe(pParentWrite) == -1 ) exit(1); if ( pipe(pParentRead) == -1 ) exit(1); v3 = fork(); if ( v3 != -1 ) { if ( v3 ) { close(pParentWrite[0]); close(pParentRead[1]); while ( 1 ) { printf(&#34;Input key : &#34;); memset(bufWrite, 0, 0xC8u); gets(bufWrite); v4 = strlen(bufWrite); v5 = write(pParentWrite[1], bufWrite, v4); if ( v5 != strlen(bufWrite) ) printf(&#34;parent - partial/failed write&#34;); do { memset(bufParentRead, 0, sizeof(bufParentRead)); numReada = read(pParentRead[0], bufParentRead, 0xC8u); v6 = bCheckPtrace || checkDebuggerProcessRunning(); if ( !v6 &amp;&amp; checkStringIsNumber(bufParentRead) &amp;&amp; atoi(bufParentRead) ) { puts(&#34;True&#34;); if ( close(pParentWrite[1]) == -1 ) exit(1); exit(0); } puts(&#34;Wrong !!!\n&#34;); } while ( numReada == -1 ); } } close(pParentWrite[1]); close(pParentRead[0]); while ( 1 ) { memset(bufParentRead, 0, sizeof(bufParentRead)); numRead = read(pParentWrite[0], bufParentRead, 0xC8u); if ( numRead == -1 ) break; if ( numRead ) { if ( !childCheckDebugResult() &amp;&amp; bufParentRead[0] == 123 &amp;&amp; strlen(bufParentRead) == 42 &amp;&amp; !strncmp(&amp;bufParentRead[1], &#34;53fc275d81&#34;, 0xAu) &amp;&amp; bufParentRead[strlen(bufParentRead) - 1] == &#39;}&#39; &amp;&amp; !strncmp(&amp;bufParentRead[31], &#34;4938ae4efd&#34;, 0xAu) &amp;&amp; confuseKey(bufParentRead, 42) &amp;&amp; !strncmp(bufParentRead, &#34;{daf29f59034938ae4efd53fc275d81053ed5be8c}&#34;, 0x2Au) ) { responseTrue(); } else { responseFalse(); } } } exit(1); } exit(1); } 能发现下面就是一个判断 第一个判断是否为{开头
 ">
   <title>GFSJ0134-【re1-100】 - Q7411 CTF blog</title>
-  <link rel="canonical" href="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0134-re1-100/">
+  <link rel="canonical" href="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0134-re1-100/">
   <link rel="icon" type="image/jpeg" href="../../../../assets/images/touxiang.jpg">
   <link rel="apple-touch-icon" href="../../../../assets/images/touxiang.jpg">
   
@@ -23,14 +23,14 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp) {
   <meta property="og:description" content=" 签到
 int __fastcall __noreturn main(int argc, const char **argv, const char **envp) { __pid_t v3; // eax size_t v4; // rax ssize_t v5; // rbx bool v6; …">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="http://localhost:1313/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0134-re1-100/">
-  <meta property="og:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta property="og:url" content="https://www.q7411.xyz/post/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp/%E7%AE%80%E5%8D%95/gfsj0134-re1-100/">
+  <meta property="og:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="GFSJ0134-【re1-100】 - Q7411 CTF blog">
   <meta name="twitter:description" content=" 签到
 int __fastcall __noreturn main(int argc, const char **argv, const char **envp) { __pid_t v3; // eax size_t v4; // rax ssize_t v5; // rbx bool v6; …">
-  <meta name="twitter:image" content="http://localhost:1313/assets/images/touxiang.jpg">
+  <meta name="twitter:image" content="https://www.q7411.xyz/assets/images/touxiang.jpg">
   
   
   
@@ -53,14 +53,14 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp) {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "http:\/\/localhost:1313\/"
+        "item": "https:\/\/www.q7411.xyz\/"
       }
       
       ,{
         "@type": "ListItem",
         "position": 2,
         "name": "Posts",
-        "item": "http:\/\/localhost:1313\/post/"
+        "item": "https:\/\/www.q7411.xyz\/post/"
       }
       
       
@@ -68,7 +68,7 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp) {
         "@type": "ListItem",
         "position": 3,
         "name": "GFSJ0134-【re1-100】",
-        "item": "http:\/\/localhost:1313\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0134-re1-100\/"
+        "item": "https:\/\/www.q7411.xyz\/post\/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8Cwp\/%E7%AE%80%E5%8D%95\/gfsj0134-re1-100\/"
       }
       
     ]
@@ -84,7 +84,7 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp) {
         repoId: "R_kgDOR8Bf7A",
         category: "General",
         categoryId: "DIC_kwDOR8Bf7M4C6WUW",
-        enabled: false
+        enabled: true
       }
     };
   </script>
@@ -2891,6 +2891,6 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp) {
     };
   </script>
   
-  <script src="../../../../js/main.1cc7e5b54d5ac32200d5c188b5318a56160190d2ddcc79297180f14877a1d09b.js" defer></script>
+  <script src="../../../../js/main.a2416be4d2eff1343738f204c15db30e22ac369a0f350458055692f0b0a833d8.js" defer></script>
 </body>
 </html>
