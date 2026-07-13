@@ -1284,37 +1284,41 @@ a:hover {
 .home-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: 14px;
   margin-top: var(--space-8);
 }
 
 .home-action {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: 0 var(--space-5);
+  justify-content: flex-start;
+  gap: 10px;
+  width: 156px;
+  min-height: 48px;
+  padding: 0 14px;
   color: var(--text-color);
-  background: transparent;
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  font-size: var(--text-sm);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.95rem;
   font-weight: 700;
   text-decoration: none;
-  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .home-action.primary {
   color: #ffffff;
   background: var(--color-primary);
   border-color: var(--color-primary);
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.2);
 }
 
 .home-action:hover {
   color: var(--color-primary);
-  background: var(--hover-bg);
+  background: var(--card-bg);
   border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
   text-decoration: none;
 }
@@ -1322,6 +1326,25 @@ a:hover {
 .home-action.primary:hover {
   color: #ffffff;
   background: var(--color-primary-hover);
+}
+
+.home-action:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.home-action-icon,
+.home-action-arrow {
+  flex: 0 0 auto;
+}
+
+.home-action-arrow {
+  margin-left: auto;
+  transition: transform var(--transition-fast);
+}
+
+.home-action:hover .home-action-arrow {
+  transform: translateX(2px);
 }
 
 .home-identity-panel {
